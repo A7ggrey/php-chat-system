@@ -25,6 +25,15 @@ include('./../database/database.php');
 			margin-top: 150px;
 			margin-left: 30px;
 		}
+
+		button {
+			margin-top: 20px;
+			border-top: none;
+			border-bottom: none;
+			border-left: none;
+			border-right: none;
+			background-color: white;
+		}
 	</style>
 </head>
 <body>
@@ -37,7 +46,7 @@ include('./../database/database.php');
 
 	$currentuser = $_SESSION['userid'];
 
-	$query = "SELECT * FROM messages WHERE readerid = '$currentuser'";
+	$query = "SELECT * FROM user";
 	$result = mysqli_query($connect, $query);
 
 	if (mysqli_num_rows($result) > 0) {
@@ -47,7 +56,7 @@ include('./../database/database.php');
 
 		<div>
 			<form method="GET" action="read.php">
-				<p><button name="user" value="<?php echo $rows['id'];?>">&nbsp;&nbsp;<?php echo $rows['message'];?></button></p>
+				<p><button name="user" value="<?php echo $rows['id'];?>">&nbsp;&nbsp;<?php echo $rows['username'];?></button></p>
 			</form>
 		</div>
 
