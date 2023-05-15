@@ -24,7 +24,7 @@ if (isset($_POST['sign'])) {
 
 	    if ($result1) {
 	    	
-	    	echo "<script>alert('user registered successfully.'); location.replace(./);</script>";
+	    	echo "<script>alert('user registered successfully.'); location.replace('./');</script>";
 	    } else {
 
 	    	echo "<script>alert('Something went wrong. Try again later!'); history.back(-1);</script>";
