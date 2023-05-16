@@ -46,12 +46,12 @@ $sender = $_SESSION['userid'];
 					<p>
 						<?php
 
-						    if ($sender == $user) {
+						    if ($sender == $rows_selected['senderid']) {
 						    	
-						    	echo '<div style="text-align: left;">' .$rows_selected['message']. '<span style="color: red;">' .$rows_selected['time']. '' .$rows_selected['date']. '</span>';
+						    	echo '<div style="text-align: right;">' .$rows_selected['message']. '<span style="color: red;">' .$rows_selected['time']. '' .$rows_selected['date']. '</span>';
 						    } else {
 
-						    	echo '<div style="text-align: right;">' .$rows_selected['message']. '<span style="color: blue;">' .$rows_selected['time']. '' .$rows_selected['date']. '</span>';
+						    	echo '<div style="text-align: left;">' .$rows_selected['message']. '<span style="color: blue;">' .$rows_selected['time']. '' .$rows_selected['date']. '</span>';
 						    }
 						?>
 					</p>
