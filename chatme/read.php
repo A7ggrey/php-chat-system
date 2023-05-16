@@ -43,7 +43,18 @@ $sender = $_SESSION['userid'];
 				?>
 
 				<div>
-					<p><?php echo $rows_selected['message'];?> <span style="color: blue;"><?php echo $rows_selected['time'];?> <?php echo $rows_selected['date'];?></span></p>
+					<p>
+						<?php
+
+						    if ($sender == $user) {
+						    	
+						    	echo '<div style="text-align: left;">' .$rows_selected['message']. '<span style="color: red;">' .$rows_selected['time']. '' .$rows_selected['date']. '</span>';
+						    } else {
+
+						    	echo '<div style="text-align: right;">' .$rows_selected['message']. '<span style="color: blue;">' .$rows_selected['time']. '' .$rows_selected['date']. '</span>';
+						    }
+						?>
+					</p>
 				</div>
 
 				<?php
