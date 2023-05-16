@@ -18,7 +18,7 @@ include('./../database/database.php');
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Chatme - Chats</title>
+	<title>Chatme - Start a Chat</title>
 	<link rel="stylesheet" type="text/css" href="./../others/bootstrap.css">
 	<style type="text/css">
 		body {
