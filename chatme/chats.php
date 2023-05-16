@@ -46,7 +46,9 @@ include('./../database/database.php');
 
 	$currentuser = $_SESSION['userid'];
 
-	$query = "SELECT * FROM user";
+	//echo $currentuser;
+
+	$query = "SELECT * FROM user WHERE id <> '$currentuser'";
 	$result = mysqli_query($connect, $query);
 
 	if (mysqli_num_rows($result) > 0) {
