@@ -49,10 +49,12 @@ include('./../database/database.php');
 	$query = "SELECT messages.*, user.* FROM messages INNER JOIN user ON messages.readerid = user.id WHERE messages.senderid = '$currentuser' OR messages.readerid = '$currentuser' GROUP BY user.id";
 	$result = mysqli_query($connect, $query);
 
+	$rows_before = mysqli_fetch_assoc($result);
+
 	echo '<div><table class="table table-stripped"><thead><th>Messages</th><th><div class="btn-group">
 		<a href="chats.php" class="btn btn-primary">Available Contacts</a>
 		<a href="logout.php" class="btn btn-warning">Logout</a>
-	</div></th></thead><tbody>';
+	</div></th><th style="color: darkblue;">Logged in as ' .$currentuser. '</th></thead><tbody>';
 
 	if (mysqli_num_rows($result) > 0) {
 		while($rows = mysqli_fetch_assoc($result)) {
