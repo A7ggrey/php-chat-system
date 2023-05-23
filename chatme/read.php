@@ -63,10 +63,12 @@ $reciever_name = $select_user_rows['username'];
 
 						    if ($sender == $rows_selected['senderid']) {
 						    	
-						    	echo '<div class="input-group mb-3"><span style="text-align: right;">' .$rows_selected['message']. ' <span style="color: darkgrey; font-size: 9px; margin-top: 7px;">' .$rows_selected['time']. ' ' .$rows_selected['date']. ' </span><span style="color: blue; font-size: 9px; margin-top: 7px;">send</span></span></div>';
+						    	echo '<div class="input-group mb-3 bg-warning" style="width: 250px; float: right;"><span style="margin-left: 5px;">' .$rows_selected['message']. ' <br><span style="color: black; font-size: 9px; margin-top: 7px; margin-left: 100px;">' .$rows_selected['time']. ' ' .$rows_selected['date']. ' </span><span style="color: blue; font-size: 9px; margin-top: 7px;">send</span></span></div><br><br><br>';
 						    } else {
 
-						    	echo '<div class="input-group mb-3"><span style="text-align: left;">' .$rows_selected['message']. ' <span style="color: hotpink; font-size: 9px; margin-top: 7px;">' .$rows_selected['time']. ' ' .$rows_selected['date']. ' </span> <span style="color: blue; font-size: 9px; margin-top: 7px;"> recieve</span></span></div>';
+						    	//echo '<div class="input-group mb-3 bg-warning" style="width: 250px; float: left;"><span style="margin-left: 5px;">' .$rows_selected['message']. ' <br><span style="color: black; font-size: 9px; margin-top: 7px; margin-left: 100px;">' .$rows_selected['time']. ' ' .$rows_selected['date']. ' </span><span style="color: blue; font-size: 9px; margin-top: 7px;">send</span></span></div>';
+
+						    	echo '<div class="input-group mb-3 bg-success" style="width: 250px; float: left;><span style="text-align: left;">' .$rows_selected['message']. ' <span style="color: hotpink;  font-size: 9px; margin-top: 7px; margin-left: 100px;">' .$rows_selected['time']. ' ' .$rows_selected['date']. ' </span><span style="color: blue; font-size: 9px; margin-top: 7px;"> recieve</span></span></div><br><br><br>';
 						    }
 						?>
 					</p>
