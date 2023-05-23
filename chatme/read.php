@@ -13,6 +13,13 @@ include('./../database/database.php');
 $user = $_GET['user'];
 $sender = $_SESSION['userid'];
 
+$select_user_details = "SELECT * FROM user WHERE id = '$user'";
+$select_user_result = mysqli_query($connect, $select_user_details);
+
+$select_user_rows = mysqli_fetch_assoc($select_user_result);
+
+$reciever_name = $select_user_rows['username'];
+
 
 ?>
 
@@ -30,16 +37,12 @@ $sender = $_SESSION['userid'];
 		}
 	</style>
 </head>
-<body>
-
-	<div>
-		
-	</div>
+<body class="container">
 
 	<div class="login-box">
 		<div class="card card-outline card-primary">
-			<div class="card-header text-center">
-				<h4 class="h4">Login Here!</h4>
+			<div class="card-header bg-info" style="color: brown;">
+				<h4 class="h4"><?php echo $reciever_name;?></h4>
 			</div>
 			<div class="card-body">
 				<?php
@@ -48,10 +51,6 @@ $sender = $_SESSION['userid'];
 		$select_message_result = mysqli_query($connect, $select_message_query);
 
 		$rows_selected_display = mysqli_fetch_assoc($select_message_result);
-
-		$reciever_name = $rows_selected_display['username'];
-
-		echo '<h4>' .$reciever_name. '</h4>';
 
 
 		if (mysqli_num_rows($select_message_result) > 0) {
@@ -65,11 +64,11 @@ $sender = $_SESSION['userid'];
 						    if ($sender == $rows_selected['senderid']) {
 						    	
 						    	echo '
-						    	<div class="input-group mb-3" text-right>' .$rows_selected['message']. '<span style="color: red;">' .$rows_selected['time']. '' .$rows_selected['date']. '</span>';
+						    	<div class="input-group mb-3" style="text-align: right;">' .$rows_selected['message']. '<span style="color: red;">' .$rows_selected['time']. '' .$rows_selected['date']. '</span>';
 						    } else {
 
 						    	echo '
-						    	<div class="input-group mb-3">' .$rows_selected['message']. '<span style="color: red;">' .$rows_selected['time']. '' .$rows_selected['date']. '</span>';
+						    	<div class="input-group mb-3" style="text-align: left;">' .$rows_selected['message']. '<span style="color: blue;">' .$rows_selected['time']. '' .$rows_selected['date']. '</span>';
 						    }
 						?>
 					</p>
@@ -84,7 +83,7 @@ $sender = $_SESSION['userid'];
 
 			</div>
 
-			<div class="card-footer">
+			<div class="card-footer bg-default">
 				<form method="POST" action="send-message.php">
 		            <div class="btn-group">
 			            <input type="hidden" name="recieverid" value="<?php echo $user;?>">
