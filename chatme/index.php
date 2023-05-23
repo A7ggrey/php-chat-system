@@ -62,12 +62,23 @@ include('./../database/database.php');
 
 		while($rows_chats = mysqli_fetch_assoc($result_chats)) {
 
+			$my_id = $rows_chats['current_user_id'];
+			$your_id = $rows_chats['user_id'];
+
+			if ($my_id == $currentuser) {
+				
+				$id_to_display = $your_id;
+			} else {
+
+				$id_to_display = $my_id;
+			}
+
 		?>
 
 		<div class="input-group mb-3">
 			<p>
 				<form method="GET" action="read.php">
-					<button name="user" value="<?php echo $rows_chats['user_id'];?>">
+					<button name="user" value="<?php echo $id_to_display;?>">
 						&nbsp;&nbsp;<span style="font-weight: bold;"><?php echo $rows_chats['username'];?></span><br>
 						&nbsp;&nbsp;<span style="color: grey; font-size: 12px; margin-left: 30px;">message</span>
 					</button>
