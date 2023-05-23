@@ -63,12 +63,10 @@ $reciever_name = $select_user_rows['username'];
 
 						    if ($sender == $rows_selected['senderid']) {
 						    	
-						    	echo '
-						    	<div class="input-group mb-3" style="text-align: right;">' .$rows_selected['message']. '<span style="color: red;">' .$rows_selected['time']. '' .$rows_selected['date']. '</span>';
+						    	echo '<div class="input-group mb-3"><span style="text-align: right;">' .$rows_selected['message']. '<span style="color: darkgrey; font-size: 12px; margin-top: 7px;">' .$rows_selected['time']. ' ' .$rows_selected['date']. '</span></span></div>';
 						    } else {
 
-						    	echo '
-						    	<div class="input-group mb-3" style="text-align: left;">' .$rows_selected['message']. '<span style="color: blue;">' .$rows_selected['time']. '' .$rows_selected['date']. '</span>';
+						    	echo '<div class="input-group mb-3"><span style="text-align: left;">' .$rows_selected['message']. '<span style="color: hotpink; font-size: 12px; margin-top: 7px;">' .$rows_selected['time']. ' ' .$rows_selected['date']. '</span></div>';
 						    }
 						?>
 					</p>
