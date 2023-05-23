@@ -36,11 +36,16 @@ include('./../database/database.php');
 		}
 	</style>
 </head>
-<body>
+<body class="container">
 
-	
-
-	<?php
+<div class="login-box">
+		<div class="card card-outline card-primary">
+			<div class="card-header text-left">
+				<a href="chats.php" class="btn btn-primary">Available Contacts</a>
+		        <a href="logout.php" class="btn btn-danger">Logout</a>
+			</div>
+		<div class="card-body">
+				<?php
 
 	$currentuser = $_SESSION['userid'];
 
@@ -51,26 +56,22 @@ include('./../database/database.php');
 
 	$rows_before = mysqli_fetch_assoc($result);
 
-	echo '<div><table class="table table-stripped"><thead><th>Messages</th><th><div class="btn-group">
-		<a href="chats.php" class="btn btn-primary">Available Contacts</a>
-		<a href="logout.php" class="btn btn-warning">Logout</a>
-	</div></th><th style="color: darkblue;">Logged in as ' .$currentuser. '</th></thead><tbody>';
-
 	if (mysqli_num_rows($result) > 0) {
 		while($rows = mysqli_fetch_assoc($result)) {
 
 		?>
 
-		<tr>
-			<td>
+		<div class="input-group mb-3">
+			<p>
 				<form method="GET" action="read.php">
 					<button name="user" value="<?php echo $rows['readerid'];?>">
 						&nbsp;&nbsp;<span style="font-weight: bold;"><?php echo $rows['username'];?></span><br>
 						&nbsp;&nbsp;<span style="color: grey; font-size: 12px; margin-left: 30px;"><?php echo $rows['message'];?></span>
 					</button>
 				</form>
-			</td>
-		</tr> 
+			</p>
+		</div>
+		<hr>
 
 		<?php
 	}
@@ -78,8 +79,7 @@ include('./../database/database.php');
 
 
 	?>
-</tbody>
-</table>
+	</div>
 </div>
 
 </body>
