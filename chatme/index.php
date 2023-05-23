@@ -51,7 +51,9 @@ include('./../database/database.php');
 
 	include('./message-select.php');
 
-	$query = "SELECT messages.*, user.* FROM messages INNER JOIN user ON messages.readerid = user.id WHERE messages.senderid = '$currentuser' OR messages.readerid = '$currentuser' GROUP BY user.id";
+	//$query = "SELECT messages.*, user.* FROM messages INNER JOIN user ON messages.readerid = user.id WHERE messages.senderid = '$currentuser' OR messages.readerid = '$currentuser' GROUP BY user.id";
+
+	$query = "SELECT chats.*, user.* FROM user INNER JOIN chats ON user.id = chats.user_id WHERE chats.current_user_id = '$currentuser'";
 	$result = mysqli_query($connect, $query);
 
 	$rows_before = mysqli_fetch_assoc($result);
@@ -64,9 +66,9 @@ include('./../database/database.php');
 		<div class="input-group mb-3">
 			<p>
 				<form method="GET" action="read.php">
-					<button name="user" value="<?php echo $rows['readerid'];?>">
+					<button name="user" value="">
 						&nbsp;&nbsp;<span style="font-weight: bold;"><?php echo $rows['username'];?></span><br>
-						&nbsp;&nbsp;<span style="color: grey; font-size: 12px; margin-left: 30px;"><?php echo $rows['message'];?></span>
+						&nbsp;&nbsp;<span style="color: grey; font-size: 12px; margin-left: 30px;">message</span>
 					</button>
 				</form>
 			</p>
