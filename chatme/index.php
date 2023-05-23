@@ -49,25 +49,26 @@ include('./../database/database.php');
 
 	$currentuser = $_SESSION['userid'];
 
-	include('./message-select.php');
+	//include('./message-select.php');
 
 	//$query = "SELECT messages.*, user.* FROM messages INNER JOIN user ON messages.readerid = user.id WHERE messages.senderid = '$currentuser' OR messages.readerid = '$currentuser' GROUP BY user.id";
 
-	$query = "SELECT chats.*, user.* FROM user INNER JOIN chats ON user.id = chats.user_id WHERE chats.current_user_id = '$currentuser'";
-	$result = mysqli_query($connect, $query);
+	$query_chats = "SELECT chats.*, user.* FROM user INNER JOIN chats ON user.id = chats.user_id WHERE chats.current_user_id = '$currentuser' OR chats.user_id = '$currentuser'";
+	$result_chats = mysqli_query($connect, $query_chats);
 
-	$rows_before = mysqli_fetch_assoc($result);
+	//$rows_before = mysqli_fetch_assoc($result_chats);
 
-	if (mysqli_num_rows($result) > 0) {
-		while($rows = mysqli_fetch_assoc($result)) {
+	if (mysqli_num_rows($result_chats) > 0) {
+
+		while($rows_chats = mysqli_fetch_assoc($result_chats)) {
 
 		?>
 
 		<div class="input-group mb-3">
 			<p>
 				<form method="GET" action="read.php">
-					<button name="user" value="">
-						&nbsp;&nbsp;<span style="font-weight: bold;"><?php echo $rows['username'];?></span><br>
+					<button name="user" value="<?php echo $rows_chats['user_id'];?>">
+						&nbsp;&nbsp;<span style="font-weight: bold;"><?php echo $rows_chats['username'];?></span><br>
 						&nbsp;&nbsp;<span style="color: grey; font-size: 12px; margin-left: 30px;">message</span>
 					</button>
 				</form>
