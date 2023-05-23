@@ -50,7 +50,7 @@ $reciever_name = $select_user_rows['username'];
 		$select_message_query = "SELECT * FROM messages WHERE readerid = '$user' AND senderid = '$sender' OR readerid = '$sender' AND senderid = '$user'";
 		$select_message_result = mysqli_query($connect, $select_message_query);
 
-		$rows_selected_display = mysqli_fetch_assoc($select_message_result);
+		//$rows_selected_display = mysqli_fetch_assoc($select_message_result);
 
 
 		if (mysqli_num_rows($select_message_result) > 0) {
