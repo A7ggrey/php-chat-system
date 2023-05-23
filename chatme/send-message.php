@@ -20,7 +20,7 @@ if (isset($_POST['send'])) {
 	$date = date("d/m/Y");
 	$time = date("h:i:sa");
 
-	$select_chats = "SELECT * FROM chats WHERE user_id = '$reciever' AND current_user_id = 'sender'";
+	$select_chats = "SELECT * FROM chats WHERE user_id = '$reciever' AND current_user_id = '$sender' OR user_id = '$sender' AND current_user_id = '$reciever'";
 	$select_chats_result = mysqli_query($connect, $select_chats);
 
 	if (mysqli_num_rows($select_chats_result) > 0) {
