@@ -32,19 +32,50 @@ $reciever_name = $select_user_rows['username'];
 	<title>Read messages - User</title>
 	<style type="text/css">
 		body {
-			margin-top: 150px;
-			margin-left: 30px;
+			padding-top: 40px;
+			padding-bottom: 60px;
+		}
+
+		.container {
+			width: 80%;
+			margin: 0 auto;
+		}
+
+		.fixed-header, .fixed-footer {
+			width: 80%;
+			position: fixed;
+			background: blue;
+			padding: 10px 0;
+		}
+
+		.fixed-header {
+			top: 0;
+		}
+
+		.fixed-footer {
+			bottom: 0;
+		}
+
+		.container p {
+			line-height: 200px;
+		}
+
+		.outer {
+			border: 1px;
+			border-color: black;
 		}
 	</style>
 </head>
-<body class="container">
+<body>
 
-	<div class="login-box">
-		<div class="card card-outline card-primary">
-			<div class="card-header bg-info" style="color: brown;">
-				<h4 class="h4"><?php echo $reciever_name;?></h4>
+	<div class="container outer">
+		<div class="">
+			<div class="fixed-header" style="color: brown;">
+				<div class="">
+					<h4 class="h4"><?php echo $reciever_name;?></h4>
+				</div>
 			</div>
-			<div class="card-body">
+			<div class="">
 				<?php
 
 		$select_message_query = "SELECT * FROM messages WHERE readerid = '$user' AND senderid = '$sender' OR readerid = '$sender' AND senderid = '$user'";
@@ -83,7 +114,7 @@ $reciever_name = $select_user_rows['username'];
 
 			</div>
 
-			<div class="card-footer bg-default">
+			<div class="fixed-footer">
 				<form method="POST" action="send-message.php">
 		            <div class="btn-group">
 			            <input type="hidden" name="recieverid" value="<?php echo $user;?>">
