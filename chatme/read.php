@@ -32,8 +32,8 @@ $reciever_name = $select_user_rows['username'];
 	<title>Read messages - User</title>
 	<style type="text/css">
 		body {
-			padding-top: 40px;
-			padding-bottom: 60px;
+			padding-top: 60px;
+			padding-bottom: 40px;
 		}
 
 		.container {
@@ -42,7 +42,7 @@ $reciever_name = $select_user_rows['username'];
 		}
 
 		.fixed-header, .fixed-footer {
-			width: 80%;
+			width: 100%;
 			position: fixed;
 			background: blue;
 			padding: 10px 0;
