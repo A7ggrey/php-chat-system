@@ -7,6 +7,7 @@ include('./database/database.php');
 
 if (isset($_POST['sign'])) {
 	
+	$full_name = mysqli_real_escape_string($connect, $_POST['full_name']);
 	$email = mysqli_real_escape_string($connect, $_POST['email']);
 	$password = mysqli_real_escape_string($connect, $_POST['password']);
 	$password1 = password_hash($password, PASSWORD_DEFAULT);
@@ -19,7 +20,7 @@ if (isset($_POST['sign'])) {
 		echo "<script>alert('Account already exists!'); history.back(-1);</script>";
 	} else {
 		
-		$query1 = "INSERT INTO user(username, password) VALUES('$email', '$password1')";
+		$query1 = "INSERT INTO user(full_name, username, password) VALUES('$full_name', '$email', '$password1')";
 	    $result1 = mysqli_query($connect, $query1);
 
 	    if ($result1) {
