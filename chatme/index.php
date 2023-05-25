@@ -64,6 +64,7 @@ include('./../database/database.php');
 
 			$my_id = $rows_chats['current_user_id'];
 			$your_id = $rows_chats['user_id'];
+			$user_id_two = $rows_chats['']
 
 			if ($my_id == $currentuser) {
 				
