@@ -64,7 +64,7 @@ include('./../database/database.php');
 
 			$my_id = $rows_chats['current_user_id'];
 			$your_id = $rows_chats['user_id'];
-			$user_id_two = $rows_chats['']
+			//$user_id_two = $rows_chats['']
 
 			if ($my_id == $currentuser) {
 				
@@ -80,7 +80,28 @@ include('./../database/database.php');
 			<p>
 				<form method="GET" action="read.php">
 					<button name="user" value="<?php echo $id_to_display;?>">
-						&nbsp;&nbsp;<span style="font-weight: bold;"><?php echo $rows_chats['username'];?></span><br>
+						&nbsp;&nbsp;
+						<span style="font-weight: bold;">
+							<?php 
+							//if ($id_to_display == $your_id) {
+							   	
+							   	$select_your_id = "SELECT * FROM user WHERE id = '$id_to_display'";
+							   	$select_your_id_result = mysqli_query($connect, $select_your_id);
+
+							   	if (mysqli_num_rows($select_your_id_result) > 0) {
+							   		
+							   		$select_your_id_rows = mysqli_fetch_assoc($select_your_id_result);
+							   			?>
+
+							   			<?php echo $select_your_id_rows['username'];?></span><br>
+
+							   			<?php
+							   		}
+							   	//}
+							   //}
+							   ?>  
+
+							   
 						&nbsp;&nbsp;<span style="color: grey; font-size: 12px; margin-left: 30px;">message</span>
 					</button>
 				</form>
