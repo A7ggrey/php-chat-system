@@ -53,7 +53,7 @@ include('./../database/database.php');
 
 	//$query = "SELECT messages.*, user.* FROM messages INNER JOIN user ON messages.readerid = user.id WHERE messages.senderid = '$currentuser' OR messages.readerid = '$currentuser' GROUP BY user.id";
 
-	$query_chats = "SELECT chats.*, user.* FROM user INNER JOIN chats ON user.id = chats.user_id WHERE chats.current_user_id = '$currentuser' OR chats.user_id = '$currentuser'";
+	$query_chats = "SELECT chats.*, user.* FROM user INNER JOIN chats ON user.id = chats.user_id WHERE chats.current_user_id = '$currentuser' OR chats.user_id = '$currentuser' ORDER BY chats.chat_time ASC";
 	$result_chats = mysqli_query($connect, $query_chats);
 
 	//$rows_before = mysqli_fetch_assoc($result_chats);
@@ -93,7 +93,7 @@ include('./../database/database.php');
 							   		$select_your_id_rows = mysqli_fetch_assoc($select_your_id_result);
 							   			?>
 
-							   			<?php echo $select_your_id_rows['username'];?></span><br>
+							   			<?php echo $select_your_id_rows['full_name'];?></span><br>
 
 							   			<?php
 							   		}
