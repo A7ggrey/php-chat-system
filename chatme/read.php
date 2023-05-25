@@ -18,7 +18,7 @@ $select_user_result = mysqli_query($connect, $select_user_details);
 
 $select_user_rows = mysqli_fetch_assoc($select_user_result);
 
-$reciever_name = $select_user_rows['username'];
+$reciever_name = $select_user_rows['full_name'];
 
 
 ?>
@@ -104,6 +104,11 @@ $reciever_name = $select_user_rows['username'];
 
 				<?php
 			}
+		} else {
+
+			echo '<div style="background-color: black; color: white; text-align: center; margin-top: 17px;">
+			            <span>Start a New Chat</span>
+			      </div>';
 		}
 
 		?>
@@ -112,7 +117,7 @@ $reciever_name = $select_user_rows['username'];
         <form method="POST" action="send-message.php">
 		    <div class="btn-group">
 			        <input type="hidden" style="margin-left: 5px;" name="recieverid" value="<?php echo $user;?>">
-			        <input type="text"  style="margin-left: 5px;"name="message" class="form-control" placeholder="Write message...">
+			        <input type="text"  style="margin-left: 5px;"name="message" class="form-control" placeholder="Write message..." required>
 		        <input type="submit" style="margin-left: 5px;" name="send" value="send" class="btn btn-info">
 		    </div>
 	    </form>        
