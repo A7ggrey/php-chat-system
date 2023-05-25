@@ -58,7 +58,7 @@ include('./../database/database.php');
 
 		<div>
 			<form method="GET" action="read.php">
-				<p><button name="user" value="<?php echo $rows['id'];?>">&nbsp;&nbsp;<?php echo $rows['username'];?></button></p>
+				<p><button name="user" value="<?php echo $rows['id'];?>">&nbsp;&nbsp;<?php echo $rows['full_name'];?></button></p>
 			</form>
 		</div>
 
