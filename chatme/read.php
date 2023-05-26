@@ -65,7 +65,6 @@ $reciever_name = $select_user_rows['full_name'];
 
     .sender-div {
     	width: 250px;
-    	float: right;
     	background-color: lightblue;
     }
 
@@ -81,6 +80,28 @@ $reciever_name = $select_user_rows['full_name'];
     }
 
     .sender-span-3 {
+    	 color: blue;
+    	 font-size: 9px;
+    	 margin-top: 7px;
+    }
+
+    .receiver-div {
+    	width: 250px;
+    	background-color: lightgreen;
+    }
+
+    .receiver-span-1 {
+    	margin-left: 7px;
+    }
+
+    .receiver-span-2 {
+    	 color: black;
+    	 font-size: 9px;
+    	 margin-top: 7px;
+    	 margin-left: 100px;
+    }
+
+    .receiver-span-3 {
     	 color: blue;
     	 font-size: 9px;
     	 margin-top: 7px;
@@ -219,6 +240,9 @@ $reciever_name = $select_user_rows['full_name'];
 
 		if (mysqli_num_rows($select_message_result) > 0) {
 			while ($rows_selected = mysqli_fetch_assoc($select_message_result)) {
+
+				$reciever_id = $rows_selected[''];
+				$sender_id = $rows_selected[''];
 				?>
 
 				<div>
