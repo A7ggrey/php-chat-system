@@ -19,6 +19,7 @@ $select_user_result = mysqli_query($connect, $select_user_details);
 $select_user_rows = mysqli_fetch_assoc($select_user_result);
 
 $reciever_name = $select_user_rows['full_name'];
+$reciever_profile = $select_user_rows['profile_photo'];
 
 
 ?>
@@ -64,19 +65,26 @@ $reciever_name = $select_user_rows['full_name'];
     }
 
     .sender-div {
-    	width: 250px;
+    	width: 80%;
     	background-color: lightblue;
+    	margin: 0 auto;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        min-height: 60px;
     }
 
     .sender-span-1 {
     	margin-left: 7px;
+        width: 60%;
     }
 
     .sender-span-2 {
     	 color: black;
     	 font-size: 9px;
     	 margin-top: 7px;
-    	 margin-left: 100px;
+    	 margin-right: 50px;
+         float: right;
+         bottom: 0;
     }
 
     .sender-span-3 {
@@ -86,25 +94,62 @@ $reciever_name = $select_user_rows['full_name'];
     }
 
     .receiver-div {
-    	width: 250px;
+    	width: 80%;
     	background-color: lightgreen;
+    	margin: 0 auto;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        min-height: 60px;
     }
 
     .receiver-span-1 {
     	margin-left: 7px;
+        width: 60%;
     }
 
     .receiver-span-2 {
     	 color: black;
     	 font-size: 9px;
     	 margin-top: 7px;
-    	 margin-left: 100px;
+         float: left;
+    	 margin-left: 50px;
+         bottom: 0;
     }
 
     .receiver-span-3 {
     	 color: blue;
     	 font-size: 9px;
     	 margin-top: 7px;
+    }
+
+    .dp_display_sender {
+    	width: 30px;
+    	height: 30px;
+    	float: right;
+        margin-right: 7px;
+        margin-top: 3px;
+        border-radius: 100%;
+    }
+
+    .dp_display_receiver {
+    	width: 30px;
+    	height: 30px;
+    	float: left;
+        margin-left: 7px;
+        margin-top: 3px;
+        border-radius: 100%;
+    }
+
+    .receiver-profile {
+        width: 20px;
+        height: 20px;
+        border-radius: 100%;
+        margin-top: 4px;
+    }
+
+    .name-display {
+        font-size: 20px;
+        margin-top: 2px;
     }
 
     @media only screen and (max-device-width: 480px) {
@@ -225,7 +270,11 @@ $reciever_name = $select_user_rows['full_name'];
     <div class="fixed-header">
         <div class="container">
             <nav>
-                <h4><?php echo $reciever_name;?></h4>
+                    <span>
+                        <img src="./profile/<?php echo $reciever_profile;?>" class="receiver-profile">
+                        &nbsp;
+                        <span class="name-display"><?php echo $reciever_name;?></span>
+                    </span>
             </nav>
         </div>
     </div>
@@ -241,8 +290,8 @@ $reciever_name = $select_user_rows['full_name'];
 		if (mysqli_num_rows($select_message_result) > 0) {
 			while ($rows_selected = mysqli_fetch_assoc($select_message_result)) {
 
-				$reciever_id = $rows_selected[''];
-				$sender_id = $rows_selected[''];
+				$reciever_id = $rows_selected['readerid'];
+				$sender_id = $rows_selected['senderid'];
 				?>
 
 				<div>
@@ -250,13 +299,25 @@ $reciever_name = $select_user_rows['full_name'];
 						<?php
 
 						    if ($sender == $rows_selected['senderid']) {
+
+						    	$select_dp_sender = "SELECT * FROM user WHERE id = '$sender_id'";
+						    	$select_dp_sender_result = mysqli_query($connect, $select_dp_sender);
+
+						    	$select_dp_sender_rows = mysqli_fetch_assoc($select_dp_sender_result);
+
+						    	$sender_dp = $select_dp_sender_rows['profile_photo'];
 						    	
-						    	echo '<div class="input-group mb-3 sender-div"><span class="sender-span-1">' .$rows_selected['message']. ' <br><span class="sender-span-2">' .$rows_selected['time']. ' ' .$rows_selected['date']. ' </span><span class="sender-span-3">send</span></span></div>';
+						    	echo '<div class="input-group mb-3 sender-div"><span class="sender-span-1"> <img src="./profile/' .$sender_dp. ' " class="dp_display_sender"> ' .$rows_selected['message']. ' <br><br><span class="sender-span-2">' .$rows_selected['time']. ' - ' .$rows_selected['date']. ' <span class="sender-span-3">send</span> </span> </span></div>';
 						    } else {
 
-						    	//echo '<div class="input-group mb-3 bg-warning" style="width: 250px; float: left;"><span style="margin-left: 5px;">' .$rows_selected['message']. ' <br><span style="color: black; font-size: 9px; margin-top: 7px; margin-left: 100px;">' .$rows_selected['time']. ' ' .$rows_selected['date']. ' </span><span style="color: blue; font-size: 9px; margin-top: 7px;">send</span></span></div>';
+						    	$select_dp_receiver = "SELECT * FROM user WHERE id = '$sender_id'";
+						    	$select_dp_receiver_result = mysqli_query($connect, $select_dp_receiver);
 
-						    	echo '<div class="input-group mb-3 bg-success receiver-div"><span class="receiver-span-1">' .$rows_selected['message']. ' <span class="receiver-span-2">' .$rows_selected['time']. ' ' .$rows_selected['date']. ' </span><span class="receiver-span-3"> recieve</span></span></div>';
+						    	$select_dp_receiver_rows = mysqli_fetch_assoc($select_dp_receiver_result);
+
+						    	$receiver_dp = $select_dp_receiver_rows['profile_photo'];
+
+						    	echo '<div class="input-group mb-3 bg-success receiver-div"><span class="receiver-span-1"><img src="./profile/' .$receiver_dp. ' " class="dp_display_receiver">' .$rows_selected['message']. ' <br><br><span class="receiver-span-2">' .$rows_selected['time']. ' - ' .$rows_selected['date']. ' <span class="receiver-span-3"> recieved</span></span></span></div>';
 						    }
 						?>
 					</p>
@@ -274,7 +335,7 @@ $reciever_name = $select_user_rows['full_name'];
 		?>
     </div>    
     <div class="fixed-footer">
-        <form method="POST" action="send-message.php">
+        <form method="POST" action="send-message.php" id="sendingForm">
 		    <div class="btn-group">
 			        <input type="hidden" style="margin-left: 5px;" name="recieverid" value="<?php echo $user;?>">
 			        <input type="text"  style="margin-left: 5px;"name="message" class="form-control" placeholder="Write message..." required>
@@ -283,4 +344,19 @@ $reciever_name = $select_user_rows['full_name'];
 	    </form>        
     </div>
 </body>
+
+<script type="text/javascript">
+    
+    //Get form Elements
+    var form = getElementById("sendingForm");
+
+    function submitForm(event) {
+
+        //Preventing the page from refresh
+        event.prenetDefault();
+    }
+
+    //Calling a function during form submission
+    form.addEventListener('submit', submitForm);
+</script>
 </html>
