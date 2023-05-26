@@ -41,8 +41,9 @@ include('./../database/database.php');
 <div class="login-box">
 		<div class="card card-outline card-primary">
 			<div class="card-header text-left">
-				<a href="chats.php" class="btn btn-primary">Available Contacts</a>
-		        <a href="logout.php" class="btn btn-danger">Logout</a>
+				<a href="./profile/profile.php" class="btn btn-info">My Profile</a>
+				<a href="./chats.php" class="btn btn-primary">Available Contacts</a>
+		        <a href="./logout.php" class="btn btn-danger">Logout</a>
 			</div>
 		<div class="card-body">
 				<?php
