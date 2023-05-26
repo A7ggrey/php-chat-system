@@ -62,6 +62,44 @@ $reciever_name = $select_user_rows['full_name'];
     .container p{
         line-height: 200px; /* Create scrollbar to test positioning */
     }
+
+    @media only screen and (max-width: 600px) {
+    	/* Add some padding on document's body to prevent the content
+    to go underneath the header and footer */
+    body{        
+        padding-top: 60px;
+        padding-bottom: 40px;
+    }
+    .container{
+        width: 80%;
+        margin: 0 auto; /* Center the DIV horizontally */
+    }
+    .fixed-header, .fixed-footer{
+        width: 100%;
+        position: fixed;        
+        background: brown;
+        padding: 10px 0;
+        color: #fff;
+        height: 350px;
+        background-color: blue;
+    }
+    .fixed-header{
+        top: 0;
+    }
+    .fixed-footer{
+        bottom: 0;
+    }    
+    /* Some more styles to beutify this example */
+    nav a{
+        color: #fff;
+        text-decoration: none;
+        padding: 7px 25px;
+        display: inline-block;
+    }
+    .container p{
+        line-height: 200px; /* Create scrollbar to test positioning */
+    }
+    }
 </style>
 </head>
 <body>
