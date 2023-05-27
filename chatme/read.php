@@ -165,7 +165,8 @@ $reciever_profile = $select_user_rows['profile_photo'];
     }
     .fixed-header, .fixed-footer{
         width: 100%;
-        position: fixed;        
+        position: fixed;
+        z-index: 1000;       
         background: brown;
         padding: 10px 0;
         color: #fff;
@@ -179,6 +180,7 @@ $reciever_profile = $select_user_rows['profile_photo'];
         bottom: 0;
         padding-left: 25px;
         padding-top: 25px;
+        margin-top: 10px;
     }    
     /* Some more styles to beutify this example */
     nav a{
@@ -205,13 +207,14 @@ $reciever_profile = $select_user_rows['profile_photo'];
     	border-radius: 12px;
     }
     .sender-div {
-    	width: 350px;
-    	float: right;
+    	width: 100%;
+        position: relative;
     	background-color: lightblue;
     	padding-top: 10px;
     	padding-left: 4px;
-    	margin: 10px;
-    	margin-bottom: 20px;
+    	margin: 0 auto;
+    	margin-bottom: 100px;
+        min-height: 160px;
     }
 
     .sender-span-1 {
@@ -220,11 +223,11 @@ $reciever_profile = $select_user_rows['profile_photo'];
     }
 
     .sender-span-2 {
-    	 color: black;
-    	 font-size: 9px;
-    	 margin-top: 7px;
-    	 margin-left: 100px;
-    	 font-size: 18px;
+    	 position: absolute;
+         color: black;
+         bottom: 8px;
+         right: 16px;
+         font-size: 18px;
     }
 
     .sender-span-3 {
@@ -235,13 +238,14 @@ $reciever_profile = $select_user_rows['profile_photo'];
     }
 
     .receiver-div {
-    	width: 350px;
-    	float: left;
+        position: relative;
+    	width: 100%;
     	background-color: lightgreen;
     	padding-top: 10px;
     	padding-left: 4px;
-    	margin: 10px;
-    	margin-bottom: 20px;
+    	margin: 0 auto;
+    	margin-bottom: 100px;
+        min-height: 200px;
     }
 
     .receiver-span-1 {
@@ -250,19 +254,49 @@ $reciever_profile = $select_user_rows['profile_photo'];
     }
 
     .receiver-span-2 {
+         position: absolute;
     	 color: black;
-    	 font-size: 9px;
-    	 margin-top: 7px;
-    	 margin-left: 100px;
-    	 font-size: 18px;
+         bottom: 8px;
+         left: 16px;
+         font-size: 18px;
     }
 
     .receiver-span-3 {
     	 color: blue;
     	 font-size: 9px;
-    	 margin-top: 7px;
     	 font-size: 18px;
     }
+
+    .dp_display_sender {
+        width: 50px;
+        height: 50px;
+        float: right;
+        margin-right: 7px;
+        margin-top: 3px;
+        border-radius: 100%;
+    }
+
+    .dp_display_receiver {
+        width: 50px;
+        height: 50px;
+        float: left;
+        margin-left: 7px;
+        margin-top: 3px;
+        border-radius: 100%;
+    }
+
+    .receiver-profile {
+        width: 20px;
+        height: 20px;
+        border-radius: 100%;
+        margin-top: 4px;
+    }
+
+    .name-display {
+        font-size: 20px;
+        margin-top: 2px;
+    }
+
     }
 </style>
 </head>
