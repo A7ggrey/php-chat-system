@@ -41,6 +41,7 @@ $reciever_profile = $select_user_rows['profile_photo'];
         margin: 0 auto; /* Center the DIV horizontally */
     }
     .fixed-header, .fixed-footer{
+        z-index: 1000;
         width: 100%;
         position: fixed;        
         background: brown;
@@ -65,12 +66,16 @@ $reciever_profile = $select_user_rows['profile_photo'];
     }
 
     .sender-div {
+        position: relative;
     	width: 80%;
     	background-color: lightblue;
     	margin: 0 auto;
         margin-top: 5px;
         margin-bottom: 5px;
         min-height: 60px;
+        border-style: dotted;
+        border-color: blue;
+        border-radius: 20px;
     }
 
     .sender-span-1 {
@@ -79,12 +84,11 @@ $reciever_profile = $select_user_rows['profile_photo'];
     }
 
     .sender-span-2 {
+        position: absolute;
     	 color: black;
     	 font-size: 9px;
-    	 margin-top: 7px;
-    	 margin-right: 50px;
-         float: right;
-         bottom: 0;
+    	 bottom: 8px;
+         right: 10px;
     }
 
     .sender-span-3 {
@@ -94,25 +98,29 @@ $reciever_profile = $select_user_rows['profile_photo'];
     }
 
     .receiver-div {
+        position: relative;
     	width: 80%;
     	background-color: lightgreen;
     	margin: 0 auto;
         margin-top: 5px;
         margin-bottom: 5px;
         min-height: 60px;
+        border-style: dotted;
+        border-color: green;
+        border-radius: 20px;
     }
 
     .receiver-span-1 {
-    	margin-left: 7px;
+    	margin-left: 17px;
         width: 60%;
     }
 
     .receiver-span-2 {
+        position: absolute;
     	 color: black;
     	 font-size: 9px;
-    	 margin-top: 7px;
-         float: left;
-    	 margin-left: 50px;
+         left: 10px;
+         bottom: 8px;
          bottom: 0;
     }
 
@@ -226,7 +234,7 @@ $reciever_profile = $select_user_rows['profile_photo'];
     	 position: absolute;
          color: black;
          bottom: 8px;
-         right: 16px;
+         right: 2px;
          font-size: 18px;
     }
 
@@ -257,7 +265,7 @@ $reciever_profile = $select_user_rows['profile_photo'];
          position: absolute;
     	 color: black;
          bottom: 8px;
-         left: 16px;
+         left: 2px;
          font-size: 18px;
     }
 
@@ -268,8 +276,8 @@ $reciever_profile = $select_user_rows['profile_photo'];
     }
 
     .dp_display_sender {
-        width: 50px;
-        height: 50px;
+        width: 70px;
+        height: 70px;
         float: right;
         margin-right: 7px;
         margin-top: 3px;
@@ -277,8 +285,8 @@ $reciever_profile = $select_user_rows['profile_photo'];
     }
 
     .dp_display_receiver {
-        width: 50px;
-        height: 50px;
+        width: 70px;
+        height: 70px;
         float: left;
         margin-left: 7px;
         margin-top: 3px;
@@ -286,14 +294,14 @@ $reciever_profile = $select_user_rows['profile_photo'];
     }
 
     .receiver-profile {
-        width: 20px;
-        height: 20px;
+        width: 50px;
+        height: 50px;
         border-radius: 100%;
-        margin-top: 4px;
+        margin-top: 25px;
     }
 
     .name-display {
-        font-size: 20px;
+        font-size: 30px;
         margin-top: 2px;
     }
 
@@ -341,7 +349,7 @@ $reciever_profile = $select_user_rows['profile_photo'];
 
 						    	$sender_dp = $select_dp_sender_rows['profile_photo'];
 						    	
-						    	echo '<div class="input-group mb-3 sender-div"><span class="sender-span-1"> <img src="./profile/' .$sender_dp. ' " class="dp_display_sender"> ' .$rows_selected['message']. ' <br><br><span class="sender-span-2">' .$rows_selected['time']. ' - ' .$rows_selected['date']. ' <span class="sender-span-3">send</span> </span> </span></div>';
+						    	echo '<div class="input-group mb-3 sender-div"><span class="sender-span-1"> <img src="./profile/' .$sender_dp. ' " class="dp_display_sender"><br><br> ' .$rows_selected['message']. ' <br><br><span class="sender-span-2">' .$rows_selected['time']. ' - ' .$rows_selected['date']. ' <span class="sender-span-3">send</span> </span> </span></div>';
 						    } else {
 
 						    	$select_dp_receiver = "SELECT * FROM user WHERE id = '$sender_id'";
@@ -351,7 +359,7 @@ $reciever_profile = $select_user_rows['profile_photo'];
 
 						    	$receiver_dp = $select_dp_receiver_rows['profile_photo'];
 
-						    	echo '<div class="input-group mb-3 bg-success receiver-div"><span class="receiver-span-1"><img src="./profile/' .$receiver_dp. ' " class="dp_display_receiver">' .$rows_selected['message']. ' <br><br><span class="receiver-span-2">' .$rows_selected['time']. ' - ' .$rows_selected['date']. ' <span class="receiver-span-3"> recieved</span></span></span></div>';
+						    	echo '<div class="input-group mb-3 bg-success receiver-div"><span class="receiver-span-1"><img src="./profile/' .$receiver_dp. ' " class="dp_display_receiver"> <br><br>' .$rows_selected['message']. ' <br><br><span class="receiver-span-2">' .$rows_selected['time']. ' - ' .$rows_selected['date']. ' <span class="receiver-span-3"> recieved</span></span></span></div>';
 						    }
 						?>
 					</p>
@@ -381,16 +389,6 @@ $reciever_profile = $select_user_rows['profile_photo'];
 
 <script type="text/javascript">
     
-    //Get form Elements
-    var form = getElementById("sendingForm");
-
-    function submitForm(event) {
-
-        //Preventing the page from refresh
-        event.prenetDefault();
-    }
-
-    //Calling a function during form submission
-    form.addEventListener('submit', submitForm);
+    
 </script>
 </html>
