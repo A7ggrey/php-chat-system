@@ -22,6 +22,14 @@ $reciever_name = $select_user_rows['full_name'];
 $reciever_profile = $select_user_rows['profile_photo'];
 
 
+$select_messages_to_read = "SELECT * FROM readmessages WHERE"
+
+if ($sender != $sender) {
+    # code...
+}
+$update_messages_to_read = "INSERT "
+
+
 ?>
 
 <!DOCTYPE html>
