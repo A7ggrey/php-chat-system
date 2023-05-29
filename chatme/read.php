@@ -22,13 +22,20 @@ $reciever_name = $select_user_rows['full_name'];
 $reciever_profile = $select_user_rows['profile_photo'];
 
 
-$select_messages_to_read = "SELECT * FROM readmessages WHERE"
+$select_messages_to_read = "SELECT * FROM readmessages WHERE sender_id = '' AND reciever_id = '' OR sender_id = '' AND reciever_id = ''";
+$select_messages_to_read_result = mysqli_query($connect, $select_messages_to_read);
 
-if ($sender != $sender) {
-    # code...
+$selected_messages_to_read_rows = mysqli_fetch_assoc($select_messages_to_read_result);
+
+$sender_one = $selected_messages_to_read_rows['sender_id'];
+$reciever_one = $selected_messages_to_read_rows['receiver_id'];
+
+if ($sender != $sender_one) {
+
+    $updates_status = 1;
+
+    $update_messages_to_read = "UPDATE readmessages SET status = '$updates_status' WHERE "
 }
-$update_messages_to_read = "INSERT "
-
 
 ?>
 
