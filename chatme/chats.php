@@ -34,6 +34,14 @@ include('./../database/database.php');
 			border-right: none;
 			background-color: white;
 		}
+
+		.verified {
+			width: 20px;
+			height: 20px;
+			border-radius: 100%;
+			border-style: double;
+			border-color: lightgrey;
+		}
 	</style>
 </head>
 <body>
@@ -53,17 +61,20 @@ include('./../database/database.php');
 
 	if (mysqli_num_rows($result) > 0) {
 		while($rows = mysqli_fetch_assoc($result)) {
+			$verify_tick = $rows['verified'];
 
 		?>
 
 		<div>
 			<form method="GET" action="read.php">
-				<p><button name="user" value="<?php echo $rows['id'];?>">&nbsp;&nbsp;<?php echo $rows['full_name'];?></button></p>
+				<p><button name="user" value="<?php echo $rows['id'];?>">&nbsp;&nbsp;<?php echo $rows['full_name'];?>&nbsp;&nbsp;
+					<?php if($verify_tick == 1) {?><img src="./photos/verify.jpg" class="verified"></button></p>
 			</form>
 		</div>
 
 		<?php
 	}
+}
 }
 
 
