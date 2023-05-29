@@ -34,6 +34,14 @@ include('./../database/database.php');
 			border-right: none;
 			background-color: white;
 		}
+
+		.verified {
+			width: 20px;
+			height: 20px;
+			border-radius: 100%;
+			border-style: double;
+			border-color: lightgrey;
+		}
 	</style>
 </head>
 <body class="container">
@@ -92,13 +100,15 @@ include('./../database/database.php');
 							   	if (mysqli_num_rows($select_your_id_result) > 0) {
 							   		
 							   		$select_your_id_rows = mysqli_fetch_assoc($select_your_id_result);
+
+							   		$verify_tick = $select_your_id_rows['verified'];
 							   			?>
 
-							   			<?php echo $select_your_id_rows['full_name'];?></span><br>
+							   			<?php echo $select_your_id_rows['full_name'];?>&nbsp; <?php if($verify_tick == 1) {?><img src="./photos/verify.jpg" class="verified"></span><br>
 
 							   			<?php
 							   		}
-							   	//}
+							   	}
 							   //}
 							   ?>  
 
@@ -117,6 +127,7 @@ include('./../database/database.php');
 						    		<?php
 						    		//if sender is me, then display this, else don't display to reciever (changes to make)
 						    		//count the number of unread messages and display how they are
+						    		//capitalize first letters for each sentense when writing a message
 						    		    if ($rows_messages_read['status'] == 0) {
 						    		    	
 						    		    	echo "<b><i>" .$rows_messages_read['message']. "&nbsp;&nbsp; &#x2713;</i></b>";
