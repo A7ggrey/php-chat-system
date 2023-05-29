@@ -28,7 +28,7 @@ $reciever_profile = $select_user_rows['profile_photo'];
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Creating Fixed Header and Footer with CSS</title>
+<title>Chat Me - <?php echo $reciever_name;?></title>
 <style>
     /* Add some padding on document's body to prevent the content
     to go underneath the header and footer */
