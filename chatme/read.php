@@ -13,6 +13,11 @@ include('./../database/database.php');
 $user = $_GET['user'];
 $sender = $_SESSION['userid'];
 
+date_default_timezone_set("Africa/Nairobi");
+
+$date = date("d/m/Y");
+$time = date("h:i:sa");
+
 $select_user_details = "SELECT * FROM user WHERE id = '$user'";
 $select_user_result = mysqli_query($connect, $select_user_details);
 
@@ -35,9 +40,10 @@ if (mysqli_num_rows($select_messages_to_read_result) > 0) {
 
 if ($sender != $sender_one) {
 
+    $previous_status = 0;
     $updates_status = 1;
 
-    $update_messages_to_read = "UPDATE readmessages SET status = '$updates_status' WHERE reciever_id = '$sender'";
+    $update_messages_to_read = "UPDATE readmessages SET status = '$updates_status', read_date = '$date', read_time ='$time' WHERE reciever_id = '$sender'";
     $update_messages_to_read_result = mysqli_query($connect, $update_messages_to_read);
 }
 }
@@ -179,6 +185,10 @@ if ($sender != $sender_one) {
         font-size: 20px;
         margin-top: 2px;
     }
+
+    /*input::first-letter{
+        text-transform: capitalize;
+    }*/
 
     @media only screen and (max-device-width: 480px) {
     	/* Add some padding on document's body to prevent the content
@@ -397,10 +407,10 @@ if ($sender != $sender_one) {
 		?>
     </div>    
     <div class="fixed-footer">
-        <form method="POST" action="send-message.php" id="sendingForm">
+        <form autocomplete="off" method="POST" action="send-message.php" id="sendingForm">
 		    <div class="btn-group">
 			        <input type="hidden" style="margin-left: 5px;" name="recieverid" value="<?php echo $user;?>">
-			        <input type="text"  style="margin-left: 5px;"name="message" class="form-control" placeholder="Write message..." required>
+			        <input type="text"  style="margin-left: 5px;" name="message" class="input_message" placeholder="Write message..." autocomplete="false" required>
 		        <input type="submit" style="margin-left: 5px;" name="send" value="send" class="btn btn-info" id="btn">
 		    </div>
 	    </form>        
