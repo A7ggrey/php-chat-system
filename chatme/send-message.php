@@ -30,7 +30,7 @@ if (isset($_POST['send'])) {
 
 	if ($send_message_result) {
 		
-		$read_message_query = "SELECT * FROM messages WHERE readerid = '$reciever' AND senderid = '$sender' LIMIT = 1";
+		$read_message_query = "SELECT * FROM messages WHERE readerid = '$reciever' AND senderid = '$sender' ORDER BY id DESC LIMIT 1";
 		$read_message_result = mysqli_query($connect, $read_message_query);
 
 		if (mysqli_num_rows($read_message_result) > 0) {
@@ -38,9 +38,19 @@ if (isset($_POST['send'])) {
 			$read_message_rows = mysqli_fetch_assoc($read_message_result);
 
 			$message_id = $read_message_rows['id'];
+			$message_status = 0;
 			$null = "";
 			
-			$insert_read_message = "INSERT INTO readmessages(messageid, userid, status, date, time, read_date, read_time) VALUES('$message_id', '''''''''''''''''''''''''''''''')";
+			$insert_read_message = "INSERT INTO readmessages(messageid, sender_id, reciever_id, status, send_date, send_time, read_date, read_time) VALUES('$message_id', '$sender', '$reciever', '$message_status', '$date', '$time', '$null', '$null')";
+			$insert_read_result = mysqli_query($connect, $insert_read_message);
+
+			if ($insert_read_result) {
+				
+				header("location: ./read.php?user=".$reciever. "");
+		        exit;
+			} else {
+				echo "<script>alert('Could not send message. Try again!'); history.back(-1);</script>";
+			}
 		}
 	} else {
 
@@ -58,8 +68,28 @@ if (isset($_POST['send'])) {
 
 	if ($send_message_result) {
 		
-		header("location: ./read.php?user=".$reciever. "");
-		exit;
+		$read_message_query = "SELECT * FROM messages WHERE readerid = '$reciever' AND senderid = '$sender' LIMIT = 1";
+		$read_message_result = mysqli_query($connect, $read_message_query);
+
+		if (mysqli_num_rows($read_message_result) > 0) {
+
+			$read_message_rows = mysqli_fetch_assoc($read_message_result);
+
+			$message_id = $read_message_rows['id'];
+			$message_status = 0;
+			$null = "";
+			
+			$insert_read_message = "INSERT INTO readmessages(messageid, sender_id, reciever_id, status, send_date, send_time, read_date, read_time) VALUES('$message_id', '$sender', '$reciever', '$message_status', '$date', '$time', '$null', '$null')";
+			$insert_read_result = mysqli_query($connect, $insert_read_message);
+
+			if ($insert_read_result) {
+				
+				header("location: ./read.php?user=".$reciever. "");
+		        exit;
+			} else {
+				echo "<script>alert('Could not send message. Try again!'); history.back(-1);</script>";
+			}
+		}
 	} else {
 
 		echo "<script>alert('Could not send message. Try again!'); history.back(-1);</script>";
