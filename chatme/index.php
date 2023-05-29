@@ -114,13 +114,15 @@ include('./../database/database.php');
 						    	while ($rows_messages_read = mysqli_fetch_assoc($select_message_display_result)) {
 						    		
 						    		?>
-						    		<?php 
+						    		<?php
+						    		//if sender is me, then display this, else don't display to reciever (changes to make)
+						    		//count the number of unread messages and display how they are
 						    		    if ($rows_messages_read['status'] == 0) {
 						    		    	
-						    		    	echo "<b><i>" .$rows_messages_read['message']. "</i></b>";
+						    		    	echo "<b><i>" .$rows_messages_read['message']. "&nbsp;&nbsp; &#x2713;</i></b>";
 						    		    } elseif ($rows_messages_read['status'] == 1) {
 						    		    	
-						    		    	echo "" .$rows_messages_read['message']. "" ;
+						    		    	echo "" .$rows_messages_read['message']. "&nbsp;&nbsp; <span style='color: blue;'>&#x2713;&#x2713;<?span>" ;
 						    		    }
 						    		?>
 						    		<?php
