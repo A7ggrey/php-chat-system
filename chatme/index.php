@@ -106,13 +106,22 @@ include('./../database/database.php');
 						&nbsp;&nbsp;<span style="color: grey; font-size: 12px; margin-left: 30px;">
 						<?php
 
-						    $select_message_display = "SELECT messages.*, readmessages.* FROM readmessages INNER JOIN messages ON readmessages.messageid = messages.id WHERE readmessages.senderid = '$currentuser' AND messages.reciever_id = '$id_to_display' ORDER BY readmessages.messageid DESC LIMIT 1";
+						    $select_message_display = "SELECT messages.*, readmessages.* FROM readmessages INNER JOIN messages ON readmessages.messageid = messages.id WHERE readmessages.sender_id = '$currentuser' AND readmessages.reciever_id = '$id_to_display' OR readmessages.sender_id = '$id_to_display' AND readmessages.reciever_id = '$currentuser' ORDER BY readmessages.messageid DESC LIMIT 1";
 						    $select_message_display_result = mysqli_query($connect, $select_message_display);
 
 						    if (mysqli_num_rows($select_message_display_result) > 0) {
 						    	
 						    	while ($rows_messages_read = mysqli_fetch_assoc($select_message_display_result)) {
 						    		
+						    		?>
+						    		<?php 
+						    		    if ($rows_messages_read['status'] == 0) {
+						    		    	
+						    		    	echo "<b><i>" .$rows_messages_read['message']. "</i></b>";
+						    		    } elseif ($rows_messages_read['status'] == 1) {
+						    		    	
+						    		    	echo "" .$rows_messages_read['message']. "" ;
+						    		    }
 						    		?>
 						    		<?php
 						    	}
