@@ -68,7 +68,7 @@ if (isset($_POST['send'])) {
 
 	if ($send_message_result) {
 		
-		$read_message_query = "SELECT * FROM messages WHERE readerid = '$reciever' AND senderid = '$sender' LIMIT = 1";
+		$read_message_query = "SELECT * FROM messages WHERE readerid = '$reciever' AND senderid = '$sender' ORDER BY id DESC LIMIT 1";
 		$read_message_result = mysqli_query($connect, $read_message_query);
 
 		if (mysqli_num_rows($read_message_result) > 0) {
