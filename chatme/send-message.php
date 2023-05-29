@@ -40,7 +40,7 @@ if (isset($_POST['send'])) {
 			$message_id = $read_message_rows['id'];
 			$null = "";
 			
-			$insert_read_message = "INSERT INTO readmessages(messageid, userid, status, date, time, read_date, read_time) VALUES('''''''''''''''''''''''''''''''''')";
+			$insert_read_message = "INSERT INTO readmessages(messageid, userid, status, date, time, read_date, read_time) VALUES('$message_id', '''''''''''''''''''''''''''''''')";
 		}
 	} else {
 
