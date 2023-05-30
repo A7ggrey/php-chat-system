@@ -184,6 +184,14 @@ if ($sender != $sender_one) {
         margin-top: 2px;
     }
 
+    .button_name {
+        border-top: none;
+        border-bottom: none;
+        border-right: none;
+        border-left: blue;
+        background-color: brown;
+    }
+
     /*input::first-letter{
         text-transform: capitalize;
     }*/
@@ -343,7 +351,12 @@ if ($sender != $sender_one) {
                     <span>
                         <img src="./profile/<?php echo $reciever_profile;?>" class="receiver-profile">
                         &nbsp;
-                        <span class="name-display"><?php echo $reciever_name;?></span>
+                        <form method="GET" action="./profile/profile.php">
+                            <span class="name-display">
+                                <input type="hidden" name="opid" value="<?php echo $user;?>">
+                                <input type="submit" class="btn_name" value="<?php echo $reciever_name;?>">
+                            </span>
+                        </form>
                     </span>
             </nav>
         </div>
