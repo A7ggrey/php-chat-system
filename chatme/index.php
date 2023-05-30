@@ -40,7 +40,7 @@ include('./../database/database.php');
 			height: 20px;
 			border-radius: 100%;
 			border-style: double;
-			border-color: lightgrey;
+			border-color: rgb(160, 238, 95);
 		}
 	</style>
 </head>
