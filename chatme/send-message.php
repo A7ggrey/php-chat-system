@@ -25,11 +25,16 @@ if (isset($_POST['send'])) {
 
 	if (mysqli_num_rows($select_chats_result) > 0) {
 
+	   //update chat date and time to for them to be arranged from the latest to the earilest as they are recieved 
+	   $update_chats = "UPDATE chats SET chat_date = '$date', chat_time = '$time' WHERE ";
+	   $update_chats_result = mysqli_query($connect, $update_chats);
+
 	$send_message_query = "INSERT INTO messages(readerid, senderid, message, date, time) VALUES('$reciever', '$sender', '$message', '$date', '$time')";
 	$send_message_result = mysqli_query($connect, $send_message_query);
 
 	if ($send_message_result) {
-		
+
+		//select from table messages to use message id in the read messages table		
 		$read_message_query = "SELECT * FROM messages WHERE readerid = '$reciever' AND senderid = '$sender' ORDER BY id DESC LIMIT 1";
 		$read_message_result = mysqli_query($connect, $read_message_query);
 
@@ -41,6 +46,7 @@ if (isset($_POST['send'])) {
 			$message_status = 0;
 			$null = "";
 			
+			//inserting a new record into the read messages table (to separate read fron unread messages)
 			$insert_read_message = "INSERT INTO readmessages(messageid, sender_id, reciever_id, status, send_date, send_time, read_date, read_time) VALUES('$message_id', '$sender', '$reciever', '$message_status', '$date', '$time', '$null', '$null')";
 			$insert_read_result = mysqli_query($connect, $insert_read_message);
 
