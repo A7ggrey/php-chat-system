@@ -13,11 +13,6 @@ include('./../database/database.php');
 $user = $_GET['user'];
 $sender = $_SESSION['userid'];
 
-date_default_timezone_set("Africa/Nairobi");
-
-$date = date("d/m/Y");
-$time = date("h:i:sa");
-
 $select_user_details = "SELECT * FROM user WHERE id = '$user'";
 $select_user_result = mysqli_query($connect, $select_user_details);
 
@@ -27,7 +22,7 @@ $reciever_name = $select_user_rows['full_name'];
 $reciever_profile = $select_user_rows['profile_photo'];
 
 
-$select_messages_to_read = "SELECT * FROM readmessages WHERE sender_id = '$user' AND reciever_id = '$sender' OR sender_id = '$sender' AND reciever_id = '$user'";
+$select_messages_to_read = "SELECT * FROM readmessages WHERE sender_id = '$user' AND reciever_id = '$sender'";
 $select_messages_to_read_result = mysqli_query($connect, $select_messages_to_read);
 
 if (mysqli_num_rows($select_messages_to_read_result) > 0) {
@@ -37,13 +32,16 @@ if (mysqli_num_rows($select_messages_to_read_result) > 0) {
     $sender_one = $selected_messages_to_read_rows['sender_id'];
     $reciever_one = $selected_messages_to_read_rows['reciever_id'];
 
+    date_default_timezone_set("Africa/Nairobi");
+    $date = date('d/m/Y');
+    $time = date('h:i:sa');
+
 
 if ($sender != $sender_one) {
 
-    $previous_status = 0;
     $updates_status = 1;
 
-    $update_messages_to_read = "UPDATE readmessages SET status = '$updates_status', read_date = '$date', read_time ='$time' WHERE reciever_id = '$sender'";
+    $update_messages_to_read = "UPDATE readmessages SET status = '$updates_status', read_date = '$date', read_time = '$time' WHERE reciever_id = '$sender'";
     $update_messages_to_read_result = mysqli_query($connect, $update_messages_to_read);
 }
 }
