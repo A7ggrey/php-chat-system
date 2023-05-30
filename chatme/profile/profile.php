@@ -32,12 +32,30 @@ if (mysqli_num_rows($select_profile_result) > 0) {
 <head>
 	<title>Chat Me - <?php echo $current_user_name;?></title>
 </head>
+<style type="text/css">
+	.profile_user {
+			width: 40px;
+			height: 40px;
+			border-radius: 100%;
+			border-style: double;
+			border-color: rgb(77, 46, 161);
+		}
+</style>
 <body>
 
 	<div>
 		<p>
-			<img src="./<?php echo $current_user_profile;?>" class="profile">
+			<img src="./<?php echo $current_user_profile;?>" class="profile_user">
 		</p>
+		
+		<p>
+			<?php echo $current_user_name;?>
+		</p>
+		
+		<p>
+			<?php echo $current_user_username;?>
+		</p>
+		
 	</div>
 
 </body>
