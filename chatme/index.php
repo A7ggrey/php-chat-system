@@ -42,6 +42,14 @@ include('./../database/database.php');
 			border-style: double;
 			border-color: rgb(160, 238, 95);
 		}
+
+		.profile_user {
+			width: 30px;
+			height: 30px;
+			border-radius: 100%;
+			border-style: double;
+			border-color: rgb(77, 46, 161);
+		}
 	</style>
 </head>
 <body class="container">
@@ -102,9 +110,10 @@ include('./../database/database.php');
 							   		$select_your_id_rows = mysqli_fetch_assoc($select_your_id_result);
 
 							   		$verify_tick = $select_your_id_rows['verified'];
+							   		$profile_photo = $select_your_id_rows['profile_photo'];
 							   			?>
 
-							   			<?php echo $select_your_id_rows['full_name'];?>&nbsp; <?php if($verify_tick == 1) {?><img src="./photos/verify.jpg" class="verified"></span><br>
+							   			<img src="./profile/<?php echo $profile_photo;?>" class="profile_user">&nbsp;<?php echo $select_your_id_rows['full_name'];?>&nbsp; <?php if($verify_tick == 1) {?><img src="./photos/verify.jpg" class="verified"></span><br>
 
 							   			<?php
 							   		}
