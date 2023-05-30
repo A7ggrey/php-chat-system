@@ -26,7 +26,7 @@ if (isset($_POST['send'])) {
 	if (mysqli_num_rows($select_chats_result) > 0) {
 
 	   //update chat date and time to for them to be arranged from the latest to the earilest as they are recieved 
-	   $update_chats = "UPDATE chats SET chat_date = '$date', chat_time = '$time' WHERE ";
+	   $update_chats = "UPDATE chats SET chat_date = '$date', chat_time = '$time' WHERE current_user_id = '$sender' AND user_id = '$reciever' OR current_user_id = '$reciever' AND user_id = '$sender'";
 	   $update_chats_result = mysqli_query($connect, $update_chats);
 
 	$send_message_query = "INSERT INTO messages(readerid, senderid, message, date, time) VALUES('$reciever', '$sender', '$message', '$date', '$time')";
