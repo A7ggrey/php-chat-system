@@ -42,6 +42,15 @@ include('./../database/database.php');
 			border-style: double;
 			border-color: rgb(160, 238, 95);
 		}
+
+		.profile_user {
+			width: 40px;
+			height: 40px;
+			border-radius: 100%;
+			border-style: double;
+			border-color: rgb(77, 46, 161);
+		}
+
 	</style>
 </head>
 <body>
@@ -62,23 +71,45 @@ include('./../database/database.php');
 	if (mysqli_num_rows($result) > 0) {
 		while($rows = mysqli_fetch_assoc($result)) {
 			$verify_tick = $rows['verified'];
+			$profile_photo = $rows['profile_photo'];
+			$user_id_for_followers = $rows['id'];
 
 		?>
 
 		<div>
-			<form method="GET" action="read.php">
-				<p><button name="user" value="<?php echo $rows['id'];?>">&nbsp;&nbsp;<?php echo $rows['full_name'];?>&nbsp;&nbsp;
-					<?php if($verify_tick == 1) {?><img src="./photos/verify.jpg" class="verified"></button></p>
-			</form>
-		</div>
-
+			<p>
+				<form method="GET" action="read.php">
+					<img src="./profile/<?php echo $profile_photo;?>" class="profile_user">
+					<button name="user" value="<?php echo $rows['id'];?>">&nbsp;&nbsp;<?php echo $rows['full_name'];?>    &nbsp;&nbsp;
+					    <?php if($verify_tick == 1) {?><img src="./photos/verify.jpg" class="verified"> 
+				    </button>
+			    </form>
+		    
 		<?php
 	}
+	//select and count number of followers
+		    $select_followers = "SELECT * FROM followers WHERE my_id = '$user_id_for_followers'";
+		    $select_followers_result = mysqli_query($connect, $select_followers);
+		    $count_followers = mysqli_num_rows($select_followers_result);
+
+		    echo "
+		    <form method='GET' action='./friends.php'>
+		        <input type='hidden' name='friends' value='" .$user_id_for_followers. "'>
+		        <button>Followed By 
+		            <span style='color: blue;'>" .$count_followers. " User</span>
+		        </button>
+		    <form>";
+
+		    ?>
+		    </p>
+        </div>
+        <hr>
+
+        <?php
 }
 }
 
 
 	?>
-
 </body>
 </html>
