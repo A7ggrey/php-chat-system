@@ -38,4 +38,31 @@ if (isset($_POST['follower_btn'])) {
 	}
 }
 
+
+
+
+
+    if (isset($_POST['unfollower_btn'])) {
+    	
+    	$unfollow_id = $_POST['unfollow_id'];
+	    $follower_id = $_SESSION['userid'];
+
+	    $select_follower = "SELECT * FROM followers WHERE my_id = '$unfollow_id' AND follower_id = '$follower_id'";
+	    $select_follower_result = mysqli_query($connect, $select_follower);
+
+	if (mysqli_num_rows($select_follower_result) != 1) {
+		
+		echo "<script>history.back(-1);</script>";
+	} else {
+
+		$insert_follower = "DELETE FROM followers WHERE my_id = '$unfollow_id' AND follower_id = '$follower_id'";
+		$insert_follower_result = mysqli_query($connect, $insert_follower);
+
+		if ($insert_follower_result) {
+			
+			echo "<script>history.back(-1);</script>";
+		}
+	}
+    }
+
 ?>
