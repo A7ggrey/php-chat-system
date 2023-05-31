@@ -74,19 +74,40 @@ include('./../database/database.php');
 			$profile_photo = $rows['profile_photo'];
 			$user_id_for_followers = $rows['id'];
 
-		?>
+		
+		if ($verify_tick == 1) {
+			
+			echo '
 
-		<div>
+			    <div>
+			        <p>
+				        <form method="GET" action="./read.php">
+					        <img src="./profile/' .$profile_photo. '" class="profile_user">
+					        <input type="text" name="user" value="' .$rows["id"]. '">
+					        <button name="user">&nbsp;&nbsp;' .$rows["full_name"]. '
+					        </button>&nbsp;&nbsp;
+					        <img src="./photos/verify.jpg" class="verified"> 
+			            </form>
+			        </p>
+		        </div>
+
+			';
+		}
+
+		/*<div>
 			<p>
 				<form method="GET" action="./read.php">
 					<img src="./profile/<?php echo $profile_photo;?>" class="profile_user">
-					<button name="user" value="<?php echo $rows['id'];?>">&nbsp;&nbsp;<?php echo $rows['full_name'];?>    &nbsp;&nbsp;
+					<button name="user" value="<?php echo $rows['id'];?>">&nbsp;&nbsp;<?php echo $rows['full_name'];?>
+					</button>&nbsp;&nbsp;
 					    <?php if($verify_tick == 1) {?><img src="./photos/verify.jpg" class="verified"> 
-				    </button>
 			    </form>
+			</p>
+		</div>
 		    
 		<?php
-	}
+	}*/
+
 	//select and count number of followers
 		    $select_followers = "SELECT * FROM followers WHERE my_id = '$user_id_for_followers'";
 		    $select_followers_result = mysqli_query($connect, $select_followers);
@@ -101,8 +122,6 @@ include('./../database/database.php');
 		    <form>";
 
 		    ?>
-		    </p>
-        </div>
         <hr>
 
         <?php
