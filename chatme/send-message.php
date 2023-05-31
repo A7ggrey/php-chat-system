@@ -52,8 +52,9 @@ if (isset($_POST['send'])) {
 
 			if ($insert_read_result) {
 				
-				header("location: ./read.php?user=".$reciever. "");
-		        exit;
+				echo "<script>history.back(-1);</script>";
+				//header("location: ./read.php?user=".$reciever. "");
+		        //exit;
 			} else {
 				echo "<script>alert('Could not send message. Try again!'); history.back(-1);</script>";
 			}
@@ -90,8 +91,9 @@ if (isset($_POST['send'])) {
 
 			if ($insert_read_result) {
 				
-				header("location: ./read.php?user=".$reciever. "");
-		        exit;
+				echo "<script>history.back(-1);</script>";
+				//header("location: ./read.php?user=".$reciever. "");
+		        //exit;
 			} else {
 				echo "<script>alert('Could not send message. Try again!'); history.back(-1);</script>";
 			}
