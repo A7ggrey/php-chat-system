@@ -110,7 +110,7 @@ if (!isset($_GET['opid'])) {
 			    $select_unfollow_result = mysqli_query($connect, $select_unfollow);
 			    $count_unfollow = mysqli_num_rows($select_unfollow_result);
 
-//MAKE FOLLOW AND UNFOLLOW BUTTONS FUNCTIONAL
+
 			    if ($count_unfollow > 0) {
 			    	
 			    	?>
