@@ -17,10 +17,11 @@ if (isset($_GET['opid'])) {
 
 	$follow_me = $_SESSION['userid'];
 }
-
+    
+   $current_user = $_SESSION['userid'];
 if (!isset($_GET['opid'])) {
 	
-	$current_user = $_SESSION['userid'];
+	
 
     $select_profile = "SELECT * FROM user WHERE id = '$current_user'";
     $select_profile_result = mysqli_query($connect, $select_profile);
@@ -103,10 +104,40 @@ if (!isset($_GET['opid'])) {
 		</p>
 
 		<p>
-			<form method="POST" action="follower.php">
-				<input type="hidden" name="follow_id" value="<?php echo $follow_me;?>">
-				<input type="submit" name="follower_btn" value="Follow">
-			</form>
+			<?php
+
+			    $select_unfollow = "SELECT * FROM followers WHERE my_id = '$follow_me' AND follower_id = '$current_user'";
+			    $select_unfollow_result = mysqli_query($connect, $select_unfollow);
+			    $count_unfollow = mysqli_num_rows($select_unfollow_result);
+
+//MAKE FOLLOW AND UNFOLLOW BUTTONS FUNCTIONAL
+			    if ($count_unfollow > 0) {
+			    	
+			    	?>
+
+			    	<p>You follow this account.</p>
+
+			    	<form method="POST" action="follower.php">
+				        <input type="hidden" name="unfollow_id" value="<?php echo $follow_me;?>">
+				        <input type="submit" name="unfollower_btn" value="Unfollow">
+			        </form>
+
+			    <?php
+
+			    } else {
+			    	?>
+
+			    	<p>You don't follow this account.</p>
+
+			    	<form method="POST" action="follower.php">
+				        <input type="hidden" name="follow_id" value="<?php echo $follow_me;?>">
+				        <input type="submit" name="follower_btn" value="Follow">
+			        </form>
+
+			        <?php
+			    }
+
+			?>
 		</p>
 		
 	</div>
