@@ -95,7 +95,7 @@ include('./../database/database.php');
 		    echo "
 		    <form method='GET' action='./friends.php'>
 		        <input type='hidden' name='friends' value='" .$user_id_for_followers. "'>
-		        <button>Followed By 
+		        <button name='friend'>Followed By 
 		            <span style='color: blue;'>" .$count_followers. " User</span>
 		        </button>
 		    <form>";
