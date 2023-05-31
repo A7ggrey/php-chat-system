@@ -14,7 +14,7 @@ $currentuser_id = $_SESSION['userid'];
 
 echo "<h4><center>Your Followers</center><h4>";
 
-if (isset($_GET['friend'])) {
+//if (isset($_GET['friend'])) {
 	
 	if (isset($_GET['friends'])) {
 	
@@ -41,6 +41,6 @@ if (isset($_GET['friend'])) {
 	echo "No one has followed this profile yet!";
 }
 }
-}
+//}
 
 ?> 
