@@ -78,7 +78,7 @@ include('./../database/database.php');
 
 		<div>
 			<p>
-				<form method="GET" action="read.php">
+				<form method="GET" action="./read.php">
 					<img src="./profile/<?php echo $profile_photo;?>" class="profile_user">
 					<button name="user" value="<?php echo $rows['id'];?>">&nbsp;&nbsp;<?php echo $rows['full_name'];?>    &nbsp;&nbsp;
 					    <?php if($verify_tick == 1) {?><img src="./photos/verify.jpg" class="verified"> 
@@ -95,7 +95,7 @@ include('./../database/database.php');
 		    echo "
 		    <form method='GET' action='./friends.php'>
 		        <input type='hidden' name='friends' value='" .$user_id_for_followers. "'>
-		        <button name='friend'>Followed By 
+		        <button>Followed By 
 		            <span style='color: blue;'>" .$count_followers. " User</span>
 		        </button>
 		    <form>";
