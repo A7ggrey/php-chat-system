@@ -83,8 +83,8 @@ include('./../database/database.php');
 			        <p>
 				        <form method="GET" action="./read.php">
 					        <img src="./profile/' .$profile_photo. '" class="profile_user">
-					        <input type="text" name="user" value="' .$rows["id"]. '">
-					        <button name="user">&nbsp;&nbsp;' .$rows["full_name"]. '
+					        <input type="hidden" name="user" value="' .$rows["id"]. '">
+					        <button>&nbsp;&nbsp;' .$rows["full_name"]. '
 					        </button>&nbsp;&nbsp;
 					        <img src="./photos/verify.jpg" class="verified"> 
 			            </form>
@@ -119,7 +119,7 @@ include('./../database/database.php');
 		        <button>Followed By 
 		            <span style='color: blue;'>" .$count_followers. " User</span>
 		        </button>
-		    <form>";
+		    </form>";
 
 		    ?>
         <hr>
