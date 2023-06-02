@@ -113,7 +113,7 @@ if ($sender != $sender_one) {
             <!-- DIRECT CHAT -->
             <div class="card direct-chat direct-chat-primary">
               <div class="card-header">
-                <h3 class="card-title">Chat Me</h3>
+                <h3 class="card-title"><?php echo "" .$reciever_name. " - Messages"?></h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
