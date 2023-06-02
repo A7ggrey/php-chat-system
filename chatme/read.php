@@ -1,435 +1,300 @@
-<?php
-
-session_start();
-
-if (!isset($_SESSION['login_user'])) {
-	
-	header('location: ./../');
-	exit;
-}
-
-include('./../database/database.php');
-
-$user = $_GET['user'];
-$sender = $_SESSION['userid'];
-
-$select_user_details = "SELECT * FROM user WHERE id = '$user'";
-$select_user_result = mysqli_query($connect, $select_user_details);
-
-$select_user_rows = mysqli_fetch_assoc($select_user_result);
-
-$reciever_name = $select_user_rows['full_name'];
-$reciever_profile = $select_user_rows['profile_photo'];
-
-
-$select_messages_to_read = "SELECT * FROM readmessages WHERE sender_id = '$user' AND reciever_id = '$sender'";
-$select_messages_to_read_result = mysqli_query($connect, $select_messages_to_read);
-
-if (mysqli_num_rows($select_messages_to_read_result) > 0) {
-    
-    $selected_messages_to_read_rows = mysqli_fetch_assoc($select_messages_to_read_result);
-
-    $sender_one = $selected_messages_to_read_rows['sender_id'];
-    $reciever_one = $selected_messages_to_read_rows['reciever_id'];
-
-    date_default_timezone_set("Africa/Nairobi");
-    $date = date('d/m/Y');
-    $time = date('h:i:sa');
-
-
-if ($sender != $sender_one) {
-
-    $updates_status = 1;
-
-    $update_messages_to_read = "UPDATE readmessages SET status = '$updates_status', read_date = '$date', read_time = '$time' WHERE reciever_id = '$sender'";
-    $update_messages_to_read_result = mysqli_query($connect, $update_messages_to_read);
-}
-}
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<title>Chat Me - <?php echo $reciever_name;?></title>
-<style>
-    /* Add some padding on document's body to prevent the content
-    to go underneath the header and footer */
-    body{        
-        padding-top: 60px;
-        padding-bottom: 40px;
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AdminLTE 3 | Dashboard</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="./../plugins/fontawesome-free/css/all.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- Tempusdominus Bootstrap 4 -->
+  <link rel="stylesheet" href="./../plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+  <!-- iCheck -->
+  <link rel="stylesheet" href="./../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <!-- JQVMap -->
+  <link rel="stylesheet" href="./../plugins/jqvmap/jqvmap.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="./../dist/css/adminlte.min.css">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="./../plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+  <!-- Daterange picker -->
+  <link rel="stylesheet" href="./../plugins/daterangepicker/daterangepicker.css">
+  <!-- summernote -->
+  <link rel="stylesheet" href="./../plugins/summernote/summernote-bs4.min.css">
+  <style type="text/css">
+    #content_section {
+      margin-top: 110px;
     }
-    .container{
-        width: 80%;
-        margin: 0 auto; /* Center the DIV horizontally */
-    }
-    .fixed-header, .fixed-footer{
-        z-index: 1000;
-        width: 100%;
-        position: fixed;        
-        background: brown;
-        padding: 10px 0;
-        color: #fff;
-    }
-    .fixed-header{
-        top: 0;
-    }
-    .fixed-footer{
-        bottom: 0;
-    }    
-    /* Some more styles to beutify this example */
-    nav a{
-        color: #fff;
-        text-decoration: none;
-        padding: 7px 25px;
-        display: inline-block;
-    }
-    .container p{
-        line-height: 200px; /* Create scrollbar to test positioning */
+    .main_div {
+      margin: 0 auto;
+      width: 60%;
     }
 
-    .sender-div {
-        position: relative;
-    	width: 80%;
-    	background-color: lightblue;
-    	margin: 0 auto;
-        margin-top: 5px;
-        margin-bottom: 5px;
-        min-height: 60px;
-        border-style: dotted;
-        border-color: blue;
-        border-radius: 20px;
-    }
+    @media (max-width: 480px) {
 
-    .sender-span-1 {
-    	margin-left: 7px;
-        width: 60%;
+      #content_section {
+        margin-top: 100px;
+      }
+      .main_div {
+      margin: 0 auto;
+      width: 95%;
     }
-
-    .sender-span-2 {
-        position: absolute;
-    	 color: black;
-    	 font-size: 9px;
-    	 bottom: 8px;
-         right: 10px;
     }
-
-    .sender-span-3 {
-    	 color: blue;
-    	 font-size: 9px;
-    	 margin-top: 7px;
-    }
-
-    .receiver-div {
-        position: relative;
-    	width: 80%;
-    	background-color: lightgreen;
-    	margin: 0 auto;
-        margin-top: 5px;
-        margin-bottom: 5px;
-        min-height: 60px;
-        border-style: dotted;
-        border-color: green;
-        border-radius: 20px;
-    }
-
-    .receiver-span-1 {
-    	margin-left: 17px;
-        width: 60%;
-    }
-
-    .receiver-span-2 {
-        position: absolute;
-    	 color: black;
-    	 font-size: 9px;
-         left: 10px;
-         bottom: 8px;
-         bottom: 0;
-    }
-
-    .receiver-span-3 {
-    	 color: blue;
-    	 font-size: 9px;
-    	 margin-top: 7px;
-    }
-
-    .dp_display_sender {
-    	width: 30px;
-    	height: 30px;
-    	float: right;
-        margin-right: 7px;
-        margin-top: 3px;
-        border-radius: 100%;
-    }
-
-    .dp_display_receiver {
-    	width: 30px;
-    	height: 30px;
-    	float: left;
-        margin-left: 7px;
-        margin-top: 3px;
-        border-radius: 100%;
-    }
-
-    .receiver-profile {
-        width: 20px;
-        height: 20px;
-        border-radius: 100%;
-        margin-top: 4px;
-    }
-
-    .name-display {
-        font-size: 20px;
-        margin-top: 2px;
-    }
-
-    .button_name {
-        border-top: none;
-        border-bottom: none;
-        border-right: none;
-        border-left: blue;
-        background-color: brown;
-    }
-
-    /*input::first-letter{
-        text-transform: capitalize;
-    }*/
-
-    @media only screen and (max-device-width: 480px) {
-    	/* Add some padding on document's body to prevent the content
-    to go underneath the header and footer */
-    body{        
-        padding-top: 60px;
-        padding-bottom: 40px;
-    }
-    .container{
-        width: 80%;
-        margin: 0 auto; /* Center the DIV horizontally */
-    }
-    .fixed-header, .fixed-footer{
-        width: 100%;
-        position: fixed;
-        z-index: 1000;       
-        background: brown;
-        padding: 10px 0;
-        color: #fff;
-        height: 100px;
-        font-size: 35px;
-    }
-    .fixed-header{
-        top: 0;
-    }
-    .fixed-footer{
-        bottom: 0;
-        padding-left: 25px;
-        padding-top: 25px;
-        margin-top: 10px;
-    }    
-    /* Some more styles to beutify this example */
-    nav a{
-        color: #fff;
-        text-decoration: none;
-        padding: 7px 25px;
-        display: inline-block;
-    }
-    .container p{
-        line-height: 200px; /* Create scrollbar to test positioning */
-    }
-
-    .messages {
-    	margin-top: 90px;
-    }
-    .form-control {
-    	font-size: 40px;
-    	border-radius: 10px;
-    }
-    #btn {
-    	font-size: 40px;
-    	background-color: blue;
-    	color: white;
-    	border-radius: 12px;
-    }
-    .sender-div {
-    	width: 100%;
-        position: relative;
-    	background-color: lightblue;
-    	padding-top: 10px;
-    	padding-left: 4px;
-    	margin: 0 auto;
-    	margin-bottom: 100px;
-        min-height: 160px;
-    }
-
-    .sender-span-1 {
-    	margin-left: 7px;
-    	font-size: 30px;
-    }
-
-    .sender-span-2 {
-    	 position: absolute;
-         color: black;
-         bottom: 8px;
-         right: 2px;
-         font-size: 18px;
-    }
-
-    .sender-span-3 {
-    	 color: blue;
-    	 font-size: 9px;
-    	 margin-top: 7px;
-    	 font-size: 18px;
-    }
-
-    .receiver-div {
-        position: relative;
-    	width: 100%;
-    	background-color: lightgreen;
-    	padding-top: 10px;
-    	padding-left: 4px;
-    	margin: 0 auto;
-    	margin-bottom: 100px;
-        min-height: 200px;
-    }
-
-    .receiver-span-1 {
-    	margin-left: 7px;
-    	font-size: 30px;
-    }
-
-    .receiver-span-2 {
-         position: absolute;
-    	 color: black;
-         bottom: 8px;
-         left: 2px;
-         font-size: 18px;
-    }
-
-    .receiver-span-3 {
-    	 color: blue;
-    	 font-size: 9px;
-    	 font-size: 18px;
-    }
-
-    .dp_display_sender {
-        width: 70px;
-        height: 70px;
-        float: right;
-        margin-right: 7px;
-        margin-top: 3px;
-        border-radius: 100%;
-    }
-
-    .dp_display_receiver {
-        width: 70px;
-        height: 70px;
-        float: left;
-        margin-left: 7px;
-        margin-top: 3px;
-        border-radius: 100%;
-    }
-
-    .receiver-profile {
-        width: 50px;
-        height: 50px;
-        border-radius: 100%;
-        margin-top: 25px;
-    }
-
-    .name-display {
-        font-size: 30px;
-        margin-top: 2px;
-    }
-
-    }
-</style>
+  </style>
 </head>
-<body>
-    <div class="fixed-header">
-        <div class="container">
-            <nav>
-                    <span>
-                        <img src="./profile/<?php echo $reciever_profile;?>" class="receiver-profile">
-                        &nbsp;
-                        <form method="GET" action="./profile/profile.php">
-                            <span class="name-display">
-                                <input type="hidden" name="opid" value="<?php echo $user;?>">
-                                <input type="submit" class="btn_name" value="<?php echo $reciever_name;?>">
-                            </span>
-                        </form>
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="main_div">
+
+
+  <!-- Main content -->
+    <section class="content" id="content_section">
+      <div class="container-fluid">
+        <!-- Small boxes (Stat box) -->
+
+        <!-- Main row -->
+        <div class="row">
+          <!-- Left col -->
+          <section class="col-lg-12 connectedSortable">
+            <!-- Custom tabs (Charts with tabs)-->
+            <!-- DIRECT CHAT -->
+            <div class="card direct-chat direct-chat-primary">
+              <div class="card-header">
+                <h3 class="card-title">Chat Me</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <!-- Conversations are loaded here -->
+                <div class="direct-chat-messages">
+                  <!-- Message. Default to the left -->
+                  <div class="direct-chat-msg">
+                    <div class="direct-chat-infos clearfix">
+                      <span class="direct-chat-name float-left">Alexander Pierce</span>
+                      <span class="direct-chat-timestamp float-right">23 Jan 2:00 pm</span>
+                    </div>
+                    <!-- /.direct-chat-infos -->
+                    <img class="direct-chat-img" src="./../dist/img/user1-128x128.jpg" alt="message user image">
+                    <!-- /.direct-chat-img -->
+                    <div class="direct-chat-text">
+                      Is this template really for free? That's unbelievable!
+                    </div>
+                    <!-- /.direct-chat-text -->
+                  </div>
+                  <!-- /.direct-chat-msg -->
+
+                  <!-- Message to the right -->
+                  <div class="direct-chat-msg right">
+                    <div class="direct-chat-infos clearfix">
+                      <span class="direct-chat-name float-right">Sarah Bullock</span>
+                      <span class="direct-chat-timestamp float-left">23 Jan 2:05 pm</span>
+                    </div>
+                    <!-- /.direct-chat-infos -->
+                    <img class="direct-chat-img" src="./../dist/img/user3-128x128.jpg" alt="message user image">
+                    <!-- /.direct-chat-img -->
+                    <div class="direct-chat-text">
+                      You better believe it!
+                    </div>
+                    <!-- /.direct-chat-text -->
+                  </div>
+                  <!-- /.direct-chat-msg -->
+
+                  <!-- Message. Default to the left -->
+                  <div class="direct-chat-msg">
+                    <div class="direct-chat-infos clearfix">
+                      <span class="direct-chat-name float-left">Alexander Pierce</span>
+                      <span class="direct-chat-timestamp float-right">23 Jan 5:37 pm</span>
+                    </div>
+                    <!-- /.direct-chat-infos -->
+                    <img class="direct-chat-img" src="./../dist/img/user1-128x128.jpg" alt="message user image">
+                    <!-- /.direct-chat-img -->
+                    <div class="direct-chat-text">
+                      Working with AdminLTE on a great new app! Wanna join?
+                    </div>
+                    <!-- /.direct-chat-text -->
+                  </div>
+                  <!-- /.direct-chat-msg -->
+
+                  <!-- Message to the right -->
+                  <div class="direct-chat-msg right">
+                    <div class="direct-chat-infos clearfix">
+                      <span class="direct-chat-name float-right">Sarah Bullock</span>
+                      <span class="direct-chat-timestamp float-left">23 Jan 6:10 pm</span>
+                    </div>
+                    <!-- /.direct-chat-infos -->
+                    <img class="direct-chat-img" src="./../dist/img/user3-128x128.jpg" alt="message user image">
+                    <!-- /.direct-chat-img -->
+                    <div class="direct-chat-text">
+                      I would love to.
+                    </div>
+                    <!-- /.direct-chat-text -->
+                  </div>
+                  <!-- /.direct-chat-msg -->
+
+                </div>
+                <!--/.direct-chat-messages-->
+
+                <!-- Contacts are loaded here -->
+                <div class="direct-chat-contacts">
+                  <ul class="contacts-list">
+                    <li>
+                      <a href="#">
+                        <img class="contacts-list-img" src="./../dist/img/user1-128x128.jpg" alt="User Avatar">
+
+                        <div class="contacts-list-info">
+                          <span class="contacts-list-name">
+                            Count Dracula
+                            <small class="contacts-list-date float-right">2/28/2015</small>
+                          </span>
+                          <span class="contacts-list-msg">How have you been? I was...</span>
+                        </div>
+                        <!-- /.contacts-list-info -->
+                      </a>
+                    </li>
+                    <!-- End Contact Item -->
+                    <li>
+                      <a href="#">
+                        <img class="contacts-list-img" src="./../dist/img/user7-128x128.jpg" alt="User Avatar">
+
+                        <div class="contacts-list-info">
+                          <span class="contacts-list-name">
+                            Sarah Doe
+                            <small class="contacts-list-date float-right">2/23/2015</small>
+                          </span>
+                          <span class="contacts-list-msg">I will be waiting for...</span>
+                        </div>
+                        <!-- /.contacts-list-info -->
+                      </a>
+                    </li>
+                    <!-- End Contact Item -->
+                    <li>
+                      <a href="#">
+                        <img class="contacts-list-img" src="./../dist/img/user3-128x128.jpg" alt="User Avatar">
+
+                        <div class="contacts-list-info">
+                          <span class="contacts-list-name">
+                            Nadia Jolie
+                            <small class="contacts-list-date float-right">2/20/2015</small>
+                          </span>
+                          <span class="contacts-list-msg">I'll call you back at...</span>
+                        </div>
+                        <!-- /.contacts-list-info -->
+                      </a>
+                    </li>
+                    <!-- End Contact Item -->
+                    <li>
+                      <a href="#">
+                        <img class="contacts-list-img" src="./../dist/img/user5-128x128.jpg" alt="User Avatar">
+
+                        <div class="contacts-list-info">
+                          <span class="contacts-list-name">
+                            Nora S. Vans
+                            <small class="contacts-list-date float-right">2/10/2015</small>
+                          </span>
+                          <span class="contacts-list-msg">Where is your new...</span>
+                        </div>
+                        <!-- /.contacts-list-info -->
+                      </a>
+                    </li>
+                    <!-- End Contact Item -->
+                    <li>
+                      <a href="#">
+                        <img class="contacts-list-img" src="./../dist/img/user6-128x128.jpg" alt="User Avatar">
+
+                        <div class="contacts-list-info">
+                          <span class="contacts-list-name">
+                            John K.
+                            <small class="contacts-list-date float-right">1/27/2015</small>
+                          </span>
+                          <span class="contacts-list-msg">Can I take a look at...</span>
+                        </div>
+                        <!-- /.contacts-list-info -->
+                      </a>
+                    </li>
+                    <!-- End Contact Item -->
+                    <li>
+                      <a href="#">
+                        <img class="contacts-list-img" src="./../dist/img/user8-128x128.jpg" alt="User Avatar">
+
+                        <div class="contacts-list-info">
+                          <span class="contacts-list-name">
+                            Kenneth M.
+                            <small class="contacts-list-date float-right">1/4/2015</small>
+                          </span>
+                          <span class="contacts-list-msg">Never mind I found...</span>
+                        </div>
+                        <!-- /.contacts-list-info -->
+                      </a>
+                    </li>
+                    <!-- End Contact Item -->
+                  </ul>
+                  <!-- /.contacts-list -->
+                </div>
+                <!-- /.direct-chat-pane -->
+              </div>
+              <!-- /.card-body -->
+              <div class="card-footer">
+                <form action="#" method="post">
+                  <div class="input-group">
+                    <input type="text" name="message" placeholder="Type Message ..." class="form-control">
+                    <span class="input-group-append">
+                      <button type="button" class="btn btn-primary">Send</button>
                     </span>
-            </nav>
+                  </div>
+                </form>
+              </div>
+              <!-- /.card-footer-->
+            </div>
+            <!--/.direct-chat -->
+          </section>
+          <!-- /.Left col -->
         </div>
-    </div>
-    <div class="container messages">
-    	<?php
+        <!-- /.row (main row) -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
 
-		$select_message_query = "SELECT * FROM messages WHERE readerid = '$user' AND senderid = '$sender' OR readerid = '$sender' AND senderid = '$user'";
-		$select_message_result = mysqli_query($connect, $select_message_query);
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
 
-		//$rows_selected_display = mysqli_fetch_assoc($select_message_result);
-
-
-		if (mysqli_num_rows($select_message_result) > 0) {
-			while ($rows_selected = mysqli_fetch_assoc($select_message_result)) {
-
-				$reciever_id = $rows_selected['readerid'];
-				$sender_id = $rows_selected['senderid'];
-				?>
-
-				<div>
-					<p>
-						<?php
-
-						    if ($sender == $rows_selected['senderid']) {
-
-						    	$select_dp_sender = "SELECT * FROM user WHERE id = '$sender_id'";
-						    	$select_dp_sender_result = mysqli_query($connect, $select_dp_sender);
-
-						    	$select_dp_sender_rows = mysqli_fetch_assoc($select_dp_sender_result);
-
-						    	$sender_dp = $select_dp_sender_rows['profile_photo'];
-						    	
-						    	echo '<div class="input-group mb-3 sender-div"><span class="sender-span-1"> <img src="./profile/' .$sender_dp. ' " class="dp_display_sender"><br><br> ' .$rows_selected['message']. ' <br><br><span class="sender-span-2">' .$rows_selected['time']. ' - ' .$rows_selected['date']. ' <span class="sender-span-3">send</span> </span> </span></div>';
-						    } else {
-
-						    	$select_dp_receiver = "SELECT * FROM user WHERE id = '$sender_id'";
-						    	$select_dp_receiver_result = mysqli_query($connect, $select_dp_receiver);
-
-						    	$select_dp_receiver_rows = mysqli_fetch_assoc($select_dp_receiver_result);
-
-						    	$receiver_dp = $select_dp_receiver_rows['profile_photo'];
-
-						    	echo '<div class="input-group mb-3 bg-success receiver-div"><span class="receiver-span-1"><img src="./profile/' .$receiver_dp. ' " class="dp_display_receiver"> <br><br>' .$rows_selected['message']. ' <br><br><span class="receiver-span-2">' .$rows_selected['time']. ' - ' .$rows_selected['date']. ' <span class="receiver-span-3"> recieved</span></span></span></div>';
-						    }
-						?>
-					</p>
-				</div>
-
-				<?php
-			}
-		} else {
-
-			echo '<div style="background-color: black; color: white; text-align: center; margin-top: 17px;">
-			            <span>Start a New Chat</span>
-			      </div>';
-		}
-
-		?>
-    </div>    
-    <div class="fixed-footer">
-        <form autocomplete="off" method="POST" action="send-message.php" id="sendingForm">
-		    <div class="btn-group">
-			        <input type="hidden" style="margin-left: 5px;" name="recieverid" value="<?php echo $user;?>">
-			        <input type="text"  style="margin-left: 5px;" name="message" class="input_message" placeholder="Write message..." autocomplete="false" required>
-		        <input type="submit" style="margin-left: 5px;" name="send" value="send" class="btn btn-info" id="btn">
-		    </div>
-	    </form>        
-    </div>
-</body>
-
-<script type="text/javascript">
-    
-    
+<!-- jQuery -->
+<script src="./../plugins/jquery/jquery.min.js"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="./../plugins/jquery-ui/jquery-ui.min.js"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+  $.widget.bridge('uibutton', $.ui.button)
 </script>
+<!-- Bootstrap 4 -->
+<script src="./../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- ChartJS -->
+<script src="./../plugins/chart.js/Chart.min.js"></script>
+<!-- Sparkline -->
+<script src="./../plugins/sparklines/sparkline.js"></script>
+<!-- JQVMap -->
+<script src="./../plugins/jqvmap/jquery.vmap.min.js"></script>
+<script src="./../plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+<!-- jQuery Knob Chart -->
+<script src="./../plugins/jquery-knob/jquery.knob.min.js"></script>
+<!-- daterangepicker -->
+<script src="./../plugins/moment/moment.min.js"></script>
+<script src="./../plugins/daterangepicker/daterangepicker.js"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="./../plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+<!-- Summernote -->
+<script src="./../plugins/summernote/summernote-bs4.min.js"></script>
+<!-- overlayScrollbars -->
+<script src="./../plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+<!-- AdminLTE App -->
+<script src="./../dist/js/adminlte.js"></script>
+</body>
 </html>
