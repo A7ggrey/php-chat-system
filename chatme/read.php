@@ -1,9 +1,59 @@
+<?php
+
+session_start();
+
+if (!isset($_SESSION['login_user'])) {
+  
+  header('location: ./../');
+  exit;
+}
+
+include('./../database/database.php');
+
+$user = $_GET['user'];
+$sender = $_SESSION['userid'];
+
+$select_user_details = "SELECT * FROM user WHERE id = '$user'";
+$select_user_result = mysqli_query($connect, $select_user_details);
+
+$select_user_rows = mysqli_fetch_assoc($select_user_result);
+
+$reciever_name = $select_user_rows['full_name'];
+$reciever_profile = $select_user_rows['profile_photo'];
+
+
+$select_messages_to_read = "SELECT * FROM readmessages WHERE sender_id = '$user' AND reciever_id = '$sender'";
+$select_messages_to_read_result = mysqli_query($connect, $select_messages_to_read);
+
+if (mysqli_num_rows($select_messages_to_read_result) > 0) {
+    
+    $selected_messages_to_read_rows = mysqli_fetch_assoc($select_messages_to_read_result);
+
+    $sender_one = $selected_messages_to_read_rows['sender_id'];
+    $reciever_one = $selected_messages_to_read_rows['reciever_id'];
+
+    date_default_timezone_set("Africa/Nairobi");
+    $date = date('d/m/Y');
+    $time = date('h:i:sa');
+
+
+if ($sender != $sender_one) {
+
+    $updates_status = 1;
+
+    $update_messages_to_read = "UPDATE readmessages SET status = '$updates_status', read_date = '$date', read_time = '$time' WHERE reciever_id = '$sender'";
+    $update_messages_to_read_result = mysqli_query($connect, $update_messages_to_read);
+}
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | Dashboard</title>
+  <title>Chat Me | <?php echo $reciever_name;?></title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -69,72 +119,103 @@
               <div class="card-body">
                 <!-- Conversations are loaded here -->
                 <div class="direct-chat-messages">
+                  <?php
+
+                    $select_message_query = "SELECT * FROM messages WHERE readerid = '$user' AND senderid = '$sender' OR readerid = '$sender' AND senderid = '$user'";
+                    $select_message_result = mysqli_query($connect, $select_message_query);
+
+                    //$rows_selected_display = mysqli_fetch_assoc($select_message_result);
+
+
+                    if (mysqli_num_rows($select_message_result) > 0) {
+                      while ($rows_selected = mysqli_fetch_assoc($select_message_result)) {
+
+                        $reciever_id = $rows_selected['readerid'];
+                        $sender_id = $rows_selected['senderid'];
+                  ?>
+
+        <div>
+          <p>
+                  <?php
+
+                    if ($sender == $rows_selected['senderid']) {
+
+                      $select_dp_sender = "SELECT * FROM user WHERE id = '$sender_id'";
+                      $select_dp_sender_result = mysqli_query($connect, $select_dp_sender);
+
+                      $select_dp_sender_rows = mysqli_fetch_assoc($select_dp_sender_result);
+
+                      $sender_dp = $select_dp_sender_rows['profile_photo'];
+                      $sender_full_name = $select_dp_sender_rows['full_name'];
+                  
+                      //echo '<div class="input-group mb-3 sender-div"><span class="sender-span-1"> <img src="./profile/' .$sender_dp. ' " class="dp_display_sender"><br><br> ' .$rows_selected['message']. ' <br><br><span class="sender-span-2">' .$rows_selected['time']. ' - ' .$rows_selected['date']. ' <span class="sender-span-3">send</span> </span> </span></div>';
+                      ?>
+
+                         <!-- Message to the right -->
+                  <div class="direct-chat-msg right">
+                    <div class="direct-chat-infos clearfix">
+                      <span class="direct-chat-name float-right"><?php echo $sender_full_name;?></span>
+                      <span class="direct-chat-timestamp float-left"><?php echo $rows_selected['date']. " " .$rows_selected['time'];?></span>
+                    </div>
+                    <!-- /.direct-chat-infos -->
+                    <img class="direct-chat-img" src="./profile/<?php echo $sender_dp;?>" alt="message user image">
+                    <!-- /.direct-chat-img -->
+                    <div class="direct-chat-text">
+                      <?php echo $rows_selected['message'];?>
+                    </div>
+                    <!-- /.direct-chat-text -->
+                  </div>
+                  <!-- /.direct-chat-msg -->                  
+
+                      <?php
+                    
+                    } else {
+
+                      $select_dp_receiver = "SELECT * FROM user WHERE id = '$sender_id'";
+                      $select_dp_receiver_result = mysqli_query($connect, $select_dp_receiver);
+
+                      $select_dp_receiver_rows = mysqli_fetch_assoc($select_dp_receiver_result);
+
+                      $receiver_dp = $select_dp_receiver_rows['profile_photo'];
+                      $reciever_full_name = $select_dp_receiver_rows['full_name'];
+
+                      //echo '<div class="input-group mb-3 bg-success receiver-div"><span class="receiver-span-1"><img src="./profile/' .$receiver_dp. ' " class="dp_display_receiver"> <br><br>' .$rows_selected['message']. ' <br><br><span class="receiver-span-2">' .$rows_selected['time']. ' - ' .$rows_selected['date']. ' <span class="receiver-span-3"> recieved</span></span></span></div>';
+                      ?>
+
                   <!-- Message. Default to the left -->
                   <div class="direct-chat-msg">
                     <div class="direct-chat-infos clearfix">
-                      <span class="direct-chat-name float-left">Alexander Pierce</span>
-                      <span class="direct-chat-timestamp float-right">23 Jan 2:00 pm</span>
+                      <span class="direct-chat-name float-left"><?php echo $reciever_full_name;?></span>
+                      <span class="direct-chat-timestamp float-right"><?php echo $rows_selected['date']. " " .$rows_selected['time'];?></span>
                     </div>
                     <!-- /.direct-chat-infos -->
-                    <img class="direct-chat-img" src="./../dist/img/user1-128x128.jpg" alt="message user image">
+                    <img class="direct-chat-img" src="./profile/<?php echo $receiver_dp;?>" alt="message user image">
                     <!-- /.direct-chat-img -->
                     <div class="direct-chat-text">
-                      Is this template really for free? That's unbelievable!
+                      <?php echo $rows_selected['message'];?>
                     </div>
                     <!-- /.direct-chat-text -->
                   </div>
                   <!-- /.direct-chat-msg -->
 
-                  <!-- Message to the right -->
-                  <div class="direct-chat-msg right">
-                    <div class="direct-chat-infos clearfix">
-                      <span class="direct-chat-name float-right">Sarah Bullock</span>
-                      <span class="direct-chat-timestamp float-left">23 Jan 2:05 pm</span>
-                    </div>
-                    <!-- /.direct-chat-infos -->
-                    <img class="direct-chat-img" src="./../dist/img/user3-128x128.jpg" alt="message user image">
-                    <!-- /.direct-chat-img -->
-                    <div class="direct-chat-text">
-                      You better believe it!
-                    </div>
-                    <!-- /.direct-chat-text -->
-                  </div>
-                  <!-- /.direct-chat-msg -->
+                      <?php
+                    }
+                  ?>
+          </p>
+        </div>
 
-                  <!-- Message. Default to the left -->
-                  <div class="direct-chat-msg">
-                    <div class="direct-chat-infos clearfix">
-                      <span class="direct-chat-name float-left">Alexander Pierce</span>
-                      <span class="direct-chat-timestamp float-right">23 Jan 5:37 pm</span>
-                    </div>
-                    <!-- /.direct-chat-infos -->
-                    <img class="direct-chat-img" src="./../dist/img/user1-128x128.jpg" alt="message user image">
-                    <!-- /.direct-chat-img -->
-                    <div class="direct-chat-text">
-                      Working with AdminLTE on a great new app! Wanna join?
-                    </div>
-                    <!-- /.direct-chat-text -->
-                  </div>
-                  <!-- /.direct-chat-msg -->
+                  <?php
+                  
+                    }
+                  
+                  } else {
 
-                  <!-- Message to the right -->
-                  <div class="direct-chat-msg right">
-                    <div class="direct-chat-infos clearfix">
-                      <span class="direct-chat-name float-right">Sarah Bullock</span>
-                      <span class="direct-chat-timestamp float-left">23 Jan 6:10 pm</span>
-                    </div>
-                    <!-- /.direct-chat-infos -->
-                    <img class="direct-chat-img" src="./../dist/img/user3-128x128.jpg" alt="message user image">
-                    <!-- /.direct-chat-img -->
-                    <div class="direct-chat-text">
-                      I would love to.
-                    </div>
-                    <!-- /.direct-chat-text -->
-                  </div>
-                  <!-- /.direct-chat-msg -->
+      echo '<div style="background-color: black; color: white; text-align: center; margin-top: 17px;">
+                  <span>Start a New Chat</span>
+            </div>';
+                  }
 
-                </div>
-                <!--/.direct-chat-messages-->
+                  ?>
 
                 <!-- Contacts are loaded here -->
                 <div class="direct-chat-contacts">
