@@ -317,11 +317,12 @@ if ($sender != $sender_one) {
               </div>
               <!-- /.card-body -->
               <div class="card-footer">
-                <form action="send-message.php" method="POST">
+                <form autocomplete="off" action="send-message.php" method="POST">
                   <div class="input-group">
-                    <input type="text" name="message" placeholder="Type Message ..." class="form-control">
+                    <input type="hidden" name="recieverid" value="<?php echo $user;?>">
+                    <input type="text" name="message" placeholder="Type Message ..." class="form-control" autocomplete="off" required>
                     <span class="input-group-append">
-                      <button type="button" class="btn btn-primary">Send</button>
+                      <button type="submit" name="send" class="btn btn-primary">Send</button>
                     </span>
                   </div>
                 </form>
