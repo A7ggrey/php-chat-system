@@ -317,7 +317,7 @@ if ($sender != $sender_one) {
               </div>
               <!-- /.card-body -->
               <div class="card-footer">
-                <form action="#" method="post">
+                <form action="send-message.php" method="POST">
                   <div class="input-group">
                     <input type="text" name="message" placeholder="Type Message ..." class="form-control">
                     <span class="input-group-append">
