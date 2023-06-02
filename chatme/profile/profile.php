@@ -24,11 +24,11 @@ if (!isset($_GET['opid'])) {
 	
 
     $select_profile = "SELECT * FROM user WHERE id = '$current_user'";
-    $select_profile_result = mysqli_query($connect, $select_profile);
+    $select_profile_result_current = mysqli_query($connect, $select_profile);
 
-    if (mysqli_num_rows($select_profile_result) > 0) {
+    if (mysqli_num_rows($select_profile_result_current) > 0) {
 	
-	    $select_profile_rows = mysqli_fetch_assoc($select_profile_result);
+	    $select_profile_rows = mysqli_fetch_assoc($select_profile_result_current);
 
 	    $current_user_name = $select_profile_rows['full_name'];
 	    $current_user_username = $select_profile_rows['username'];
@@ -44,11 +44,11 @@ if (!isset($_GET['opid'])) {
 	$opid = $_GET['opid'];
 
 	$select_profile = "SELECT * FROM user WHERE id = '$opid'";
-    $select_profile_result = mysqli_query($connect, $select_profile);
+    $select_profile_result_other = mysqli_query($connect, $select_profile);
 
-    if (mysqli_num_rows($select_profile_result) > 0) {
+    if (mysqli_num_rows($select_profile_result_other) > 0) {
 	
-	    $select_profile_rows = mysqli_fetch_assoc($select_profile_result);
+	    $select_profile_rows = mysqli_fetch_assoc($select_profile_result_other);
 
 	    $current_user_name = $select_profile_rows['full_name'];
 	    $current_user_username = $select_profile_rows['username'];
@@ -137,6 +137,19 @@ if (!isset($_GET['opid'])) {
 			        <?php
 			    }
 
+			?>
+
+			<?php
+
+			    if (isset($select_profile_result_current)) {
+			    	
+			    	if (mysqli_num_rows($select_profile_result_current) > 0) {
+
+			    	echo '<br>
+			    	<a href="update_profile.php">Update Profile</a>';
+
+			    }
+			    }
 			?>
 		</p>
 		
