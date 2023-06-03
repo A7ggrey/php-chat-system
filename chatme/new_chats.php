@@ -156,7 +156,7 @@ if ($sender != $sender_one) {
 
                     ?>
                     <li>
-                      <a href="#">
+                      <a href="read.php?user=<?php echo $id_to_display;?>">
                         <?php 
                               //if ($id_to_display == $your_id) {
                   
@@ -209,10 +209,10 @@ if ($sender != $sender_one) {
                                 
                                 if ($rows_messages_read['status'] == 0) {
                           
-                                  echo "" .$rows_messages_read['message']. "&nbsp;&nbsp; &#x2713;";
+                                  echo "&nbsp;&nbsp; &#x2713; " .$rows_messages_read['message']. "";
                                 } elseif ($rows_messages_read['status'] == 1) {
                           
-                                  echo "" .$rows_messages_read['message']. "&nbsp;&nbsp; <span style='color: blue;'>&#x2713;&#x2713;<?span>" ;
+                                  echo "&nbsp;&nbsp; <span style='color: blue;'>&#x2713;&#x2713;<?span> " .$rows_messages_read['message']. "" ;
                                 }
                             ?>
                             
