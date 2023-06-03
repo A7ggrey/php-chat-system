@@ -123,6 +123,7 @@ if ($sender != $sender_one) {
                   
                 <!-- Contacts are loaded here -->
                 <div class="">
+                  
                   <ul class="contacts-list">
                     <?php
 
@@ -187,6 +188,7 @@ if ($sender != $sender_one) {
                             <?php echo $user_full_name;?>
                             <small class="contacts-list-date float-right">2/23/2015</small>
                           </span>
+                          
                           <span class="contacts-list-msg">
                             <?php
 
@@ -207,7 +209,7 @@ if ($sender != $sender_one) {
                                 
                                 if ($rows_messages_read['status'] == 0) {
                           
-                                  echo "<b><i>" .$rows_messages_read['message']. "&nbsp;&nbsp; &#x2713;</i></b>";
+                                  echo "" .$rows_messages_read['message']. "&nbsp;&nbsp; &#x2713;";
                                 } elseif ($rows_messages_read['status'] == 1) {
                           
                                   echo "" .$rows_messages_read['message']. "&nbsp;&nbsp; <span style='color: blue;'>&#x2713;&#x2713;<?span>" ;
@@ -224,88 +226,16 @@ if ($sender != $sender_one) {
                         <!-- /.contacts-list-info -->
                       </a>
                     </li>
+                            <?php
+                                }
+                              //}
+
+                            ?>
                     <!-- End Contact Item -->
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    <li>
-                      <a href="#">
-                        <img class="contacts-list-img" src="./../dist/img/user3-128x128.jpg" alt="User Avatar">
-
-                        <div class="contacts-list-info">
-                          <span class="contacts-list-name">
-                            Nadia Jolie
-                            <small class="contacts-list-date float-right">2/20/2015</small>
-                          </span>
-                          <span class="contacts-list-msg">I'll call you back at...</span>
-                        </div>
-                        <!-- /.contacts-list-info -->
-                      </a>
-                    </li>
-                    <!-- End Contact Item -->
-                    <li>
-                      <a href="#">
-                        <img class="contacts-list-img" src="./../dist/img/user5-128x128.jpg" alt="User Avatar">
-
-                        <div class="contacts-list-info">
-                          <span class="contacts-list-name">
-                            Nora S. Vans
-                            <small class="contacts-list-date float-right">2/10/2015</small>
-                          </span>
-                          <span class="contacts-list-msg">Where is your new...</span>
-                        </div>
-                        <!-- /.contacts-list-info -->
-                      </a>
-                    </li>
-                    <!-- End Contact Item -->
-                    <li>
-                      <a href="#">
-                        <img class="contacts-list-img" src="./../dist/img/user6-128x128.jpg" alt="User Avatar">
-
-                        <div class="contacts-list-info">
-                          <span class="contacts-list-name">
-                            John K.
-                            <small class="contacts-list-date float-right">1/27/2015</small>
-                          </span>
-                          <span class="contacts-list-msg">Can I take a look at...</span>
-                        </div>
-                        <!-- /.contacts-list-info -->
-                      </a>
-                    </li>
-                    <!-- End Contact Item -->
-                    <li>
-                      <a href="#">
-                        <img class="contacts-list-img" src="./../dist/img/user8-128x128.jpg" alt="User Avatar">
-
-                        <div class="contacts-list-info">
-                          <span class="contacts-list-name">
-                            Kenneth M.
-                            <small class="contacts-list-date float-right">1/4/2015</small>
-                          </span>
-                          <span class="contacts-list-msg">Never mind I found...</span>
-                        </div>
-                        <!-- /.contacts-list-info -->
-                      </a>
-                    </li>
-                    <!-- End Contact Item -->
                   </ul>
                   <!-- /.contacts-list -->
+
                 </div>
                 <!-- /.direct-chat-pane -->
               </div>
