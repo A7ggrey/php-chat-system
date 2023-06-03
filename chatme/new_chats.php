@@ -54,7 +54,7 @@ if ($sender != $sender_one) {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Chat Me | <?php //echo $reciever_name;?></title>
+  <title>Chat Me | Chats</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -193,10 +193,11 @@ if ($sender != $sender_one) {
                   
                                 while ($rows_messages_read = mysqli_fetch_assoc($select_message_display_result)) {
 
-                                  $select_date_to_display
+                                  $select_time_to_display = $rows_messages_read['time'];
+                                  $select_date_to_display = $rows_messages_read['date'];
                     
                             ?>
-                            <small class="contacts-list-date float-right">2/23/2015</small>
+                            <small class="contacts-list-date float-right"><!--2/23/2015--><?php echo $select_time_to_display. " - " .$select_date_to_display;?></small>
                           </span>
                           
                           <span class="contacts-list-msg">
