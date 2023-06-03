@@ -154,7 +154,7 @@ include('./../database/database.php');
 
                               if (mysqli_num_rows($select_message_display_result) > 0) {
 
-                                $count_unread = mysqli_num_rows($select_message_display_result);
+                                //$count_unread = mysqli_num_rows($select_message_display_result);
                   
                                 while ($rows_messages_read = mysqli_fetch_assoc($select_message_display_result)) {
 
@@ -175,10 +175,14 @@ include('./../database/database.php');
                                 
                                 if ($rows_messages_read['status'] == 0) {
 
-                                  $select_message_display_count = "SELECT * FROM readmessages WHERE sender_id = '$currentuser' AND reciever_id = '$id_to_display' AND  OR sender_id = '$id_to_display' AND reciever_id = '$currentuser' ORDER BY messageid DESC LIMIT 1";
-                                  $select_message_display_result = mysqli_query($connect, $select_message_display);
+                                  $zero = 0;
+
+                                  $select_message_display_count = "SELECT * FROM readmessages WHERE sender_id = '$currentuser' AND reciever_id = '$id_to_display' AND status = '$zero' OR sender_id = '$id_to_display' AND reciever_id = '$currentuser' AND status = '$zero'";
+                                  $select_message_display_result_count = mysqli_query($connect, $select_message_display_count);
+
+                                  $count_unread = mysqli_num_rows($select_message_display_result_count);
                           
-                                  echo "&nbsp;&nbsp; &#x2713; " .$rows_messages_read['message']. "" .$count_unread;
+                                  echo "&nbsp;&nbsp; &#x2713; " .$rows_messages_read['message']. "<span class='badge badge-info right' style='float: right;'>" .$count_unread. "</span>";
                                 } elseif ($rows_messages_read['status'] == 1) {
                           
                                   echo "&nbsp;&nbsp; <span style='color: blue;'>&#x2713;&#x2713;<?span> " .$rows_messages_read['message']. "" ;
