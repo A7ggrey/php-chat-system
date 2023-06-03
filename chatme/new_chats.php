@@ -181,10 +181,6 @@ if ($sender != $sender_one) {
                           <span class="contacts-list-name">
 
                             <?php echo $user_full_name;?>
-                            <small class="contacts-list-date float-right">2/23/2015</small>
-                          </span>
-                          
-                          <span class="contacts-list-msg">
 
                             <?php
 
@@ -196,8 +192,16 @@ if ($sender != $sender_one) {
                               if (mysqli_num_rows($select_message_display_result) > 0) {
                   
                                 while ($rows_messages_read = mysqli_fetch_assoc($select_message_display_result)) {
+
+                                  $select_date_to_display
                     
                             ?>
+                            <small class="contacts-list-date float-right">2/23/2015</small>
+                          </span>
+                          
+                          <span class="contacts-list-msg">
+
+
                             <?php
                               //if sender is me, then display this, else don't display to reciever (changes to make)
                               //count the number of unread messages and display how they are
