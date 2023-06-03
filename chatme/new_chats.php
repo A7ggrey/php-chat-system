@@ -125,7 +125,7 @@ if ($sender != $sender_one) {
                 <div class="">
                   <ul class="contacts-list">
                     <li>
-                      <a href="#">
+                      <a href="read.php?user=3">
                         <img class="contacts-list-img" src="./../dist/img/user1-128x128.jpg" alt="User Avatar">
 
                         <div class="contacts-list-info">
