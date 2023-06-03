@@ -124,36 +124,126 @@ if ($sender != $sender_one) {
                 <!-- Contacts are loaded here -->
                 <div class="">
                   <ul class="contacts-list">
-                    <li>
-                      <a href="read.php?user=3">
-                        <img class="contacts-list-img" src="./../dist/img/user1-128x128.jpg" alt="User Avatar">
+                    <?php
 
-                        <div class="contacts-list-info">
-                          <span class="contacts-list-name">
-                            Count Dracula
-                            <small class="contacts-list-date float-right">2/28/2015</small>
-                          </span>
-                          <span class="contacts-list-msg">How have you been? I was...</span>
-                        </div>
-                        <!-- /.contacts-list-info -->
-                      </a>
-                    </li>
-                    <!-- End Contact Item -->
+                      $currentuser = $_SESSION['userid'];
+
+                      //include('./message-select.php');
+
+                      //$query = "SELECT messages.*, user.* FROM messages INNER JOIN user ON messages.readerid = user.id WHERE messages.senderid = '$currentuser' OR messages.readerid = '$currentuser' GROUP BY user.id";
+
+                      $query_chats = "SELECT chats.*, user.* FROM user INNER JOIN chats ON user.id = chats.user_id WHERE chats.current_user_id = '$currentuser' OR chats.user_id = '$currentuser' ORDER BY chats.chat_date DESC, chats.chat_time DESC";
+                      $result_chats = mysqli_query($connect, $query_chats);
+
+                      //$rows_before = mysqli_fetch_assoc($result_chats);
+
+                      if (mysqli_num_rows($result_chats) > 0) {
+
+                        while($rows_chats = mysqli_fetch_assoc($result_chats)) {
+
+                          $my_id = $rows_chats['current_user_id'];
+                          $your_id = $rows_chats['user_id'];
+                          //$user_id_two = $rows_chats['']
+
+                          if ($my_id == $currentuser) {
+        
+                            $id_to_display = $your_id;
+                          } else {
+
+                            $id_to_display = $my_id;
+                          }
+
+                    ?>
                     <li>
                       <a href="#">
-                        <img class="contacts-list-img" src="./../dist/img/user7-128x128.jpg" alt="User Avatar">
+                        <?php 
+                              //if ($id_to_display == $your_id) {
+                  
+                              $select_your_id = "SELECT * FROM user WHERE id = '$id_to_display'";
+                              $select_your_id_result = mysqli_query($connect, $select_your_id);
+
+                              if (mysqli_num_rows($select_your_id_result) > 0) {
+                    
+                                $select_your_id_rows = mysqli_fetch_assoc($select_your_id_result);
+
+                                $verify_tick = $select_your_id_rows['verified'];
+                                $profile_photo = $select_your_id_rows['profile_photo'];
+                                $user_full_name = $select_your_id_rows['full_name'];
+                            
+                            ?>
+
+                      <!--<img src="./profile/<?php //echo $profile_photo;?>" class="profile_user">&nbsp;<?php //echo $select_your_id_rows['full_name'];?>&nbsp; <?php //if($verify_tick == 1) {?><img src="./photos/verify.jpg" class="verified"></span><br>-->
+
+                      <?php
+                    }
+                  }
+                 //}
+                 ?>
+                        <img class="contacts-list-img" src="./profile/<?php echo $profile_photo;?>" alt="User Avatar">
 
                         <div class="contacts-list-info">
                           <span class="contacts-list-name">
-                            Sarah Doe
+
+                            <?php echo $user_full_name;?>
                             <small class="contacts-list-date float-right">2/23/2015</small>
                           </span>
-                          <span class="contacts-list-msg">I will be waiting for...</span>
+                          <span class="contacts-list-msg">
+                            <?php
+
+                            //php code to display the last message send by either user
+
+                              $select_message_display = "SELECT messages.*, readmessages.* FROM readmessages INNER JOIN messages ON readmessages.messageid = messages.id WHERE readmessages.sender_id = '$currentuser' AND readmessages.reciever_id = '$id_to_display' OR readmessages.sender_id = '$id_to_display' AND readmessages.reciever_id = '$currentuser' ORDER BY readmessages.messageid DESC LIMIT 1";
+                              $select_message_display_result = mysqli_query($connect, $select_message_display);
+
+                              if (mysqli_num_rows($select_message_display_result) > 0) {
+                  
+                                while ($rows_messages_read = mysqli_fetch_assoc($select_message_display_result)) {
+                    
+                            ?>
+                            <?php
+                              //if sender is me, then display this, else don't display to reciever (changes to make)
+                              //count the number of unread messages and display how they are
+                              //capitalize first letters for each sentense when writing a message
+                                
+                                if ($rows_messages_read['status'] == 0) {
+                          
+                                  echo "<b><i>" .$rows_messages_read['message']. "&nbsp;&nbsp; &#x2713;</i></b>";
+                                } elseif ($rows_messages_read['status'] == 1) {
+                          
+                                  echo "" .$rows_messages_read['message']. "&nbsp;&nbsp; <span style='color: blue;'>&#x2713;&#x2713;<?span>" ;
+                                }
+                            ?>
+                            
+                            <?php
+                                  }
+                                }
+                            ?>
+
+                          </span>
                         </div>
                         <!-- /.contacts-list-info -->
                       </a>
                     </li>
                     <!-- End Contact Item -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                     <li>
                       <a href="#">
                         <img class="contacts-list-img" src="./../dist/img/user3-128x128.jpg" alt="User Avatar">
