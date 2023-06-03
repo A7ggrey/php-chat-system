@@ -172,6 +172,7 @@ include('./../database/database.php');
                               //if sender is me, then display this, else don't display to reciever (changes to make)
                               //count the number of unread messages and display how they are
                               //capitalize first letters for each sentense when writing a message
+                              //don't display badge and single and double ticks to the sender
                                 
                                 if ($rows_messages_read['status'] == 0) {
 
