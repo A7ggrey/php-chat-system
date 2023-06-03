@@ -175,12 +175,7 @@ if ($sender != $sender_one) {
 
                       <!--<img src="./profile/<?php //echo $profile_photo;?>" class="profile_user">&nbsp;<?php //echo $select_your_id_rows['full_name'];?>&nbsp; <?php //if($verify_tick == 1) {?><img src="./photos/verify.jpg" class="verified"></span><br>-->
 
-                      <?php
-                    }
-                  }
-                 //}
-                 ?>
-                        <img class="contacts-list-img" src="./profile/<?php echo $profile_photo;?>" alt="User Avatar">
+                      <img class="contacts-list-img" src="./profile/<?php echo $profile_photo;?>" alt="User Avatar">
 
                         <div class="contacts-list-info">
                           <span class="contacts-list-name">
@@ -190,6 +185,7 @@ if ($sender != $sender_one) {
                           </span>
                           
                           <span class="contacts-list-msg">
+
                             <?php
 
                             //php code to display the last message send by either user
@@ -220,6 +216,14 @@ if ($sender != $sender_one) {
                                   }
                                 }
                             ?>
+
+                      <?php
+                    }
+                  }
+                 //}
+                 ?>
+                        
+                            
 
                           </span>
                         </div>
