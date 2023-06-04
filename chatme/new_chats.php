@@ -272,7 +272,7 @@ include('./../database/database.php');
 
 <script>
   var mes = document.getElementById('message').innerHTML;
-  var truncated = mes.substring(0, 50) + ' ...';
+  var truncated = mes.substring(0, 50) + ' ';
   document.getElementById('message').innerHTML = truncated;
 </script>
 
