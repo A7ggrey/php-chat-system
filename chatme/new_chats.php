@@ -166,7 +166,7 @@ include('./../database/database.php');
                             <small class="contacts-list-date float-right"><!--2/23/2015--><?php echo $select_time_to_display. " - " .$select_date_to_display;?></small>
                           </span>
                           
-                          <span class="contacts-list-msg" style="height: 1px;">
+                          <span class="contacts-list-msg">
 
 
                             <?php
@@ -204,7 +204,7 @@ include('./../database/database.php');
 
                                   $count_unread = mysqli_num_rows($select_message_display_result_count);
                           
-                                  echo "&nbsp;&nbsp;&#x2713; <span style='overflow: hidden;'>" .$rows_messages_read['message']. "</span>";
+                                  echo "&nbsp;&nbsp;&#x2713; <span style='overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 90px;' id='message'>" .$rows_messages_read['message']. "</span>";
                                 } elseif ($rows_messages_read['status'] == 1) {
                           
                                   echo "&nbsp;&nbsp; <span style='color: blue;'>&#x2713;&#x2713;<?span> " .$rows_messages_read['message']. "" ;
@@ -267,6 +267,12 @@ include('./../database/database.php');
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
+
+<script>
+  var mes = document.getElementById('message').innerHTML;
+  var truncated = mes.substring(0, 50) + ' ...';
+  document.getElementById('message').innerHTML = truncated;
+</script>
 
 <!-- jQuery -->
 <script src="./../plugins/jquery/jquery.min.js"></script>
