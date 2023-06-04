@@ -10,10 +10,17 @@ if (isset($_POST['sign'])) {
 	$full_name = mysqli_real_escape_string($connect, $_POST['full_name']);
 	$email = mysqli_real_escape_string($connect, $_POST['email']);
 	$password = mysqli_real_escape_string($connect, $_POST['password']);
-	$private = mysqli_real_escape_string($connect, $_POST['private']);
 	$password1 = password_hash($password, PASSWORD_DEFAULT);
 	$profile_photo = 'a.png';
 	$verified = 1;
+
+	if (isset($_POST['private'])) {
+		
+		$private = 1;
+	} else {
+
+		$private = 0;
+	}
 
 	$query = "SELECT * FROM user WHERE username = '$email'";
 	$result = mysqli_query($connect, $query);
