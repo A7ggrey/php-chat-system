@@ -65,7 +65,9 @@ include('./../database/database.php');
 
 	//echo $currentuser;
 
-	$query = "SELECT * FROM user WHERE id <> '$currentuser'";
+	$public_account = 0;
+
+	$query = "SELECT * FROM user WHERE id <> '$currentuser' AND private_account = '$public_account'";
 	$result = mysqli_query($connect, $query);
 
 	if (mysqli_num_rows($result) > 0) {
