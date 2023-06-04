@@ -77,7 +77,7 @@ include('./../database/database.php');
             <!-- DIRECT CHAT -->
             <div class="card direct-chat direct-chat-primary">
               <div class="card-header">
-                <h3 class="card-title">Chats</h3>
+                <h3 class="card-title">Chats - <a href="./chats.php">New Chat</a> - <a href="./profile/profile.php">My Profile</a></h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -143,6 +143,7 @@ include('./../database/database.php');
                         <div class="contacts-list-info">
                           <span class="contacts-list-name">
 
+                            <!-- Name not displaying -->                          
                             <?php echo $user_full_name;?>
 
                             <?php
@@ -163,7 +164,8 @@ include('./../database/database.php');
                                   $select_user_to_display = $rows_messages_read['senderid'];
                     
                             ?>
-                            <small class="contacts-list-date float-right"><!--2/23/2015--><?php echo $select_time_to_display. " - " .$select_date_to_display;?></small>
+                            <small class="contacts-list-date float-right"><!--2/23/2015--><?php echo $select_time_to_display. " - " .$select_date_to_display;?>
+                            </small>
                           </span>
                           
                           <span class="contacts-list-msg">
