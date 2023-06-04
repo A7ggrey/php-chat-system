@@ -166,7 +166,7 @@ include('./../database/database.php');
                             <small class="contacts-list-date float-right"><!--2/23/2015--><?php echo $select_time_to_display. " - " .$select_date_to_display;?></small>
                           </span>
                           
-                          <span class="contacts-list-msg">
+                          <span class="contacts-list-msg" style="height: 1px;">
 
 
                             <?php
@@ -175,7 +175,7 @@ include('./../database/database.php');
                               //capitalize first letters for each sentense when writing a message
                               //don't display badge and single and double ticks to the sender
                                 
-                                
+
                                 if ($id_to_display == $select_user_to_display) {
   
                                   if ($rows_messages_read['status'] == 0) {
@@ -187,7 +187,7 @@ include('./../database/database.php');
 
                                   $count_unread = mysqli_num_rows($select_message_display_result_count);
                           
-                                  echo "&nbsp;&nbsp; " .$rows_messages_read['message']. "<span class='badge badge-info right' style='float: right;'>" .$count_unread. "</span>";
+                                  echo "&nbsp;&nbsp; <span style='overflow: hidden;'>" .$rows_messages_read['message']. "</span> <span class='badge badge-info right' style='float: right;'>" .$count_unread. "</span>";
                                 } elseif ($rows_messages_read['status'] == 1) {
                           
                                   echo "&nbsp;&nbsp; " .$rows_messages_read['message']. "" ;
@@ -204,7 +204,7 @@ include('./../database/database.php');
 
                                   $count_unread = mysqli_num_rows($select_message_display_result_count);
                           
-                                  echo "&nbsp;&nbsp;&#x2713; " .$rows_messages_read['message']. " ";
+                                  echo "&nbsp;&nbsp;&#x2713; <span style='overflow: hidden;'>" .$rows_messages_read['message']. "</span>";
                                 } elseif ($rows_messages_read['status'] == 1) {
                           
                                   echo "&nbsp;&nbsp; <span style='color: blue;'>&#x2713;&#x2713;<?span> " .$rows_messages_read['message']. "" ;
