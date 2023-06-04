@@ -187,10 +187,10 @@ include('./../database/database.php');
 
                                   $count_unread = mysqli_num_rows($select_message_display_result_count);
                           
-                                  echo "&nbsp;&nbsp; <span style='overflow: hidden;'>" .$rows_messages_read['message']. "</span> <span class='badge badge-info right' style='float: right;'>" .$count_unread. "</span>";
+                                  echo "&nbsp;&nbsp; <span style='overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 90px;' id='message'>" .$rows_messages_read['message']. "</span> <span class='badge badge-info right' style='float: right;'>" .$count_unread. "</span>";
                                 } elseif ($rows_messages_read['status'] == 1) {
                           
-                                  echo "&nbsp;&nbsp; " .$rows_messages_read['message']. "" ;
+                                  echo "&nbsp;&nbsp; <span style='overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 90px;' id='message'>" .$rows_messages_read['message']. "</span>" ;
                                 }
 
                                 } else {
@@ -207,7 +207,7 @@ include('./../database/database.php');
                                   echo "&nbsp;&nbsp;&#x2713; <span style='overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 90px;' id='message'>" .$rows_messages_read['message']. "</span>";
                                 } elseif ($rows_messages_read['status'] == 1) {
                           
-                                  echo "&nbsp;&nbsp; <span style='color: blue;'>&#x2713;&#x2713;<?span> " .$rows_messages_read['message']. "" ;
+                                  echo "&nbsp;&nbsp; <span style='color: blue;'>&#x2713;&#x2713;<?span> <span style='overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 90px;' id='message'>" .$rows_messages_read['message']. "</span>" ;
                                 }
                                 }
                             ?>
