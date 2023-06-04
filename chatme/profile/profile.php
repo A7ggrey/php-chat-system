@@ -53,6 +53,7 @@ if (!isset($_GET['opid'])) {
 	    $current_user_name = $select_profile_rows['full_name'];
 	    $current_user_username = $select_profile_rows['username'];
 	    $current_user_profile = $select_profile_rows['profile_photo'];
+	    $current_user_othername = $select_profile_rows['othername'];
 	    $current_user_verify = $select_profile_rows['verified'];
 } else {
 
@@ -84,6 +85,10 @@ if (!isset($_GET['opid'])) {
 		
 		<p>
 			<?php echo $current_user_name;?>
+		</p>
+
+		<p><!-- Not displaying current user username -->
+			<?php //echo $current_user_othername;?>
 		</p>
 		
 		<p>
