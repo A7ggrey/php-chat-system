@@ -160,6 +160,7 @@ include('./../database/database.php');
 
                                   $select_time_to_display = $rows_messages_read['time'];
                                   $select_date_to_display = $rows_messages_read['date'];
+                                  $select_user_to_display = $rows_messages_read['senderid'];
                     
                             ?>
                             <small class="contacts-list-date float-right"><!--2/23/2015--><?php echo $select_time_to_display. " - " .$select_date_to_display;?></small>
@@ -174,7 +175,10 @@ include('./../database/database.php');
                               //capitalize first letters for each sentense when writing a message
                               //don't display badge and single and double ticks to the sender
                                 
-                                if ($rows_messages_read['status'] == 0) {
+                                
+                                if ($id_to_display == $select_user_to_display) {
+  
+                                  if ($rows_messages_read['status'] == 0) {
 
                                   $zero = 0;
 
@@ -183,10 +187,28 @@ include('./../database/database.php');
 
                                   $count_unread = mysqli_num_rows($select_message_display_result_count);
                           
-                                  echo "&nbsp;&nbsp; &#x2713; " .$rows_messages_read['message']. "<span class='badge badge-info right' style='float: right;'>" .$count_unread. "</span>";
+                                  echo "&nbsp;&nbsp; " .$rows_messages_read['message']. "<span class='badge badge-info right' style='float: right;'>" .$count_unread. "</span>";
+                                } elseif ($rows_messages_read['status'] == 1) {
+                          
+                                  echo "&nbsp;&nbsp; " .$rows_messages_read['message']. "" ;
+                                }
+
+                                } else {
+
+                                  if ($rows_messages_read['status'] == 0) {
+
+                                  $zero = 0;
+
+                                  $select_message_display_count = "SELECT * FROM readmessages WHERE sender_id = '$currentuser' AND reciever_id = '$id_to_display' AND status = '$zero' OR sender_id = '$id_to_display' AND reciever_id = '$currentuser' AND status = '$zero'";
+                                  $select_message_display_result_count = mysqli_query($connect, $select_message_display_count);
+
+                                  $count_unread = mysqli_num_rows($select_message_display_result_count);
+                          
+                                  echo "&nbsp;&nbsp;&#x2713; " .$rows_messages_read['message']. " ";
                                 } elseif ($rows_messages_read['status'] == 1) {
                           
                                   echo "&nbsp;&nbsp; <span style='color: blue;'>&#x2713;&#x2713;<?span> " .$rows_messages_read['message']. "" ;
+                                }
                                 }
                             ?>
                             
