@@ -10,6 +10,7 @@ if (isset($_POST['sign'])) {
 	$full_name = mysqli_real_escape_string($connect, $_POST['full_name']);
 	$email = mysqli_real_escape_string($connect, $_POST['email']);
 	$password = mysqli_real_escape_string($connect, $_POST['password']);
+	$othername = mysqli_real_escape_string($connect, $_POST['othername']);
 	$password1 = password_hash($password, PASSWORD_DEFAULT);
 	$profile_photo = 'a.png';
 	$verified = 1;
@@ -30,7 +31,7 @@ if (isset($_POST['sign'])) {
 		echo "<script>alert('Account already exists!'); history.back(-1);</script>";
 	} else {
 		
-		$query1 = "INSERT INTO user(full_name, profile_photo, username, password, verified, private_account) VALUES('$full_name', '$profile_photo', '$email', '$password1', '$verified', '$private')";
+		$query1 = "INSERT INTO user(full_name, profile_photo, username, password, verified, private_account, othername) VALUES('$full_name', '$profile_photo', '$email', '$password1', '$verified', '$private', '$othername')";
 	    $result1 = mysqli_query($connect, $query1);
 
 	    if ($result1) {
@@ -74,8 +75,12 @@ if (isset($_POST['login'])) {
 			header('location: ./chatme');
 			exit;
 		} else {
+
 			echo "<script>alert('Wrong username or password!'); history.back(-1);</script>";
 		}
+	} else {
+
+		echo "<script>alert('Wrong username or password!'); history.back(-1);</script>";
 	}
 }
 
