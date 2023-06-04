@@ -56,7 +56,11 @@ include('./../database/database.php');
 <body>
 
 	<div>
-		<a href="logout.php" class="btn btn-warning">Logout</a>
+		<a href="logout.php" class="btn btn-warning">Logout</a><br>
+		<form method="GET" action="">
+			<input type="text" name="search" placeholder="Search User Name" required>
+			<input type="submit" name="search_username" value="Search">
+		</form>
 	</div>
 
 	<?php
@@ -131,6 +135,81 @@ include('./../database/database.php');
 }
 
 
+	?>
+
+	<?php
+
+	if (isset($_GET['search_username'])) {
+		
+		$currentuser = $_SESSION['userid'];
+
+	//echo $currentuser;
+
+	$public_account = 0;
+
+	$query = "SELECT * FROM user WHERE id <> '$currentuser' AND private_account = '$public_account'";
+	$result = mysqli_query($connect, $query);
+
+	if (mysqli_num_rows($result) > 0) {
+		while($rows = mysqli_fetch_assoc($result)) {
+			$verify_tick = $rows['verified'];
+			$profile_photo = $rows['profile_photo'];
+			$user_id_for_followers = $rows['id'];
+
+		
+		if ($verify_tick == 1) {
+			
+			echo '
+
+			    <div>
+			        <p>
+				        <form method="GET" action="./read.php">
+					        <img src="./profile/' .$profile_photo. '" class="profile_user">
+					        <input type="hidden" name="user" value="' .$rows["id"]. '">
+					        <button>&nbsp;&nbsp;' .$rows["full_name"]. '
+					        </button>&nbsp;&nbsp;
+					        <img src="./photos/verify.jpg" class="verified"> 
+			            </form>
+			        </p>
+		        </div>
+
+			';
+		}
+
+		/*<div>
+			<p>
+				<form method="GET" action="./read.php">
+					<img src="./profile/<?php echo $profile_photo;?>" class="profile_user">
+					<button name="user" value="<?php echo $rows['id'];?>">&nbsp;&nbsp;<?php echo $rows['full_name'];?>
+					</button>&nbsp;&nbsp;
+					    <?php if($verify_tick == 1) {?><img src="./photos/verify.jpg" class="verified"> 
+			    </form>
+			</p>
+		</div>
+		    
+		<?php
+	}*/
+
+	//select and count number of followers
+		    $select_followers = "SELECT * FROM followers WHERE my_id = '$user_id_for_followers'";
+		    $select_followers_result = mysqli_query($connect, $select_followers);
+		    $count_followers = mysqli_num_rows($select_followers_result);
+
+		    echo "
+		    <form method='GET' action='./friends.php'>
+		        <input type='hidden' name='friends' value='" .$user_id_for_followers. "'>
+		        <button>Followed By 
+		            <span style='color: blue;'>" .$count_followers. " User</span>
+		        </button>
+		    </form>";
+
+		    ?>
+        <hr>
+
+        <?php
+}
+}
+	}
 	?>
 </body>
 </html>
