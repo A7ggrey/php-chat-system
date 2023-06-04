@@ -58,12 +58,15 @@ include('./../database/database.php');
 	<div>
 		<a href="logout.php" class="btn btn-warning">Logout</a><br>
 		<form method="GET" action="">
-			<input type="text" name="search" placeholder="Search User Name" required>
-			<input type="submit" name="search_username" value="Search">
+			<input type="text" name="search" placeholder="Search Username" required>
+			<input type="submit" value="Search">
 		</form>
 	</div>
 
 	<?php
+
+	if (!isset($_GET['search'])) {
+		
 
 	$currentuser = $_SESSION['userid'];
 
@@ -94,6 +97,7 @@ include('./../database/database.php');
 					        </button>&nbsp;&nbsp;
 					        <img src="./photos/verify.jpg" class="verified"> 
 			            </form>
+			            <a href="./profile/profile.php?opid=' .$user_id_for_followers. '">Profile</a>
 			        </p>
 		        </div>
 
@@ -133,21 +137,21 @@ include('./../database/database.php');
         <?php
 }
 }
-
+}
 
 	?>
 
 	<?php
 
-	if (isset($_GET['search_username'])) {
+	if (isset($_GET['search'])) {
 		
 		$currentuser = $_SESSION['userid'];
 
 	//echo $currentuser;
 
-	$public_account = 0;
+	$username_to_search = $_GET['search'];
 
-	$query = "SELECT * FROM user WHERE id <> '$currentuser' AND private_account = '$public_account'";
+	$query = "SELECT * FROM user WHERE id <> '$currentuser' AND username = '$username_to_search'";
 	$result = mysqli_query($connect, $query);
 
 	if (mysqli_num_rows($result) > 0) {
@@ -170,6 +174,7 @@ include('./../database/database.php');
 					        </button>&nbsp;&nbsp;
 					        <img src="./photos/verify.jpg" class="verified"> 
 			            </form>
+			            <a href="./profile/profile.php?opid=' .$user_id_for_followers. '">Profile</a>
 			        </p>
 		        </div>
 
@@ -208,6 +213,9 @@ include('./../database/database.php');
 
         <?php
 }
+} else {
+
+	echo "No user with that username!";
 }
 	}
 	?>
