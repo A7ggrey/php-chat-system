@@ -28,7 +28,6 @@ $privacy = $select_old_dp_rows['private_account'];
 if (isset($_POST['update_profile_pic'])) {
   
     $old_image_path = $oldimage;
-    $rentid = $rentalid;
 
 
   // Check if new image file is uploaded
