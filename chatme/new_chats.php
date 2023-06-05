@@ -48,6 +48,11 @@ include('./../database/database.php');
       width: 60%;
     }
 
+    .new_serch_form {
+      float: right; 
+      margin-left: 100px;
+    }
+
     @media (max-width: 480px) {
 
       #content_section {
@@ -56,6 +61,12 @@ include('./../database/database.php');
       .main_div {
       margin: 0 auto;
       width: 95%;
+    }
+    .new_serch_form {
+      /*float: right; 
+      margin-right: 100px;
+      position: absolute;
+      margin-top: 5px;*/
     }
     }
   </style>
@@ -82,7 +93,7 @@ include('./../database/database.php');
                   <a href="./profile/profile.php">My Profile</a> - 
                   <a href="logout.php">Logout</a>
                 </h3>
-                  <form method="GET" action="" style="float: right; margin-left: 100px;">
+                  <form method="GET" action="" class="new_search_form">
                     <div class="btn btn-group">
                       <input type="text" name="search" placeholder="Search Username" class="form-control" required>
                       <input type="submit" value="Search" class="btn btn-info">
