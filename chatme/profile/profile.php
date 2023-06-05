@@ -3,162 +3,275 @@
 session_start();
 
 if (!isset($_SESSION['login_user'])) {
-	
-	header("location: ./../../");
-	exit;
+  
+  header("location: ./../../");
+  exit;
 }
 
 include('./../../database/database.php');
 
 if (isset($_GET['opid'])) {
-	
-	$follow_me = $_GET['opid'];
+  
+  $follow_me = $_GET['opid'];
 } else {
 
-	$follow_me = $_SESSION['userid'];
+  $follow_me = $_SESSION['userid'];
 }
     
    $current_user = $_SESSION['userid'];
 if (!isset($_GET['opid'])) {
-	
-	
+  
+  
 
     $select_profile = "SELECT * FROM user WHERE id = '$current_user'";
     $select_profile_result_current = mysqli_query($connect, $select_profile);
 
     if (mysqli_num_rows($select_profile_result_current) > 0) {
-	
-	    $select_profile_rows = mysqli_fetch_assoc($select_profile_result_current);
+  
+      $select_profile_rows = mysqli_fetch_assoc($select_profile_result_current);
 
-	    $current_user_name = $select_profile_rows['full_name'];
-	    $current_user_username = $select_profile_rows['username'];
-	    $current_user_profile = $select_profile_rows['profile_photo'];
-	    $current_user_verify = $select_profile_rows['verified'];
+      $current_user_name = $select_profile_rows['full_name'];
+      $current_user_username = $select_profile_rows['username'];
+      $current_user_user_name = $select_profile_rows['othername'];
+      $current_user_profile = $select_profile_rows['profile_photo'];
+      $current_user_verify = $select_profile_rows['verified'];
 } else {
 
-	//echo "<script>history.back(-1);</script>";
+  //echo "<script>history.back(-1);</script>";
 }
 
 } else {
 
-	$opid = $_GET['opid'];
+  $opid = $_GET['opid'];
 
-	$select_profile = "SELECT * FROM user WHERE id = '$opid'";
+  $select_profile = "SELECT * FROM user WHERE id = '$opid'";
     $select_profile_result_other = mysqli_query($connect, $select_profile);
 
     if (mysqli_num_rows($select_profile_result_other) > 0) {
-	
-	    $select_profile_rows = mysqli_fetch_assoc($select_profile_result_other);
+  
+      $select_profile_rows = mysqli_fetch_assoc($select_profile_result_other);
 
-	    $current_user_name = $select_profile_rows['full_name'];
-	    $current_user_username = $select_profile_rows['username'];
-	    $current_user_profile = $select_profile_rows['profile_photo'];
-	    $current_user_othername = $select_profile_rows['othername'];
-	    $current_user_verify = $select_profile_rows['verified'];
+      $current_user_name = $select_profile_rows['full_name'];
+      $current_user_username = $select_profile_rows['username'];
+      $current_user_user_name = $select_profile_rows['othername'];
+      $current_user_profile = $select_profile_rows['profile_photo'];
+      $current_user_verify = $select_profile_rows['verified'];
 } else {
 
-	//echo "<script>history.back(-1);</script>";
+  //echo "<script>history.back(-1);</script>";
 }
 }
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<title>Chat Me - <?php echo $current_user_name;?></title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chat Me | <?php echo $current_user_name;?> - Profile</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+  <style type="text/css">
+    #content_section {
+      margin-top: 110px;
+    }
+    .main_div {
+      margin: 0 auto;
+      width: 60%;
+    }
+
+    @media (max-width: 480px) {
+
+      #content_section {
+        margin-top: 100px;
+      }
+      .main_div {
+      margin: 0 auto;
+      width: 95%;
+    }
+    }
+  </style>
 </head>
-<style type="text/css">
-	.profile_user {
-			width: 40px;
-			height: 40px;
-			border-radius: 100%;
-			border-style: double;
-			border-color: rgb(77, 46, 161);
-		}
-</style>
-<body>
+<body class="hold-transition sidebar-mini">
+<div class="main_div">
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content">
 
-	<div>
-		<p>
-			<img src="./<?php echo $current_user_profile;?>" class="profile_user">
-		</p>
-		
-		<p>
-			<?php echo $current_user_name;?>
-		</p>
+    <!-- Main content -->
+    <section class="content" id="content_section">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
 
-		<p><!-- Not displaying current user username -->
-			<?php //echo $current_user_othername;?>
-		</p>
-		
-		<p>
-			<?php echo $current_user_username;?>
-		</p>
+            <!-- Profile Image -->
+            <div class="card card-primary card-outline">
+              <div class="card-body box-profile">
+                <div class="text-center">
+                  <img class="profile-user-img img-fluid img-circle"
+                       src="./<?php echo $current_user_profile;?>"
+                       alt="User profile picture">
+                </div>
 
-		<p>
-			<?php
+                <h3 class="profile-username text-center"><?php echo $current_user_name;?></h3>
 
-			$select_followers = "SELECT * FROM followers WHERE my_id = '$follow_me'";
-			$select_followers_result = mysqli_query($connect, $select_followers);
+                <p class="text-muted text-center"><b>@</b><?php echo $current_user_user_name;?></p>
 
-			$count_followers = mysqli_num_rows($select_followers_result);
+                <ul class="list-group list-group-unbordered mb-3">
+                  <?php
 
-			echo "Followed By <span style='color: blue;'>" .$count_followers. "</span> User";
+                      $select_followers = "SELECT * FROM followers WHERE my_id = '$follow_me'";
+                      $select_followers_result = mysqli_query($connect, $select_followers);
 
-			?>
-		</p>
+                      $count_followers = mysqli_num_rows($select_followers_result);
 
-		<p>
-			<?php
+                      //echo "Followed By <span style='color: blue;'>" .$count_followers. "</span> User";
 
-			    $select_unfollow = "SELECT * FROM followers WHERE my_id = '$follow_me' AND follower_id = '$current_user'";
-			    $select_unfollow_result = mysqli_query($connect, $select_unfollow);
-			    $count_unfollow = mysqli_num_rows($select_unfollow_result);
+                  ?>
+                  <li class="list-group-item">
+                    <b>Followers</b> <a class="float-right"><?php echo $count_followers;?></a>
+                  </li>
+                  <?php
+
+                      $select_following = "SELECT * FROM followers WHERE follower_id = '$follow_me'";
+                      $select_following_result = mysqli_query($connect, $select_following);
+
+                      $count_following = mysqli_num_rows($select_following_result);
+
+                      //echo "Followed By <span style='color: blue;'>" .$count_following. "</span> User";
+
+                  ?>
+                  <li class="list-group-item">
+                    <b>Following</b> <a class="float-right"><?php echo $count_following;?></a>
+                  </li>
+                  <li class="list-group-item">
+                    <b>Friends</b> <a class="float-right"><?php echo $count_followers;?></a>
+                  </li>
+                
+
+                <?php
+
+          $select_unfollow = "SELECT * FROM followers WHERE my_id = '$follow_me' AND follower_id = '$current_user'";
+          $select_unfollow_result = mysqli_query($connect, $select_unfollow);
+          $count_unfollow = mysqli_num_rows($select_unfollow_result);
 
 
-			    if ($count_unfollow > 0) {
-			    	
-			    	?>
+          if ($count_unfollow > 0) {
+            
+            ?>
 
-			    	<p>You follow this account.</p>
+                  <li class="list-group-item">
+                    <b>You are following this account.</b>
+                  </li>
 
-			    	<form method="POST" action="follower.php">
-				        <input type="hidden" name="unfollow_id" value="<?php echo $follow_me;?>">
-				        <input type="submit" name="unfollower_btn" value="Unfollow">
-			        </form>
+            <p>
+              <form method="POST" action="follower.php">
+                <input type="hidden" name="unfollow_id" value="<?php echo $follow_me;?>">
+                <input type="submit" name="unfollower_btn" class="btn btn-success btn-block" value="Unfollow">
+              </form>
+            </p>
 
-			    <?php
+          <?php
 
-			    } else {
-			    	?>
+          } else {
+            ?>
 
-			    	<p>You don't follow this account.</p>
+                  <li class="list-group-item">
+                    <b>You don't follow this account.</b>
+                  </li>
 
-			    	<form method="POST" action="follower.php">
-				        <input type="hidden" name="follow_id" value="<?php echo $follow_me;?>">
-				        <input type="submit" name="follower_btn" value="Follow">
-			        </form>
+              <p>
+                <form method="POST" action="follower.php">
+                  <input type="hidden" name="follow_id" value="<?php echo $follow_me;?>">
+                  <input type="submit" name="follower_btn" class="btn btn-success btn-block" value="Follow">
+                </form>
+              </p>
 
-			        <?php
-			    }
+              <?php
+          }
 
-			?>
+      ?>
 
-			<?php
+      <?php
 
-			    if (isset($select_profile_result_current)) {
-			    	
-			    	if (mysqli_num_rows($select_profile_result_current) > 0) {
+          if (isset($select_profile_result_current)) {
+            
+            if (mysqli_num_rows($select_profile_result_current) > 0) {
 
-			    	echo '<br>
-			    	<a href="update_profile.php">Update Profile</a>';
+            echo '<p><a href="./update_profile.php" class="btn btn-default btn-block"><b>Update Profile</b></a></p>';
 
-			    }
-			    }
-			?>
-		</p>
-		
-	</div>
+          }
+          }
+      ?>
+            </ul>    
+              </div>
+              <!-- /.card-body -->
 
+            <!-- About Me Box -->
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">About Me</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <strong><i class="fas fa-book mr-1"></i> Education</strong>
+
+                <p class="text-muted">
+                  B.S. in Computer Science from the University of Tennessee at Knoxville
+                </p>
+
+                <hr>
+
+                <strong><i class="fas fa-map-marker-alt mr-1"></i> Location</strong>
+
+                <p class="text-muted">Malibu, California</p>
+
+                <hr>
+
+                <strong><i class="fas fa-pencil-alt mr-1"></i> Skills</strong>
+
+                <p class="text-muted">
+                  <span class="tag tag-danger">UI Design</span>
+                  <span class="tag tag-success">Coding</span>
+                  <span class="tag tag-info">Javascript</span>
+                  <span class="tag tag-warning">PHP</span>
+                  <span class="tag tag-primary">Node.js</span>
+                </p>
+
+                <hr>
+
+                <strong><i class="far fa-file-alt mr-1"></i> Notes</strong>
+
+                <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+            </div>
+            <!-- /.card -->
+
+            
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script src="../../plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="../../dist/js/adminlte.min.js"></script>
 </body>
 </html>
