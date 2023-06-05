@@ -77,10 +77,11 @@ include('./../database/database.php');
             <!-- DIRECT CHAT -->
             <div class="card direct-chat direct-chat-primary">
               <div class="card-header">
-                <h3 class="card-title">Start Chat - <a href="./chats.php">Chats</a> - 
-
+                <h3 class="card-title">Start Chat - 
+                  <a href="./chats.php">Chats</a> - 
                   <a href="./profile/profile.php">My Profile</a> - 
-                  <a href="logout.php">Logout</a></h3>
+                  <a href="logout.php">Logout</a>
+                </h3>
                   <form method="GET" action="" style="float: right; margin-left: 100px;">
                     <div class="btn btn-group">
                       <input type="text" name="search" placeholder="Search Username" class="form-control" required>
@@ -117,6 +118,7 @@ include('./../database/database.php');
                               $verify_tick = $rows['verified'];
                               $profile_photo = $rows['profile_photo'];
                               $user_id_for_followers = $rows['id'];
+                              $display_othername = $rows['othername'];
 
     
                             if ($verify_tick == 1) {
@@ -130,61 +132,107 @@ include('./../database/database.php');
                                     <div class="contacts-list-info">
                                       <span class="contacts-list-name">
 
-                                        <small class="contacts-list-date float-right"> <a href="./profile/profile.php?opid=<?php echo $rows["id"]?>">Visit Profile</a>
+                                        <small class="contacts-list-date float-right">
+                                          <?php
+
+                                              //$currentuser = $_SESSION['userid'];
+
+                                              //echo $currentuser;
+
+                                                  $select_followers = "SELECT * FROM followers WHERE my_id = '$user_id_for_followers'";
+                                                  $select_followers_result = mysqli_query($connect, $select_followers);
+                                                  $count_followers = mysqli_num_rows($select_followers_result);
+                                                  }
+                                                //}
+                                          ?>
+                                          <a href="./friends.php?followers=<?php echo $user_id_for_followers;?>"><?php echo $count_followers;?> Followers</a> - 
+                                          <a href="./profile/profile.php?opid=<?php echo $user_id_for_followers;?>">Visit Profile</a>
                                         </small>
                                       </span>
                           
                                       &nbsp;<span class="contacts-list-msg">
-                                        <a href="./read.php?user=<?php echo $rows["id"]?>">
-                                          <?php echo $rows["othername"];?>
+                                        <a href="./read.php?user=<?php echo $user_id_for_followers;?>">
+                                          <?php echo $display_othername;?>
                                         </a>
                                       </span>
                                     </div>
-      
-                              <!--//echo '
-
-                                <div>
-                                    <p>
-                                      <form method="GET" action="./read.php">
-                                        <img src="./profile/' .$profile_photo. '" class="profile_user">
-                                        <input type="hidden" name="user" value="' .. '">
-                                        <button>&nbsp;&nbsp;' .$rows["full_name"]. '
-                                        </button>&nbsp;&nbsp;
-                                        <img src="./photos/verify.jpg" class="verified"> 
-                                        </form>
-                                        <a href="./profile/profile.php?opid=' .$user_id_for_followers. '">Profile</a>
-                                    </p>
-                                  </div>
-
-                                      ';-->
 
                                       <?php
                                     }
-
-                                  //select and count number of followers
-                                    $select_followers = "SELECT * FROM followers WHERE my_id = '$user_id_for_followers'";
-                                    $select_followers_result = mysqli_query($connect, $select_followers);
-                                    $count_followers = mysqli_num_rows($select_followers_result);
-
-                                    ?>
-
-                                    <!--<form method='GET' action='./friends.php'>
-                                        <input type='hidden' name='friends' value='" .$user_id_for_followers. "'>
-                                        <button>Followed By 
-                                            <span style='color: blue;'>" .$count_followers. " User</span>
-                                        </button>
-                                    </form>";-->
-
-                                    <?php
-
                                   }
                                 }
-                              }
 
-                    ?>
+                                  ?>
+
+
+
+                      <?php
+
+                          if (isset($_GET['search'])) {
+    
+                          $currentuser = $_SESSION['userid'];
+
+                          $username_to_search = $_GET['search'];
+
+                          //echo $currentuser;
+
+                          //$public_account = 0;
+
+                          $query = "SELECT * FROM user WHERE id <> '$currentuser' AND othername = '$username_to_search'";
+                          $result = mysqli_query($connect, $query);
+
+                          if (mysqli_num_rows($result) > 0) {
+                            while($rows = mysqli_fetch_assoc($result)) {
+                              $verify_tick = $rows['verified'];
+                              $profile_photo = $rows['profile_photo'];
+                              $user_id_for_followers = $rows['id'];
+                              $display_othername = $rows['othername'];
+
+    
+                            if ($verify_tick == 1) {
+                              ?>
+
+                              <li>
+                                <!--<a href="">-->
+
+                                  <img class="contacts-list-img" src="./profile/<?php echo $profile_photo;?>" alt="User Avatar">
+
+                                    <div class="contacts-list-info">
+                                      <span class="contacts-list-name">
+
+                                        <small class="contacts-list-date float-right">
+                                          <?php
+
+                                              //$currentuser = $_SESSION['userid'];
+
+                                              //echo $currentuser;
+
+                                                  $select_followers = "SELECT * FROM followers WHERE my_id = '$user_id_for_followers'";
+                                                  $select_followers_result = mysqli_query($connect, $select_followers);
+                                                  $count_followers = mysqli_num_rows($select_followers_result);
+                                                  }
+                                                //}
+                                          ?>
+                                          <a href="./friends.php?followers=<?php echo $user_id_for_followers;?>"><?php echo $count_followers;?> Followers</a> - 
+                                          <a href="./profile/profile.php?opid=<?php echo $user_id_for_followers;?>">Visit Profile</a>
+                                        </small>
+                                      </span>
+                          
+                                      &nbsp;<span class="contacts-list-msg">
+                                        <a href="./read.php?user=<?php echo $user_id_for_followers;?>">
+                                          <?php echo $display_othername;?>
+                                        </a>
+                                      </span>
+                                    </div>
+
+                                      <?php
+                                    }
+                                  }
+                                }
+
+                                  ?>
 
                         <!-- /.contacts-list-info -->
-                      </a>
                     </li>
                     <!-- End Contact Item -->
 
