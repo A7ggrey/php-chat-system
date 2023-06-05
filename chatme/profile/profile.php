@@ -19,6 +19,7 @@ if (isset($_GET['opid'])) {
 }
     
    $current_user = $_SESSION['userid'];
+
 if (!isset($_GET['opid'])) {
   
   
@@ -171,7 +172,7 @@ if (!isset($_GET['opid'])) {
             <p>
               <form method="POST" action="follower.php">
                 <input type="hidden" name="unfollow_id" value="<?php echo $follow_me;?>">
-                <input type="submit" name="unfollower_btn" class="btn btn-success btn-block" value="Unfollow">
+                <input type="submit" name="unfollower_btn" class="btn btn-warning btn-block" value="Unfollow">
               </form>
             </p>
 
@@ -210,6 +211,8 @@ if (!isset($_GET['opid'])) {
             </ul>    
               </div>
               <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
 
             <!-- About Me Box -->
             <div class="card card-primary">
@@ -217,40 +220,67 @@ if (!isset($_GET['opid'])) {
                 <h3 class="card-title">About Me</h3>
               </div>
               <!-- /.card-header -->
+
+              <?php
+
+                  $select_about = "SELECT * FROM about_user WHERE user_id = '$current_user'";
+                  $select_about_result = mysqli_query($connect, $select_about);
+
+                  if (mysqli_num_rows($select_about_result) > 0) {
+                    
+                    $select_about_rows = mysqli_fetch_assoc($select_about_result);
+
+                    $education = $select_about_rows['latest_education'];
+                    $my_location = $select_about_rows['location'];
+                    $skills = $select_about_rows['skills'];
+                    $job_description = $select_about_rows['job_description'];
+                    $user_bios = $select_about_rows['bios'];
+                  } else {
+                    
+                    $education = ""; 
+                    $my_location = ""; 
+                    $skills = ""; 
+                    $job_description = ""; 
+                    $user_bios = "";
+                  }
+
+              ?>
               <div class="card-body">
+                <strong><i class="fas fa-book mr-1"></i> Work</strong>
+
+                <p class="text-muted">
+                  <?php echo $job_description?>
+                </p>
+
+                <hr>
+
                 <strong><i class="fas fa-book mr-1"></i> Education</strong>
 
                 <p class="text-muted">
-                  B.S. in Computer Science from the University of Tennessee at Knoxville
+                  <?php echo $education?>
                 </p>
 
                 <hr>
 
                 <strong><i class="fas fa-map-marker-alt mr-1"></i> Location</strong>
 
-                <p class="text-muted">Malibu, California</p>
+                <p class="text-muted"><?php echo $my_location;?></p>
 
                 <hr>
 
                 <strong><i class="fas fa-pencil-alt mr-1"></i> Skills</strong>
 
                 <p class="text-muted">
-                  <span class="tag tag-danger">UI Design</span>
-                  <span class="tag tag-success">Coding</span>
-                  <span class="tag tag-info">Javascript</span>
-                  <span class="tag tag-warning">PHP</span>
-                  <span class="tag tag-primary">Node.js</span>
+                  <?php echo $skills;?>
                 </p>
 
                 <hr>
 
-                <strong><i class="far fa-file-alt mr-1"></i> Notes</strong>
+                <strong><i class="far fa-file-alt mr-1"></i> Bios</strong>
 
-                <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>
+                <p class="text-muted"><?php echo $user_bios;?></p>
               </div>
               <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
             </div>
             <!-- /.card -->
 
