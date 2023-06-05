@@ -77,7 +77,18 @@ include('./../database/database.php');
             <!-- DIRECT CHAT -->
             <div class="card direct-chat direct-chat-primary">
               <div class="card-header">
-                <h3 class="card-title">Start Chat - <a href="./chats.php">Chats</a> - <a href="./profile/profile.php">My Profile</a></h3>
+                <h3 class="card-title">Start Chat - <a href="./chats.php">Chats</a> - 
+
+                  <a href="./profile/profile.php">My Profile</a> - 
+                  <a href="logout.php">Logout</a></h3>
+                  <form method="GET" action="" style="float: right; margin-left: 100px;">
+                    <div class="btn btn-group">
+                      <input type="text" name="search" placeholder="Search Username" class="form-control" required>
+                      <input type="submit" value="Search" class="btn btn-info">
+                    </div>
+                  </form>
+                  
+                </h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -90,153 +101,91 @@ include('./../database/database.php');
                   <ul class="contacts-list">
                     <?php
 
-                      $currentuser = $_SESSION['userid'];
+                          if (!isset($_GET['search'])) {
+    
+                          $currentuser = $_SESSION['userid'];
 
-                      //include('./message-select.php');
+                          //echo $currentuser;
 
-                      //$query = "SELECT messages.*, user.* FROM messages INNER JOIN user ON messages.readerid = user.id WHERE messages.senderid = '$currentuser' OR messages.readerid = '$currentuser' GROUP BY user.id";
+                          $public_account = 0;
 
-                      $query_chats = "SELECT chats.*, user.* FROM user INNER JOIN chats ON user.id = chats.user_id WHERE chats.current_user_id = '$currentuser' OR chats.user_id = '$currentuser' ORDER BY chats.chat_date DESC, chats.chat_time DESC";
-                      $result_chats = mysqli_query($connect, $query_chats);
+                          $query = "SELECT * FROM user WHERE id <> '$currentuser' AND private_account = '$public_account'";
+                          $result = mysqli_query($connect, $query);
 
-                      //$rows_before = mysqli_fetch_assoc($result_chats);
+                          if (mysqli_num_rows($result) > 0) {
+                            while($rows = mysqli_fetch_assoc($result)) {
+                              $verify_tick = $rows['verified'];
+                              $profile_photo = $rows['profile_photo'];
+                              $user_id_for_followers = $rows['id'];
 
-                      if (mysqli_num_rows($result_chats) > 0) {
+    
+                            if ($verify_tick == 1) {
+                              ?>
 
-                        while($rows_chats = mysqli_fetch_assoc($result_chats)) {
+                              <li>
+                                <!--<a href="">-->
 
-                          $my_id = $rows_chats['current_user_id'];
-                          $your_id = $rows_chats['user_id'];
-                          //$user_id_two = $rows_chats['']
+                                  <img class="contacts-list-img" src="./profile/<?php echo $profile_photo;?>" alt="User Avatar">
 
-                          if ($my_id == $currentuser) {
-        
-                            $id_to_display = $your_id;
-                          } else {
+                                    <div class="contacts-list-info">
+                                      <span class="contacts-list-name">
 
-                            $id_to_display = $my_id;
-                          }
-
-                    ?>
-                    <li>
-                      <a href="read.php?user=<?php echo $id_to_display;?>">
-                        <?php 
-                              //if ($id_to_display == $your_id) {
-                  
-                              $select_your_id = "SELECT * FROM user WHERE id = '$id_to_display'";
-                              $select_your_id_result = mysqli_query($connect, $select_your_id);
-
-                              if (mysqli_num_rows($select_your_id_result) > 0) {
-                    
-                                $select_your_id_rows = mysqli_fetch_assoc($select_your_id_result);
-
-                                $verify_tick = $select_your_id_rows['verified'];
-                                $profile_photo = $select_your_id_rows['profile_photo'];
-                                $user_full_name = $select_your_id_rows['full_name'];
-                            
-                            ?>
-
-                      <!--<img src="./profile/<?php //echo $profile_photo;?>" class="profile_user">&nbsp;<?php //echo $select_your_id_rows['full_name'];?>&nbsp; <?php //if($verify_tick == 1) {?><img src="./photos/verify.jpg" class="verified"></span><br>-->
-
-                      <img class="contacts-list-img" src="./profile/<?php echo $profile_photo;?>" alt="User Avatar">
-
-                        <div class="contacts-list-info">
-                          <span class="contacts-list-name">
-
-                            <!-- Name not displaying -->                          
-                            <?php echo $user_full_name;?>
-
-                            <?php
-
-                            //php code to display the last message send by either user
-
-                              $select_message_display = "SELECT messages.*, readmessages.* FROM readmessages INNER JOIN messages ON readmessages.messageid = messages.id WHERE readmessages.sender_id = '$currentuser' AND readmessages.reciever_id = '$id_to_display' OR readmessages.sender_id = '$id_to_display' AND readmessages.reciever_id = '$currentuser' ORDER BY readmessages.messageid DESC LIMIT 1";
-                              $select_message_display_result = mysqli_query($connect, $select_message_display);
-
-                              if (mysqli_num_rows($select_message_display_result) > 0) {
-
-                                //$count_unread = mysqli_num_rows($select_message_display_result);
-                  
-                                while ($rows_messages_read = mysqli_fetch_assoc($select_message_display_result)) {
-
-                                  $select_time_to_display = $rows_messages_read['time'];
-                                  $select_date_to_display = $rows_messages_read['date'];
-                                  $select_user_to_display = $rows_messages_read['senderid'];
-                    
-                            ?>
-                            <small class="contacts-list-date float-right"><!--2/23/2015--><?php echo $select_time_to_display. " - " .$select_date_to_display;?>
-                            </small>
-                          </span>
+                                        <small class="contacts-list-date float-right"> <a href="./profile/profile.php?opid=<?php echo $rows["id"]?>">Visit Profile</a>
+                                        </small>
+                                      </span>
                           
-                          <span class="contacts-list-msg">
+                                      &nbsp;<span class="contacts-list-msg">
+                                        <a href="./read.php?user=<?php echo $rows["id"]?>">
+                                          <?php echo $rows["othername"];?>
+                                        </a>
+                                      </span>
+                                    </div>
+      
+                              <!--//echo '
 
+                                <div>
+                                    <p>
+                                      <form method="GET" action="./read.php">
+                                        <img src="./profile/' .$profile_photo. '" class="profile_user">
+                                        <input type="hidden" name="user" value="' .. '">
+                                        <button>&nbsp;&nbsp;' .$rows["full_name"]. '
+                                        </button>&nbsp;&nbsp;
+                                        <img src="./photos/verify.jpg" class="verified"> 
+                                        </form>
+                                        <a href="./profile/profile.php?opid=' .$user_id_for_followers. '">Profile</a>
+                                    </p>
+                                  </div>
 
-                            <?php
-                              //if sender is me, then display this, else don't display to reciever (changes to make)
-                              //count the number of unread messages and display how they are
-                              //capitalize first letters for each sentense when writing a message
-                              //don't display badge and single and double ticks to the sender
-                                
+                                      ';-->
 
-                                if ($id_to_display == $select_user_to_display) {
-  
-                                  if ($rows_messages_read['status'] == 0) {
+                                      <?php
+                                    }
 
-                                  $zero = 0;
+                                  //select and count number of followers
+                                    $select_followers = "SELECT * FROM followers WHERE my_id = '$user_id_for_followers'";
+                                    $select_followers_result = mysqli_query($connect, $select_followers);
+                                    $count_followers = mysqli_num_rows($select_followers_result);
 
-                                  $select_message_display_count = "SELECT * FROM readmessages WHERE sender_id = '$currentuser' AND reciever_id = '$id_to_display' AND status = '$zero' OR sender_id = '$id_to_display' AND reciever_id = '$currentuser' AND status = '$zero'";
-                                  $select_message_display_result_count = mysqli_query($connect, $select_message_display_count);
+                                    ?>
 
-                                  $count_unread = mysqli_num_rows($select_message_display_result_count);
-                          
-                                  echo "&nbsp;&nbsp; <span style='overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 90px;' id='message'>" .$rows_messages_read['message']. "</span> <span class='badge badge-info right' style='float: right;'>" .$count_unread. "</span>";
-                                } elseif ($rows_messages_read['status'] == 1) {
-                          
-                                  echo "&nbsp;&nbsp; <span style='overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 90px;' id='message'>" .$rows_messages_read['message']. "</span>" ;
-                                }
+                                    <!--<form method='GET' action='./friends.php'>
+                                        <input type='hidden' name='friends' value='" .$user_id_for_followers. "'>
+                                        <button>Followed By 
+                                            <span style='color: blue;'>" .$count_followers. " User</span>
+                                        </button>
+                                    </form>";-->
 
-                                } else {
+                                    <?php
 
-                                  if ($rows_messages_read['status'] == 0) {
-
-                                  $zero = 0;
-
-                                  $select_message_display_count = "SELECT * FROM readmessages WHERE sender_id = '$currentuser' AND reciever_id = '$id_to_display' AND status = '$zero' OR sender_id = '$id_to_display' AND reciever_id = '$currentuser' AND status = '$zero'";
-                                  $select_message_display_result_count = mysqli_query($connect, $select_message_display_count);
-
-                                  $count_unread = mysqli_num_rows($select_message_display_result_count);
-                          
-                                  echo "&nbsp;&nbsp;&#x2713; <span style='overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 90px;' id='message'>" .$rows_messages_read['message']. "</span>";
-                                } elseif ($rows_messages_read['status'] == 1) {
-                          
-                                  echo "&nbsp;&nbsp; <span style='color: blue;'>&#x2713;&#x2713;<?span> <span style='overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 90px;' id='message'>" .$rows_messages_read['message']. "</span>" ;
-                                }
-                                }
-                            ?>
-                            
-                            <?php
                                   }
                                 }
-                            ?>
+                              }
 
-                      <?php
-                    }
-                  }
-                 //}
-                 ?>
-                        
-                            
+                    ?>
 
-                          </span>
-                        </div>
                         <!-- /.contacts-list-info -->
                       </a>
                     </li>
-                            <?php
-                                }
-                              //}
-
-                            ?>
                     <!-- End Contact Item -->
 
                   </ul>
