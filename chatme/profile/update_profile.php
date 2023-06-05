@@ -22,12 +22,12 @@ $oldimage = $select_old_dp_rows['profile_photo'];
 $full = $select_old_dp_rows['full_name'];
 $email_add = $select_old_dp_rows['username'];
 $othername_add = $select_old_dp_rows['othername'];
-//$full = $select_old_dp_rows
+$privacy = $select_old_dp_rows['private_account'];
 
 
 if (isset($_POST['update_profile_pic'])) {
   
-  $old_image_path = $oldimage;
+    $old_image_path = $oldimage;
     $rentid = $rentalid;
 
 
@@ -42,8 +42,11 @@ if (isset($_POST['update_profile_pic'])) {
         // Delete old image file from server
 
           if ($oldimage != 'a.png') {
-            gc_collect_cycles();
-            unlink($old_image_path);
+            if ($oldimage != NULL || $oldimage != "") {
+              
+              gc_collect_cycles();
+              unlink($old_image_path);
+            }
           }
 
   $updatedetailsquery = "UPDATE user SET  profile_photo = '$new_image_path' WHERE id = '$currentuser'";
@@ -86,6 +89,62 @@ if (isset($_POST['update_profile'])) {
           echo "<script>alert('Something went wrong! try again later'); history.back(0);</script>";
       }
 }
+
+      if (isset($_POST['update_about'])) {
+  
+      $education_level = mysqli_real_escape_string($connect, $_POST['education_level']);
+      $current_location = mysqli_real_escape_string($connect, $_POST['current_location']);
+      $accured_skills = mysqli_real_escape_string($connect, $_POST['accured_skills']);
+      $about_self = mysqli_real_escape_string($connect, $_POST['about_self']);
+      $work_experience = mysqli_real_escape_string($connect, $_POST['work_experience']);
+
+      $select_about = "SELECT * FROM about_user WHERE user_id = '$currentuser'";
+      $select_about_result = mysqli_query($connect, $select_about);
+
+      $select_about_rows = mysqli_fetch_assoc($select_about_result);
+
+      $education = $select_about_rows['latest_education'];
+
+      if (mysqli_num_rows($select_about_result) > 0) {
+        
+        $update_about = "UPDATE about_user SET user_id = '$currentuser', latest_education = '$education_level', location = '$current_location', skills = '$accured_skills', job_description = '$work_experience', bios = '$about_self' WHERE user_id = '$currentuser'";
+        $update_about_result = mysqli_query($connect, $update_about);
+
+      if ($update_about_result) {
+            
+          echo "<script>alert('About Updated Successfully!'); history.back(0);</script>";
+      } else {
+
+          echo "<script>alert('Something went wrong! try again later'); history.back(0);</script>";
+      }
+
+      } else {
+
+        $insert_about = "INSERT INTO about_user(user_id, latest_education, location, skills, job_description, bios) VALUES('$currentuser', '$education_level', '$current_location', '$accured_skills', '$work_experience', '$about_self')";
+        $insert_about_result = mysqli_query($connect, $insert_about);
+
+        if ($insert_about_result) {
+            
+          echo "<script>alert('About Updated Successfully!'); history.back(0);</script>";
+      } else {
+
+          echo "<script>alert('Something went wrong! try again later'); history.back(0);</script>";
+      }
+
+      }
+}
+
+
+         $select_about_display = "SELECT * FROM about_user WHERE user_id = '$currentuser'";
+         $select_about_display_result = mysqli_query($connect, $select_about_display);
+
+         $select_about_display_rows = mysqli_fetch_assoc($select_about_display_result);
+
+         $education = $select_about_display_rows['latest_education'];
+         $my_location = $select_about_display_rows['location'];
+         $skills = $select_about_display_rows['skills'];
+         $job_description = $select_about_display_rows['job_description'];
+         $user_bios = $select_about_display_rows['bios'];
 
 ?>
 
@@ -158,49 +217,55 @@ if (isset($_POST['update_profile'])) {
                         </div>
                       </div>
                     </form>
-                    <form class="form-horizontal">
+
+
+                    <form class="form-horizontal" method="POST" action="">
                       <div class="form-group row">
                         <label for="inputName" class="col-sm-2 col-form-label">Name</label>
                         <div class="col-sm-10">
-                          <input type="email" class="form-control" id="inputName" value="" placeholder="Name">
+                          <input type="text" class="form-control" name="full_name" id="inputName" value="<?php echo $full;?>" placeholder="Name">
                         </div>
                       </div>
                       <div class="form-group row">
                         <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
                         <div class="col-sm-10">
-                          <input type="email" class="form-control" id="inputEmail" value="" placeholder="Email">
+                          <input type="email" class="form-control" name="email" id="inputEmail" value="<?php echo $email_add;?>" placeholder="Email">
                         </div>
                       </div>
                       <div class="form-group row">
                         <label for="inputName2" class="col-sm-2 col-form-label">Username</label>
                         <div class="col-sm-10">
-                          <input type="text" class="form-control" id="inputName2" value="" placeholder="Username">
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label for="inputExperience" class="col-sm-2 col-form-label">Experience</label>
-                        <div class="col-sm-10">
-                          <textarea class="form-control" id="inputExperience" placeholder="Experience"></textarea>
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label for="inputSkills" class="col-sm-2 col-form-label">Skills</label>
-                        <div class="col-sm-10">
-                          <input type="text" class="form-control" id="inputSkills" placeholder="Skills">
+                          <input type="text" class="form-control" name="othername" id="inputName2" value="<?php echo $othername_add;?>" placeholder="Username">
                         </div>
                       </div>
                       <div class="form-group row">
                         <div class="offset-sm-2 col-sm-10">
                           <div class="checkbox">
                             <label>
-                              <input type="checkbox"> I agree to the <a href="#">terms and conditions</a>
+                              <?php
+
+                                  if ($privacy == 0) {
+                                    
+                                    ?>
+                                    <input type="checkbox" name="private"> Make account <a href="#">Private</a>
+
+                                    <?php
+                                  } else {
+
+                                    ?>
+                                    <input type="checkbox" name="private" checked> Make account <a href="#">Private</a>
+
+                                    <?php
+                                  }
+
+                              ?>
                             </label>
                           </div>
                         </div>
                       </div>
                       <div class="form-group row">
                         <div class="offset-sm-2 col-sm-10">
-                          <button type="submit" class="btn btn-danger">Submit</button>
+                          <button type="submit" name="update_profile" class="btn btn-info">Update</button>
                         </div>
                       </div>
                     </form>
@@ -223,40 +288,40 @@ if (isset($_POST['update_profile'])) {
                 <div class="">
                   <!-- /.tab-pane -->
                   <div class="" id="">
-                    <form class="form-horizontal">
+                    <form class="form-horizontal" method="POST" action="">
                       <div class="form-group row">
-                        <label for="inputName" class="col-sm-2 col-form-label">Name</label>
+                        <label for="inputName" class="col-sm-2 col-form-label">Education</label>
                         <div class="col-sm-10">
-                          <input type="email" class="form-control" id="inputName" placeholder="Name">
+                          <input type="text" name="education_level" class="form-control" value="<?php echo $education;?>" id="inputName" placeholder="Latest Education Level">
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
+                        <label for="inputEmail" class="col-sm-2 col-form-label">Location</label>
                         <div class="col-sm-10">
-                          <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+                          <input type="text" name="current_location" class="form-control" value="<?php echo $my_location;?>" id="inputEmail" placeholder="Current Location">
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label for="inputName2" class="col-sm-2 col-form-label">Name</label>
+                        <label for="inputName2" class="col-sm-2 col-form-label">Skills</label>
                         <div class="col-sm-10">
-                          <input type="text" class="form-control" id="inputName2" placeholder="Name">
+                          <input type="text" name="accured_skills" class="form-control" value="<?php echo $skills;?>" id="inputName2" placeholder="Skills">
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label for="inputExperience" class="col-sm-2 col-form-label">Experience</label>
+                        <label for="inputExperience" class="col-sm-2 col-form-label">Bios</label>
                         <div class="col-sm-10">
-                          <textarea class="form-control" id="inputExperience" placeholder="Experience"></textarea>
+                          <textarea class="form-control" name="about_self" id="inputExperience" value="<?php echo $user_bios;?>" placeholder="Write something about yourself..."></textarea>
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label for="inputSkills" class="col-sm-2 col-form-label">Skills</label>
+                        <label for="inputSkills" class="col-sm-2 col-form-label">Work</label>
                         <div class="col-sm-10">
-                          <input type="text" class="form-control" id="inputSkills" placeholder="Skills">
+                          <input type="text" name="work_experience" class="form-control" value="<?php echo $job_description;?>" id="inputSkills" placeholder="Work Place">
                         </div>
                       </div>
                       <div class="form-group row">
                         <div class="offset-sm-2 col-sm-10">
-                          <button type="submit" class="btn btn-danger">Submit</button>
+                          <button type="submit" name="update_about" class="btn btn-primary">Update About</button>
                         </div>
                       </div>
                     </form>
@@ -276,18 +341,6 @@ if (isset($_POST['update_profile'])) {
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-  <footer class="main-footer">
-    <div class="float-right d-none d-sm-block">
-      <b>Version</b> 3.2.0
-    </div>
-    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
-  </footer>
-
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-  </aside>
-  <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
 
