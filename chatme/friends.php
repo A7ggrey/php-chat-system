@@ -12,13 +12,13 @@ include('./../database/database.php');
 $currentuser_id = $_SESSION['userid'];
 
 
-echo "<h4><center>Your Followers</center><h4>";
+echo "<h4><center>Followers</center><h4>";
 
 //if (isset($_GET['friend'])) {
 	
-	if (isset($_GET['friends'])) {
+	if (isset($_GET['followers'])) {
 	
-	$friends_id = $_GET['friends'];
+	$friends_id = $_GET['followers'];
 
 	$select_friends_followers = "SELECT user.*, followers.* FROM user INNER JOIN followers ON user.id = followers.follower_id WHERE followers.my_id = '$friends_id'";
 	$select_friends_followers_result = mysqli_query($connect, $select_friends_followers);
