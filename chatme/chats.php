@@ -77,7 +77,8 @@ include('./../database/database.php');
             <!-- DIRECT CHAT -->
             <div class="card direct-chat direct-chat-primary">
               <div class="card-header">
-                <h3 class="card-title">Chats - <a href="./new_chats.php">Start Chat</a> - <a href="./profile/profile.php">My Profile</a></h3>
+                <h3 class="card-title">Chats - <a href="./new_chats.php">Start Chat</a> - <a href="./profile/profile.php">My Profile</a> - 
+                  <a href="logout.php">Logout</a></h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
