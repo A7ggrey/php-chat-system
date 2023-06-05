@@ -3,9 +3,9 @@ session_start();
 
 
 if (!isset($_SESSION['login_user'])) {
-	
-	header('location: ./../../');
-	exit;
+  
+  header('location: ./../../');
+  exit;
 }
 
 include('./../../database/database.php');
@@ -26,8 +26,8 @@ $othername_add = $select_old_dp_rows['othername'];
 
 
 if (isset($_POST['update_profile_pic'])) {
-	
-	$old_image_path = $oldimage;
+  
+  $old_image_path = $oldimage;
     $rentid = $rentalid;
 
 
@@ -42,7 +42,7 @@ if (isset($_POST['update_profile_pic'])) {
         // Delete old image file from server
 
           if ($oldimage != 'a.png') {
-          	gc_collect_cycles();
+            gc_collect_cycles();
             unlink($old_image_path);
           }
 
@@ -89,59 +89,213 @@ if (isset($_POST['update_profile'])) {
 
 ?>
 
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<title>Chat Me - Update Profile</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AdminLTE 3 | User Profile</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+  <style type="text/css">
+    #content_section {
+      margin-top: 110px;
+    }
+    .main_div {
+      margin: 0 auto;
+      width: 60%;
+    }
+
+    @media (max-width: 480px) {
+
+      #content_section {
+        margin-top: 100px;
+      }
+      .main_div {
+      margin: 0 auto;
+      width: 95%;
+    }
+    }
+  </style>
 </head>
-<body>
+<body class="hold-transition sidebar-mini">
+<div class="main_div">
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content" id="content_section">
+    <!-- Content Header (Page header) -->
+    
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
 
-	<form method="POST" action="" enctype="multipart/form-data" onsubmit="return updateRentalLogo()">
-        <div class="card-body">
-            <label for="image" id="imagemessage">Profile Photo</label>
-            <br>
-            <div class="btn btn-group">
-                <input type="file" class="form-control" name="image" id="image" accept="image/*">
-                <input type="submit" name="update_profile_pic" value="Update Profile" class="btn btn-primary">
+          <!-- /.col -->
+          <div class="col-md-12">
+
+            <div class="card">
+              <div class="card-header p-2">
+                <ul class="nav nav-pills">
+                  <li class="nav-item"><b>Personal Details</b></li>
+                </ul>
+              </div><!-- /.card-header -->
+              <div class="card-body">
+                <div class="">
+                  <!-- /.tab-pane -->
+                  <div class="" id="">
+                    <form method="POST" action="" enctype="multipart/form-data">
+                      <div class="form-group row">
+                        <label for="inputName" class="col-sm-2 col-form-label">Profile Photo</label>
+                        <div class="col-sm-10">
+                          <div class="btn btn-group">
+                            <input type="file" class="form-control" name="image" id="image" accept="image/*" required>
+                            <input type="submit" name="update_profile_pic" value="Update Profile" class="btn btn-primary">
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                    <form class="form-horizontal">
+                      <div class="form-group row">
+                        <label for="inputName" class="col-sm-2 col-form-label">Name</label>
+                        <div class="col-sm-10">
+                          <input type="email" class="form-control" id="inputName" value="" placeholder="Name">
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
+                        <div class="col-sm-10">
+                          <input type="email" class="form-control" id="inputEmail" value="" placeholder="Email">
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="inputName2" class="col-sm-2 col-form-label">Username</label>
+                        <div class="col-sm-10">
+                          <input type="text" class="form-control" id="inputName2" value="" placeholder="Username">
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="inputExperience" class="col-sm-2 col-form-label">Experience</label>
+                        <div class="col-sm-10">
+                          <textarea class="form-control" id="inputExperience" placeholder="Experience"></textarea>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="inputSkills" class="col-sm-2 col-form-label">Skills</label>
+                        <div class="col-sm-10">
+                          <input type="text" class="form-control" id="inputSkills" placeholder="Skills">
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <div class="offset-sm-2 col-sm-10">
+                          <div class="checkbox">
+                            <label>
+                              <input type="checkbox"> I agree to the <a href="#">terms and conditions</a>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <div class="offset-sm-2 col-sm-10">
+                          <button type="submit" class="btn btn-danger">Submit</button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <!-- /.tab-pane -->
+                </div>
+                <!-- /.tab-content -->
+              </div><!-- /.card-body -->
             </div>
+            <!-- /.card -->
+
+
+            <div class="card">
+              <div class="card-header p-2">
+                <ul class="nav nav-pills">
+                  <li class="nav-item"><b>About Me</b></li>
+                </ul>
+              </div><!-- /.card-header -->
+              <div class="card-body">
+                <div class="">
+                  <!-- /.tab-pane -->
+                  <div class="" id="">
+                    <form class="form-horizontal">
+                      <div class="form-group row">
+                        <label for="inputName" class="col-sm-2 col-form-label">Name</label>
+                        <div class="col-sm-10">
+                          <input type="email" class="form-control" id="inputName" placeholder="Name">
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
+                        <div class="col-sm-10">
+                          <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="inputName2" class="col-sm-2 col-form-label">Name</label>
+                        <div class="col-sm-10">
+                          <input type="text" class="form-control" id="inputName2" placeholder="Name">
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="inputExperience" class="col-sm-2 col-form-label">Experience</label>
+                        <div class="col-sm-10">
+                          <textarea class="form-control" id="inputExperience" placeholder="Experience"></textarea>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="inputSkills" class="col-sm-2 col-form-label">Skills</label>
+                        <div class="col-sm-10">
+                          <input type="text" class="form-control" id="inputSkills" placeholder="Skills">
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <div class="offset-sm-2 col-sm-10">
+                          <button type="submit" class="btn btn-danger">Submit</button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <!-- /.tab-pane -->
+                </div>
+                <!-- /.tab-content -->
+              </div><!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
         </div>
-    </form>
-    <br>
-    <br>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  <footer class="main-footer">
+    <div class="float-right d-none d-sm-block">
+      <b>Version</b> 3.2.0
+    </div>
+    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+  </footer>
 
-    <form method="POST" action="">
-      <div class="card-body">
-            <label for="full" id="full">Full Name</label>
-            <br>
-            <div class="">
-                <input type="text" class="form-control" name="full_name" value="<?php echo $full;?>" id="full">
-            </div>
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
 
-            <label for="user" id="user">User Name</label>
-            <br>
-            <div class="">
-                <input type="text" class="form-control" name="othername" value="<?php echo $othername_add;?>" id="user">
-            </div>
-
-            <label for="email" id="email">Email</label>
-            <br>
-            <div class="">
-                <input type="text" class="form-control" name="email" value="<?php echo $email_add;?>" id="email">
-            </div>
-
-            <br>
-            <div class="">
-                <input type="checkbox" class="form-check-input" name="private" id="private">
-                <label for="private">Make account <a href="#">private</a></label>
-            </div>
-        </div>
-
-            <br>
-            <div class="">
-              <input type="submit" name="update_profile" value="Update Profile">
-            </div>
-    </form>
-
+<!-- jQuery -->
+<script src="../../plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="../../dist/js/adminlte.min.js"></script>
 </body>
 </html>
