@@ -1,6 +1,6 @@
 <?php
 
-header("location: ./new_chats.php");
+header("location: ./chats.php");
 exit;
 
 ?>
