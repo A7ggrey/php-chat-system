@@ -142,7 +142,7 @@ include('./../database/database.php');
                       <img class="contacts-list-img" src="./profile/<?php echo $profile_photo;?>" alt="User Avatar">
 
                         <div class="contacts-list-info">
-                          <span class="contacts-list-name">
+                          <span class="contacts-list-name" style="color: black;">
 
                             <!-- Name not displaying -->                          
                             <?php echo $user_full_name;?>
