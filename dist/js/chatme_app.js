@@ -7,7 +7,7 @@ function signupForm() {}
 //full name, email and username authentication
 function updateProfile() {}
 
-//
+//education, skills, work, location and bios
 function updateAboutMe() {}
 
 //message input authentication
