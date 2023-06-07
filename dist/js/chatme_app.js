@@ -1,3 +1,9 @@
+/*
+
+form validation of all forms contained in this project chat me
+
+*/
+
 //email and password authentication
 function loginForm() {}
 
