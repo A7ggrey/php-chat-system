@@ -287,7 +287,7 @@ if (isset($_POST['update_profile'])) {
                 <div class="">
                   <!-- /.tab-pane -->
                   <div class="" id="">
-                    <form class="form-horizontal" method="POST" action="">
+                    <form class="form-horizontal" method="POST" action="" onsubmit="return updateAboutMe()">
                       <div class="form-group row">
                         <label for="inputName" class="col-sm-2 col-form-label">Education</label>
                         <div class="col-sm-10">
