@@ -218,7 +218,7 @@ if (isset($_POST['update_profile'])) {
                     </form>
 
 
-                    <form class="form-horizontal" method="POST" action="">
+                    <form class="form-horizontal" method="POST" action="" onsubmit="return updateProfile()">
                       <div class="form-group row">
                         <label for="inputName" class="col-sm-2 col-form-label">Name</label>
                         <div class="col-sm-10">
@@ -232,9 +232,9 @@ if (isset($_POST['update_profile'])) {
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label for="inputName2" class="col-sm-2 col-form-label">Username</label>
+                        <label for="inputUserName" class="col-sm-2 col-form-label">Username</label>
                         <div class="col-sm-10">
-                          <input type="text" class="form-control" name="othername" id="inputName2" value="<?php echo $othername_add;?>" placeholder="Username">
+                          <input type="text" class="form-control" name="othername" id="inputUserName" value="<?php echo $othername_add;?>" placeholder="Username">
                         </div>
                       </div>
                       <div class="form-group row">
