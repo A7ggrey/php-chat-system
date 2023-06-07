@@ -220,10 +220,10 @@ if ($sender != $sender_one) {
               </div>
               <!-- /.card-body -->
               <div class="card-footer">
-                <form autocomplete="off" action="send-message.php" method="POST">
+                <form autocomplete="off" action="send-message.php" method="POST" onsubmit="return sendMessage()">
                   <div class="input-group">
                     <input type="hidden" name="recieverid" value="<?php echo $user;?>">
-                    <input type="text" name="message" placeholder="Type Message ..." class="form-control" autocomplete="off" required>
+                    <input type="text" name="message" id="message" placeholder="Type Message ..." class="form-control" autocomplete="off" required>
                     <span class="input-group-append">
                       <button type="submit" name="send" class="btn btn-primary">Send</button>
                     </span>
