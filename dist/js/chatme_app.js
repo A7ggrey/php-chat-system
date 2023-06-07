@@ -4,7 +4,7 @@ function loginForm() {}
 //full name, email, username, password and confirm password authentication
 function signupForm() {}
 
-//
+//full name, email and username authentication
 function updateProfile() {}
 
 //
