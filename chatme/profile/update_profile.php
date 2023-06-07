@@ -289,33 +289,33 @@ if (isset($_POST['update_profile'])) {
                   <div class="" id="">
                     <form class="form-horizontal" method="POST" action="" onsubmit="return updateAboutMe()">
                       <div class="form-group row">
-                        <label for="inputName" class="col-sm-2 col-form-label">Education</label>
+                        <label for="inputEducation" class="col-sm-2 col-form-label">Education</label>
                         <div class="col-sm-10">
-                          <input type="text" name="education_level" class="form-control" value="<?php echo $education;?>" id="inputName" placeholder="Latest Education Level">
+                          <input type="text" name="education_level" class="form-control" value="<?php echo $education;?>" id="inputEducation" placeholder="Latest Education Level">
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label for="inputEmail" class="col-sm-2 col-form-label">Location</label>
+                        <label for="inputLocation" class="col-sm-2 col-form-label">Location</label>
                         <div class="col-sm-10">
-                          <input type="text" name="current_location" class="form-control" value="<?php echo $my_location;?>" id="inputEmail" placeholder="Current Location">
+                          <input type="text" name="current_location" class="form-control" value="<?php echo $my_location;?>" id="inputLocation" placeholder="Current Location">
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label for="inputName2" class="col-sm-2 col-form-label">Skills</label>
+                        <label for="inputSkills" class="col-sm-2 col-form-label">Skills</label>
                         <div class="col-sm-10">
-                          <input type="text" name="accured_skills" class="form-control" value="<?php echo $skills;?>" id="inputName2" placeholder="Skills">
+                          <input type="text" name="accured_skills" class="form-control" value="<?php echo $skills;?>" id="inputSkills" placeholder="Skills">
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label for="inputExperience" class="col-sm-2 col-form-label">Bios</label>
+                        <label for="inputBios" class="col-sm-2 col-form-label">Bios</label>
                         <div class="col-sm-10">
-                          <textarea class="form-control" name="about_self" id="inputExperience" value="<?php echo $user_bios;?>" placeholder="Write something about yourself..."></textarea>
+                          <textarea class="form-control" name="about_self" id="inputBios" value="<?php echo $user_bios;?>" placeholder="Write something about yourself..."></textarea>
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label for="inputSkills" class="col-sm-2 col-form-label">Work</label>
+                        <label for="inputWork" class="col-sm-2 col-form-label">Work</label>
                         <div class="col-sm-10">
-                          <input type="text" name="work_experience" class="form-control" value="<?php echo $job_description;?>" id="inputSkills" placeholder="Work Place">
+                          <input type="text" name="work_experience" class="form-control" value="<?php echo $job_description;?>" id="inputWork" placeholder="Work Place">
                         </div>
                       </div>
                       <div class="form-group row">
