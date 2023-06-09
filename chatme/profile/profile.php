@@ -21,8 +21,8 @@ if (isset($_GET['opid'])) {
    $current_user = $_SESSION['userid'];
 
 if (!isset($_GET['opid'])) {
-  
-  
+
+    $opid = "";  
 
     $select_profile = "SELECT * FROM user WHERE id = '$current_user'";
     $select_profile_result_current = mysqli_query($connect, $select_profile);
@@ -223,7 +223,7 @@ if (!isset($_GET['opid'])) {
 
               <?php
 
-                  $select_about = "SELECT * FROM about_user WHERE user_id = '$current_user'";
+                  $select_about = "SELECT * FROM about_user WHERE user_id = '$current_user' OR user_id = '$opid'";
                   $select_about_result = mysqli_query($connect, $select_about);
 
                   if (mysqli_num_rows($select_about_result) > 0) {
