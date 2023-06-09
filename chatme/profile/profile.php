@@ -18,11 +18,13 @@ if (isset($_GET['opid'])) {
   $follow_me = $_SESSION['userid'];
 }
     
-   $current_user = $_SESSION['userid'];
+   //$current_user = $_SESSION['userid'];
 
 if (!isset($_GET['opid'])) {
 
     $opid = "";  
+
+    $current_user = $_SESSION['userid'];
 
     $select_profile = "SELECT * FROM user WHERE id = '$current_user'";
     $select_profile_result_current = mysqli_query($connect, $select_profile);
@@ -44,6 +46,7 @@ if (!isset($_GET['opid'])) {
 } else {
 
   $opid = $_GET['opid'];
+  $current_user = "";
 
   $select_profile = "SELECT * FROM user WHERE id = '$opid'";
     $select_profile_result_other = mysqli_query($connect, $select_profile);
@@ -246,7 +249,7 @@ if (!isset($_GET['opid'])) {
 
               ?>
               <div class="card-body">
-                <strong><i class="fas fa-book mr-1"></i> Work</strong>
+                <strong><i class="fas fa-briefcase mr-1"></i> Work</strong>
 
                 <p class="text-muted">
                   <?php echo $job_description?>
