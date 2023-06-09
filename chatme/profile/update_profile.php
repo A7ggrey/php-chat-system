@@ -139,11 +139,20 @@ if (isset($_POST['update_profile'])) {
 
          $select_about_display_rows = mysqli_fetch_assoc($select_about_display_result);
 
-         $education = $select_about_display_rows['latest_education'];
-         $my_location = $select_about_display_rows['location'];
-         $skills = $select_about_display_rows['skills'];
-         $job_description = $select_about_display_rows['job_description'];
-         $user_bios = $select_about_display_rows['bios'];
+         if (mysqli_num_rows($select_about_display_result) > 0) {
+            $education = $select_about_display_rows['latest_education'];
+            $my_location = $select_about_display_rows['location'];
+            $skills = $select_about_display_rows['skills'];
+            $job_description = $select_about_display_rows['job_description'];
+            $user_bios = $select_about_display_rows['bios'];
+         } else {
+
+            $education = "";
+            $my_location = "";
+            $skills = "";
+            $job_description = "";
+            $user_bios = "";
+         }
 
 ?>
 
@@ -152,7 +161,7 @@ if (isset($_POST['update_profile'])) {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | User Profile</title>
+  <title>Chat Me - <?php echo $full;?></title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -205,12 +214,12 @@ if (isset($_POST['update_profile'])) {
                 <div class="">
                   <!-- /.tab-pane -->
                   <div class="" id="">
-                    <form method="POST" action="" enctype="multipart/form-data">
+                    <form method="POST" action="" enctype="multipart/form-data" onsubmit="return updateProfilePhoto()">
                       <div class="form-group row">
                         <label for="inputName" class="col-sm-2 col-form-label">Profile Photo</label>
                         <div class="col-sm-10">
                           <div class="btn btn-group">
-                            <input type="file" class="form-control" name="image" id="image" accept="image/*" required>
+                            <input type="file" class="form-control" name="image" id="image" accept="image/*">
                             <input type="submit" name="update_profile_pic" value="Update Profile" class="btn btn-primary">
                           </div>
                         </div>
@@ -349,5 +358,7 @@ if (isset($_POST['update_profile'])) {
 <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../../dist/js/adminlte.min.js"></script>
+<!-- ChatMe App -->
+<script src="./../../dist/js/chatme_app.js"></script>
 </body>
 </html>
