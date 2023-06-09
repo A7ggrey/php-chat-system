@@ -92,7 +92,26 @@ function updateProfile() {
 }
 
 //education, skills, work, location and bios
-function updateAboutMe() {}
+function updateAboutMe() {
+	var education = document.getElementById('education').value;
+	var skills = document.getElementById('skills').value;
+	var work = document.getElementById('work').value;
+	var location = document.getElementById('location').value;
+	var bios = document.getElementById('bios').value;
+
+	//if (education == '' || education == null) {
+
+		//alert('Education status is required');
+	//}
+
+		//if (skills == '' || skills == null) {
+
+			//alert('input your skills!');
+		//}
+			//if (true) {}
+				//if (true) {}
+					//if (true) {}
+}
 
 //message input authentication
 function sendMessage() {}
