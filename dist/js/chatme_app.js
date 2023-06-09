@@ -56,8 +56,40 @@ function signupForm() {
 	}
 }
 
-//full name, email and username authentication
-function updateProfile() {}
+
+//update profile photo authentication
+function updateProfilePhoto() {
+	var image = document.getElementById('image').value;
+
+	if (image == '' || image == null) {
+
+		alert('Choose a photo!');
+		return false;
+	}
+}
+
+//profile photo, full name, email and username authentication
+function updateProfile() {
+	var fullName = document.getElementById('inputName').value;
+	var email = document.getElementById('inputEmail').value;
+	var userName = document.getElementById('inputUserName').value;
+
+	if (fullName == '' || fullName == null) {
+
+		alert('Full Name is required!');
+		return false;
+	}
+
+	if (email == '' || email == null) {
+		alert('Email is required!');
+		return false;
+	}
+
+	if (userName == '' || userName == null) {
+		alert('Username is required!');
+		return false;
+	}
+}
 
 //education, skills, work, location and bios
 function updateAboutMe() {}
