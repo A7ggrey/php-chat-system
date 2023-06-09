@@ -223,7 +223,7 @@ if ($sender != $sender_one) {
                 <form autocomplete="off" action="send-message.php" method="POST" onsubmit="return sendMessage()">
                   <div class="input-group">
                     <input type="hidden" name="recieverid" value="<?php echo $user;?>">
-                    <input type="text" name="message" id="message" placeholder="Type Message ..." class="form-control" autocomplete="off" required>
+                    <input type="text" name="message" id="message" placeholder="Type Message ..." class="form-control" autocomplete="off">
                     <span class="input-group-append">
                       <button type="submit" name="send" class="btn btn-primary">Send</button>
                     </span>
@@ -281,5 +281,7 @@ if ($sender != $sender_one) {
 <script src="./../plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 <!-- AdminLTE App -->
 <script src="./../dist/js/adminlte.js"></script>
+<!-- ChatMe App -->
+<script src="./../dist/js/chatme_app.js"></script>
 </body>
 </html>
