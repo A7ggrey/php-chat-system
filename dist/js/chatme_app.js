@@ -114,4 +114,10 @@ function updateAboutMe() {
 }
 
 //message input authentication
-function sendMessage() {}
+function sendMessage() {
+	var message = document.getElementById('message').value;
+
+	if (message == '' || message == null) {
+		return false;
+	}
+}
