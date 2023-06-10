@@ -23,8 +23,8 @@ if (isset($_GET['opid'])) {
 if (!isset($_GET['opid'])) {
 
     $opid = "";  
-
     $current_user = $_SESSION['userid'];
+    $current_user_two = "";
 
     $select_profile = "SELECT * FROM user WHERE id = '$current_user'";
     $select_profile_result_current = mysqli_query($connect, $select_profile);
@@ -46,6 +46,7 @@ if (!isset($_GET['opid'])) {
 } else {
 
   $opid = $_GET['opid'];
+  $current_user_two = $_SESSION['userid'];
   $current_user = "";
 
   $select_profile = "SELECT * FROM user WHERE id = '$opid'";
@@ -159,7 +160,7 @@ if (!isset($_GET['opid'])) {
 
                 <?php
 
-          $select_unfollow = "SELECT * FROM followers WHERE my_id = '$follow_me' AND follower_id = '$current_user'";
+          $select_unfollow = "SELECT * FROM followers WHERE my_id = '$follow_me' AND follower_id = '$current_user_two' OR my_id = '$follow_me' AND follower_id = '$current_user'";
           $select_unfollow_result = mysqli_query($connect, $select_unfollow);
           $count_unfollow = mysqli_num_rows($select_unfollow_result);
 
