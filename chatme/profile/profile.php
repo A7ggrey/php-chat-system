@@ -73,7 +73,7 @@ if (!isset($_GET['opid'])) {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Chat Me | <?php echo $current_user_name;?> - Profile</title>
+  <title>Chat Me Profile - <?php echo $current_user_name;?></title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
