@@ -80,7 +80,13 @@ include('./../database/database.php');
       <div class="container-fluid">
         <!-- Small boxes (Stat box) -->
 
-        <!-- Main row -->
+        <?php
+            
+            if (isset($_GET['followers'])) {
+              
+              ?>
+
+              <!-- Main row -->
         <div class="row">
           <!-- Left col -->
           <section class="col-lg-12 connectedSortable">
@@ -178,6 +184,117 @@ include('./../database/database.php');
           <!-- /.Left col -->
         </div>
         <!-- /.row (main row) -->
+
+              <?php
+            }
+        ?>
+
+        <?php
+        if (isset($_GET['following'])) {
+          ?>
+
+          <!-- Main row -->
+        <div class="row">
+          <!-- Left col -->
+          <section class="col-lg-12 connectedSortable">
+            <!-- Custom tabs (Charts with tabs)-->
+            <!-- DIRECT CHAT -->
+            <div class="card direct-chat direct-chat-primary">
+              <div class="card-header">
+                <h3 class="card-title">Following - 
+                  <a href="./chats.php">Chats</a> - 
+                  <a href="./profile/profile.php">My Profile</a> - 
+                  <a href="logout.php">Logout</a>
+                </h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <!-- Conversations are loaded here -->
+                <div class="direct-chat-messages">
+                  
+                <!-- Contacts are loaded here -->
+                <div class="">
+                  
+                  <ul class="contacts-list">
+                    <?php
+
+                      $currentuser_id = $_SESSION['userid'];
+
+                      if (isset($_GET['following'])) {
+                        $friends_id = $_GET['following'];
+
+                        $select_friends_followers = "SELECT user.*, followers.* FROM user INNER JOIN followers ON user.id = followers.my_id WHERE followers.follower_id = '$friends_id'";
+                        $select_friends_followers_result = mysqli_query($connect, $select_friends_followers);
+
+                        if (mysqli_num_rows($select_friends_followers_result) > 0) {
+    
+                          while ($select_friends_followers_rows = mysqli_fetch_assoc($select_friends_followers_result)) {
+                            ?>
+
+                    <li>
+                      <img class="contacts-list-img" src="./profile/<?php echo $select_friends_followers_rows['profile_photo'];?>" alt="User Avatar">
+                        <div class="contacts-list-info">
+                          <span class="contacts-list-name">
+                            <small class="contacts-list-date float-right">
+                              <!--<a href="./friends.php?followers=<?php echo $user_id_for_followers;?>"><?php //echo $count_followers;?> Followers</a> - 
+                                <a href="./profile/profile.php?opid=<?php echo $user_id_for_followers;?>">Visit Profile</a>-->
+                            </small>
+                          </span>
+                          &nbsp;
+                          <spnan class="contacts-list-msg">
+                            <a href="./profile/profile.php?opid=<?php echo $select_friends_followers_rows['id'];?>">
+                              <?php echo $select_friends_followers_rows['full_name'];?>
+                            </a>
+                          </span>
+                        </div>
+                    </li>
+
+      <?php
+    }
+  } else {
+    ?>
+
+                    <li>
+                      <!--<img class="contacts-list-img" src="./profile/<?php echo $profile_photo;?>" alt="User Avatar">-->
+                        <div class="contacts-list-info">
+                          <span class="contacts-list-name">
+                            <small class="contacts-list-date float-right">
+                            </small>
+                          </span>
+                          &nbsp;
+                          <span class="contacts-list-msg">
+                            No one has followed this profile yet!
+                          </span>
+                        </div>
+                    </li>
+
+                    <?php
+}
+}
+//}
+
+?> 
+                    <!-- End Contact Item -->
+                  </ul>
+                  <!-- /.contacts-list -->
+                </div>
+                <!-- /.direct-chat-pane -->
+              </div>
+              <!-- /.card-body -->
+              <div class="card-footer">
+                
+              </div>
+              <!-- /.card-footer-->
+            </div>
+            <!--/.direct-chat -->
+          </section>
+          <!-- /.Left col -->
+        </div>
+        <!-- /.row (main row) -->
+
+          <?php
+        }
+        ?>
       </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
