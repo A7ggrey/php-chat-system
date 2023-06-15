@@ -340,6 +340,45 @@ if (isset($_POST['update_profile'])) {
               </div><!-- /.card-body -->
             </div>
             <!-- /.card -->
+
+            <div class="card">
+              <div class="card-header p-2">
+                <ul class="nav nav-pills">
+                  <li class="nav-item"><b>About Me</b></li>
+                </ul>
+              </div><!-- /.card-header -->
+              <div class="card-body">
+                <div class="">
+                  <!-- /.tab-pane -->
+                  <div class="" id="">
+                    <form class="form-horizontal" method="POST" action="" onsubmit="return updateAboutMe()">
+                      <div class="form-group row">
+                        <label for="inputEducation" class="col-sm-2 col-form-label">Education</label>
+                        <div class="col-sm-10">
+                          <input type="text" name="education_level" class="form-control" value="<?php echo $education;?>" id="inputEducation" placeholder="Latest Education Level">
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="inputLocation" class="col-sm-2 col-form-label">Location</label>
+                        <div class="col-sm-10">
+                          <input type="text" name="current_location" class="form-control" value="<?php echo $my_location;?>" id="inputLocation" placeholder="Current Location">
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="inputSkills" class="col-sm-2 col-form-label">Skills</label>
+                        <div class="col-sm-10">
+                          <input type="text" name="accured_skills" class="form-control" value="<?php echo $skills;?>" id="inputSkills" placeholder="Skills">
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <!-- /.tab-pane -->
+                </div>
+                <!-- /.tab-content -->
+              </div><!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+
           </div>
           <!-- /.col -->
         </div>
