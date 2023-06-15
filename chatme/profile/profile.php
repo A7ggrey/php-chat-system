@@ -138,7 +138,7 @@ if (!isset($_GET['opid'])) {
 
                   ?>
                   <li class="list-group-item">
-                    <b>Followers</b> <a class="float-right"><?php echo $count_followers;?></a>
+                    <b><a href="./../friends.php?followers=<?php echo $follow_me;?>">Followers</b> <a class="float-right"><?php echo $count_followers;?></a>
                   </li>
                   <?php
 
@@ -151,7 +151,7 @@ if (!isset($_GET['opid'])) {
 
                   ?>
                   <li class="list-group-item">
-                    <b>Following</b> <a class="float-right"><?php echo $count_following;?></a>
+                    <b><a href="./../friends.php?following=<?php echo $follow_me;?>">Following</a></b> <a class="float-right"><?php echo $count_following;?></a>
                   </li>
                   <li class="list-group-item">
                     <b>Friends</b> <a class="float-right"><?php echo $count_followers;?></a>
