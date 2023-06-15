@@ -353,21 +353,26 @@ if (isset($_POST['update_profile'])) {
                   <div class="" id="">
                     <form class="form-horizontal" method="POST" action="" onsubmit="return updateAboutMe()">
                       <div class="form-group row">
-                        <label for="inputEducation" class="col-sm-2 col-form-label">Education</label>
+                        <label for="oldPassword" class="col-sm-2 col-form-label">Current Password</label>
                         <div class="col-sm-10">
-                          <input type="text" name="education_level" class="form-control" value="<?php echo $education;?>" id="inputEducation" placeholder="Latest Education Level">
+                          <input type="text" name="old_password" class="form-control" id="oldPassword" placeholder="Current Password">
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label for="inputLocation" class="col-sm-2 col-form-label">Location</label>
+                        <label for="newPassword" class="col-sm-2 col-form-label">New Password</label>
                         <div class="col-sm-10">
-                          <input type="text" name="current_location" class="form-control" value="<?php echo $my_location;?>" id="inputLocation" placeholder="Current Location">
+                          <input type="text" name="new_password" class="form-control" id="newPassword" placeholder="New Password">
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label for="inputSkills" class="col-sm-2 col-form-label">Skills</label>
+                        <label for="confirmPassword" class="col-sm-2 col-form-label">Confirm Password</label>
                         <div class="col-sm-10">
-                          <input type="text" name="accured_skills" class="form-control" value="<?php echo $skills;?>" id="inputSkills" placeholder="Skills">
+                          <input type="text" name="confirm_password" class="form-control" id="confirmPassword" placeholder="Confirm Password">
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <div class="offset-sm-2 col-sm-10">
+                          <button type="submit" name="change_password" class="btn btn-primary">Change Password</button>
                         </div>
                       </div>
                     </form>
